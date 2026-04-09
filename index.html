@@ -2442,7 +2442,8 @@
       filter: none;
       background-size: 220% 220%;
       background-position: 40% 45%;
-      animation: packBgGradientDrift 14s ease-in-out infinite;
+      /* Static backdrop: drifting + filter animation caused visible flashes and GPU jank */
+      animation: none;
       z-index: 0;
     }
     @keyframes packBgGradientDrift {
@@ -2471,7 +2472,7 @@
     }
     @keyframes packRipOverlayFlash {
       0% { opacity: 0; }
-      35% { opacity: 1; background: radial-gradient(ellipse 85% 65% at 50% 45%, rgba(255,255,255,0.22), transparent 62%); }
+      35% { opacity: 1; background: radial-gradient(ellipse 85% 65% at 50% 45%, rgba(255,255,255,0.14), transparent 62%); }
       100% { opacity: 0; background: transparent; }
     }
     @keyframes packBgCelebratePulse {
@@ -2490,6 +2491,10 @@
     .modal-content.pack-opening-modal-unbox .pack-bg-fx {
       display: block;
     }
+    .modal-content.pack-opening-modal-unbox .pack-bg-fx .pack-bg-mesh,
+    .modal-content.pack-opening-modal-unbox .pack-bg-fx .pack-bg-rays {
+      display: none;
+    }
     .pack-bg-fx .pack-bg-aurora {
       position: absolute;
       inset: -35%;
@@ -2502,12 +2507,12 @@
       mix-blend-mode: screen;
     }
     .modal-content.pack-opening-modal-unbox.pack-unbox-celebrate .pack-bg-fx .pack-bg-aurora {
-      animation-duration: 4.2s;
-      opacity: 1;
+      animation: none;
+      opacity: 0.55;
       background:
-        radial-gradient(ellipse 62% 52% at 32% 28%, var(--pack-aurora-rare-a, rgba(42, 255, 158, 0.45)), transparent 54%),
-        radial-gradient(ellipse 58% 48% at 72% 68%, var(--pack-aurora-rare-b, rgba(255, 255, 255, 0.14)), transparent 52%),
-        radial-gradient(ellipse 48% 42% at 50% 50%, var(--pack-aurora-rare-c, rgba(42, 255, 158, 0.12)), transparent 58%);
+        radial-gradient(ellipse 62% 52% at 32% 28%, var(--pack-aurora-rare-a, rgba(42, 255, 158, 0.32)), transparent 54%),
+        radial-gradient(ellipse 58% 48% at 72% 68%, var(--pack-aurora-rare-b, rgba(255, 255, 255, 0.1)), transparent 52%),
+        radial-gradient(ellipse 48% 42% at 50% 50%, var(--pack-aurora-rare-c, rgba(42, 255, 158, 0.08)), transparent 58%);
     }
     @keyframes packAuroraFloat {
       0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
@@ -2564,7 +2569,8 @@
       50% { opacity: 1; transform: scale(1.03); }
     }
     .modal-content.pack-opening-modal-unbox.pack-unbox-peek-mood .pack-bg-fx .pack-bg-vignette {
-      animation: packVignetteBreathe 2.8s ease-in-out infinite;
+      animation: none;
+      opacity: 0.92;
     }
     .pack-unbox-body {
       position: relative;
@@ -7428,6 +7434,7 @@
       openingModalBg.style.backgroundSize = '';
       openingModalBg.style.backgroundRepeat = '';
       openingModalBg.style.backgroundPosition = '';
+      openingModalBg.style.backgroundBlendMode = '';
     }
 
     function applyPackUnboxBackdropVars(innerHex, outerHex, rarity) {
@@ -7447,25 +7454,15 @@
       root.style.setProperty('--pack-aurora-rare-c', toR(rr, 0.14));
     }
 
-    function applyPackImageAsModalBackground(pack, fallbackInner, fallbackOuter) {
+    function applyPackOpeningModalBackdrop(innerHex, outerHex) {
       if (!openingModalBg) return;
-      const art = (marketPackArtUrl(pack) || (pack.backgroundImage || '').trim() || '').replace(/\\/g, '/');
-      const inner = fallbackInner || '#5a6a8a';
-      const outer = fallbackOuter || '#1a2233';
-      if (art) {
-        const thumb = mediaThumbUrl(art, 960, 75);
-        openingModalBg.style.backgroundImage = `linear-gradient(168deg, ${inner} 0%, ${outer} 42%, #030509 88%), url(${JSON.stringify(thumb)})`;
-        openingModalBg.style.backgroundSize = '220% 220%, cover';
-        openingModalBg.style.backgroundRepeat = 'no-repeat, no-repeat';
-        openingModalBg.style.backgroundPosition = '40% 45%, center';
-        openingModalBg.style.backgroundBlendMode = 'normal, multiply';
-      } else {
-        openingModalBg.style.backgroundImage = `linear-gradient(168deg, ${inner} 0%, ${outer} 42%, #030509 88%)`;
-        openingModalBg.style.backgroundSize = '220% 220%';
-        openingModalBg.style.backgroundRepeat = 'no-repeat';
-        openingModalBg.style.backgroundPosition = '40% 45%';
-        openingModalBg.style.backgroundBlendMode = '';
-      }
+      const inner = innerHex || '#5a6a8a';
+      const outer = outerHex || '#1a2233';
+      openingModalBg.style.backgroundImage = `linear-gradient(168deg, ${inner} 0%, ${outer} 42%, #030509 88%)`;
+      openingModalBg.style.backgroundSize = '220% 220%';
+      openingModalBg.style.backgroundRepeat = 'no-repeat';
+      openingModalBg.style.backgroundPosition = '40% 45%';
+      openingModalBg.style.backgroundBlendMode = '';
     }
 
     function showPackOpeningModal(pack, item) {
@@ -7475,7 +7472,7 @@
       const inner = fc.inner || '#5a6a8a';
       const outer = fc.outer || '#1a2233';
       applyPackUnboxBackdropVars(inner, outer, item.rarity);
-      applyPackImageAsModalBackground(pack, inner, outer);
+      applyPackOpeningModalBackdrop(inner, outer);
 
       packOpeningModalInner?.classList.add('pack-opening-modal-unbox');
       packOpeningModalBody?.classList.add('pack-unbox-body');
@@ -7522,8 +7519,7 @@
       giftAnimation.innerHTML = '';
       giftAnimation.classList.add('pack-unbox-stage');
 
-      const rawArt = (marketPackArtUrl(pack) || (pack.backgroundImage || '').trim() || (pack.items?.find(it => it.imageUrl)?.imageUrl) || 'https://placehold.co/280x280/1a1f2e/8899aa?text=Pack').replace(/\\/g, '/');
-      const artUrl = mediaThumbUrl(rawArt, 560, 82);
+      const artUrl = (marketPackArtUrl(pack) || (pack.backgroundImage || '').trim() || (pack.items?.find(it => it.imageUrl)?.imageUrl) || 'https://placehold.co/280x280/1a1f2e/8899aa?text=Pack').replace(/\\/g, '/');
 
       const stack = document.createElement('div');
       stack.className = 'pack-unbox-stack';
@@ -7533,7 +7529,7 @@
         const maxH = Math.min(window.innerHeight * 0.62, 560);
         const w = nw > 0 ? nw : 280;
         const h = nh > 0 ? nh : 280;
-        const scale = Math.min(1, maxW / w, maxH / h) * 1.3;
+        const scale = Math.min(1, maxW / w, maxH / h);
         stack.style.width = `${Math.round(w * scale)}px`;
         stack.style.height = `${Math.round(h * scale)}px`;
       };
@@ -7617,24 +7613,8 @@
       };
 
       const applyRarityCelebrateBg = () => {
-        const bg = getRarityBackgroundGradientCss(item.rarity);
-        if (openingModalBg) {
-          openingModalBg.classList.add('pack-rarity-celebrate');
-          openingModalBg.classList.toggle('pack-bg-rarity-animated', !!bg.animated);
-          openingModalBg.style.backgroundImage = bg.image;
-          openingModalBg.style.backgroundSize = bg.size;
-          openingModalBg.style.backgroundRepeat = bg.repeat;
-          openingModalBg.style.backgroundPosition = bg.position;
-          openingModalBg.style.backgroundBlendMode = '';
-          openingModalBg.style.animation = '';
-        }
         packOpeningModalInner?.classList.add('pack-unbox-celebrate');
         packOpeningModalInner?.classList.remove('pack-unbox-peek-mood');
-        setTimeout(() => {
-          if (packOpeningModal?.style.display !== 'flex' || !openingModalBg) return;
-          openingModalBg.classList.remove('pack-rarity-celebrate', 'pack-bg-rarity-animated');
-          applyPackImageAsModalBackground(pack, inner, outer);
-        }, 720);
       };
 
       const firstRip = () => {
