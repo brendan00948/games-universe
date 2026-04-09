@@ -83,25 +83,6 @@
       0% { transform: translate(0, 0) rotate(-4deg); }
       100% { transform: translate(36px, -175px) rotate(4deg); }
     }
-    /* After load, freeze heavy ambient motion to reduce jank (still shows ~7s of movement). */
-    body.site-bg-motion-done::before,
-    body.site-bg-motion-done::after {
-      animation: none !important;
-      transform: none !important;
-    }
-    body.site-bg-motion-done .site-bg-atlas {
-      animation: none !important;
-      transform: none !important;
-    }
-    body.site-bg-motion-done .site-bg-atlas::before {
-      animation: none !important;
-    }
-    body.site-bg-motion-done .page-content::before,
-    body.site-bg-motion-done .main-page::before {
-      animation: none !important;
-      transform: rotate(-2.4deg) scale(1.09) !important;
-      background-position: 0 0 !important;
-    }
     @keyframes siteOrbitGlow {
       to { transform: rotate(360deg); }
     }
@@ -149,8 +130,6 @@
     }
     @media (prefers-reduced-motion: reduce) {
       body::before, body::after { animation: none !important; transform: none !important; }
-      body.site-bg-motion-done::before,
-      body.site-bg-motion-done::after { animation: none !important; transform: none !important; }
       .site-bg-atlas { animation: none !important; transform: none !important; }
       .site-bg-atlas::before, .site-bg-atlas::after { animation: none !important; }
       .page.active, #chat-page.active { animation: none !important; }
@@ -334,6 +313,27 @@
     /* Main Page */
     .main-page {
       padding: 0;
+    }
+    .main-page-games-deferred .hero,
+    .main-page-games-deferred #categoryBrowsingSection,
+    .main-page-games-deferred #fullGamesList {
+      display: none;
+    }
+    .main-games-load-placeholder {
+      display: none;
+      margin: 24px 5% 40px;
+      padding: 28px 22px;
+      border-radius: 16px;
+      border: 1px dashed rgba(42, 255, 158, 0.28);
+      background: rgba(0, 0, 0, 0.28);
+      text-align: center;
+      color: var(--text-secondary);
+      font-weight: 700;
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+    .main-page-games-deferred .main-games-load-placeholder {
+      display: block;
     }
 
     /* Hero carousel */
@@ -4866,7 +4866,10 @@
     </header>
 
     <!-- Main Page (Games) -->
-    <div class="page main-page active" id="main-page">
+    <div class="page main-page active main-page-games-deferred" id="main-page">
+      <div class="main-games-load-placeholder" id="main-games-load-placeholder" role="status">
+        Games load when you open this page or scroll here — lighter first paint.
+      </div>
       <section class="hero"><div class="carousel-container" id="topGamesCarousel"></div></section>
       <section class="category-browsing-section" id="categoryBrowsingSection"></section>
       <section class="full-games-list" id="fullGamesList">
@@ -5618,7 +5621,7 @@
       </div>
     </div>
 
-    <div id="gameModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title" id="modalGameTitle">GAME TITLE</h2><span class="close">×</span></div><iframe id="gameFrame" class="game-frame" src="" frameborder="0"></iframe></div></div>
+    <div id="gameModal" class="modal"><div class="modal-content"><div class="modal-header"><h2 class="modal-title" id="modalGameTitle">GAME TITLE</h2><span class="close">×</span></div><iframe id="gameFrame" class="game-frame" src="" loading="lazy" frameborder="0"></iframe></div></div>
     <footer><p>© 2026 GAME UNIVERSE. ALL RIGHTS RESERVED. | DESIGNED WITH ❤️</p></footer>
   </div>
 
@@ -5997,6 +6000,12 @@
     let selectedUserForGift = null;
     let selectedGiftForSend = null;
     let friendsData = [];
+    let appGamesDataCache = null;
+    let mainPageGamesMounted = false;
+    let mainPageGamesMountPromise = null;
+    let mainPageGamesScrollObserver = null;
+    /** Set true only for email login/signup so we navigate to Profile once (not on every auth refresh). */
+    let redirectToProfileAfterAuth = false;
 
     /** Resize/compress remote images via wsrv.nl (smaller downloads for game art, blooks, pack UI). */
     function mediaThumbUrl(url, maxEdge, quality) {
@@ -6294,11 +6303,18 @@
         await loadUserProfile(user);
         await ensureDefaultTitlesExist();
         await checkStaffAccess(user);
+        if (redirectToProfileAfterAuth) {
+          redirectToProfileAfterAuth = false;
+          goToProfilePageTab();
+        }
         if (pendingGame) { showConfirmModal(pendingGame); pendingGame = null; }
         sidebar.classList.add('active');
         mainContent.classList.add('sidebar-active');
         const activePage = document.querySelector('.page.active').id;
         switch (activePage) {
+          case 'main-page':
+            if (!mainPageGamesMounted) ensureMainPageGamesDeferredObserver();
+            break;
           case 'profile-page': loadProfilePage(user.uid); break;
           case 'history-page': loadPlayHistory(user.uid); break;
           case 'shop-page': loadShopPacks(); loadUserBalance(user.uid); break;
@@ -6352,11 +6368,15 @@
       }
       if (!username || !email || !password) { showNotification("Please fill all required fields", "error"); return; }
       try {
+        redirectToProfileAfterAuth = true;
         const cred = await createUserWithEmailAndPassword(auth, email, password);
         await saveUserProfile(cred.user.uid, email, username, avatarUrl);
         signupModal.style.display = 'none';
         showNotification("Account created successfully!", "success");
-      } catch (error) { showNotification(error.message, "error"); }
+      } catch (error) {
+        redirectToProfileAfterAuth = false;
+        showNotification(error.message, "error");
+      }
     });
 
     document.getElementById('loginBtn').addEventListener('click', async () => {
@@ -6364,10 +6384,14 @@
       const password = document.getElementById('loginPassword').value;
       if (!email || !password) { showNotification("Enter email and password", "error"); return; }
       try {
+        redirectToProfileAfterAuth = true;
         await signInWithEmailAndPassword(auth, email, password);
         loginModal.style.display = 'none';
         showNotification("Login successful!", "success");
-      } catch (error) { showNotification(error.message, "error"); }
+      } catch (error) {
+        redirectToProfileAfterAuth = false;
+        showNotification(error.message, "error");
+      }
     });
 
     logoutBtn.addEventListener('click', async () => { await signOut(auth); showNotification("Logged out", "success"); });
@@ -6435,6 +6459,66 @@
         const allGames = games;
         return { topGames, newGames, allGames };
       } catch(e) { console.error(e); return { topGames: [], newGames: [], allGames: [] }; }
+    }
+
+    function goToProfilePageTab() {
+      document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+      const profileBtn = document.querySelector('.tab-button[data-page="profile-page"]');
+      const profilePage = document.getElementById('profile-page');
+      if (profileBtn) profileBtn.classList.add('active');
+      if (profilePage) profilePage.classList.add('active');
+      if (currentUser?.uid) loadProfilePage(currentUser.uid);
+    }
+
+    function populateIssueGameSelect(allGames) {
+      const sel = document.getElementById('issueGame');
+      if (!sel) return;
+      const list = Array.isArray(allGames) ? allGames : [];
+      const cur = sel.value;
+      sel.innerHTML = '<option value="">-- SELECT A GAME --</option>' +
+        [...list].sort((a, b) => (a.title || '').localeCompare(b.title || '')).map(g =>
+          `<option value="${escapeHtml(g.id)}">${escapeHtml(g.title || '')}</option>`
+        ).join('');
+      if (cur && list.some(g => g.id === cur)) sel.value = cur;
+    }
+
+    async function mountMainPageGamesContent() {
+      if (mainPageGamesMounted) return;
+      if (mainPageGamesMountPromise) return mainPageGamesMountPromise;
+      mainPageGamesMountPromise = (async () => {
+        let data = appGamesDataCache;
+        if (!data) {
+          data = await getGames();
+          appGamesDataCache = data;
+        }
+        renderTopGamesCarousel(data.topGames);
+        renderCategoryBrowsing(data);
+        renderFullGamesList(data.allGames);
+        populateIssueGameSelect(data.allGames);
+        const mp = document.getElementById('main-page');
+        if (mp) mp.classList.remove('main-page-games-deferred');
+        if (mainPageGamesScrollObserver) {
+          mainPageGamesScrollObserver.disconnect();
+          mainPageGamesScrollObserver = null;
+        }
+        mainPageGamesMounted = true;
+        mainPageGamesMountPromise = null;
+      })();
+      return mainPageGamesMountPromise;
+    }
+
+    function ensureMainPageGamesDeferredObserver() {
+      const mp = document.getElementById('main-page');
+      const ph = document.getElementById('main-games-load-placeholder');
+      if (!mp || !ph || mainPageGamesMounted || typeof IntersectionObserver === 'undefined') return;
+      if (mainPageGamesScrollObserver) return;
+      mainPageGamesScrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) mountMainPageGamesContent();
+        });
+      }, { root: mainContent, rootMargin: '120px 0px', threshold: 0.01 });
+      mainPageGamesScrollObserver.observe(ph);
     }
 
     function renderTopGamesCarousel(topGames) {
@@ -6559,6 +6643,7 @@
       contactSectionEl.classList.remove('active');
       homeTab.classList.add('active');
       contactTab.classList.remove('active');
+      mountMainPageGamesContent();
     });
     contactTab.addEventListener('click', (e) => {
       e.preventDefault();
@@ -6567,6 +6652,7 @@
       contactSectionEl.classList.add('active');
       contactTab.classList.add('active');
       homeTab.classList.remove('active');
+      mountMainPageGamesContent();
     });
     document.getElementById('suggest-tab').addEventListener('click', () => {
       document.getElementById('suggest-form-container').style.display = 'block';
@@ -6629,6 +6715,9 @@
         button.classList.add('active');
         document.getElementById(pageId).classList.add('active');
         switch (pageId) {
+          case 'main-page':
+            if (!mainPageGamesMounted) ensureMainPageGamesDeferredObserver();
+            break;
           case 'profile-page': loadProfilePage(currentUser.uid); break;
           case 'history-page': loadPlayHistory(currentUser.uid); break;
           case 'shop-page': loadShopPacks(); loadUserBalance(currentUser.uid); break;
@@ -7743,7 +7832,7 @@
         const maxH = Math.min(window.innerHeight * 0.62, 560);
         const w = nw > 0 ? nw : 280;
         const h = nh > 0 ? nh : 280;
-        const scale = Math.min(1, maxW / w, maxH / h) * 1.25;
+        const scale = Math.min(1, maxW / w, maxH / h) * 0.9;
         stack.style.width = `${Math.round(w * scale)}px`;
         stack.style.height = `${Math.round(h * scale)}px`;
       };
@@ -10641,17 +10730,13 @@
     async function init() {
       await refreshRarityOrderFromServer();
       applyFixedSiteTheme();
-      const gamesData = await getGames();
-      renderTopGamesCarousel(gamesData.topGames);
-      renderCategoryBrowsing(gamesData);
-      renderFullGamesList(gamesData.allGames);
+      appGamesDataCache = await getGames();
+      ensureMainPageGamesDeferredObserver();
       hidePageLoading();
     }
 
     init().catch(() => hidePageLoading());
     setTimeout(hidePageLoading, 12000);
-    setTimeout(() => document.body.classList.add('site-bg-motion-done'), 7000);
-
     // ========== Event Listeners ==========
     document.getElementById('daily-reward-claim-btn')?.addEventListener('click', () => claimDailyReward());
     document.getElementById('badge-detail-close')?.addEventListener('click', () => {
@@ -10764,6 +10849,8 @@
     // Close game modal
     document.querySelector('#gameModal .close').addEventListener('click', () => {
       document.getElementById('gameModal').style.display = 'none';
+      const gf = document.getElementById('gameFrame');
+      if (gf) gf.src = '';
       document.body.style.overflow = 'auto';
     });
   </script>
