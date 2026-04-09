@@ -141,6 +141,10 @@
       .carousel-dot.active { animation: none !important; }
       .carousel-slide { transition: opacity 0.3s ease !important; transform: none !important; }
       .carousel-slide.active { transform: none !important; }
+      .pack-opening-modal-unbox .modal-background#opening-modal-bg { animation: none !important; }
+      .pack-unbox-body-lively::before { animation: none !important; opacity: 0.5 !important; }
+      .pack-unbox-body-lively .pack-bg-fx .pack-bg-aurora { animation: none !important; }
+      .pack-confetti-piece { animation: none !important; opacity: 0.6 !important; }
     }
     .page-content, .main-page {
       position: relative;
@@ -1654,6 +1658,10 @@
       opacity: 0.95;
       pointer-events: none;
     }
+    .inv-blook-slot.unlocked .inv-blook-silhouette-img {
+      filter: none;
+      opacity: 1;
+    }
     .inv-blook-lock-overlay {
       position: absolute;
       inset: 0;
@@ -1714,6 +1722,9 @@
     }
     .inv-blook-detail.inv-blook-detail--opening-bg::before {
       background: rgba(0, 0, 0, 0.42);
+    }
+    .inv-blook-detail.inv-blook-detail--reveal-bg::before {
+      background: linear-gradient(180deg, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.52) 100%);
     }
     .inv-blook-detail > * {
       position: relative;
@@ -2442,9 +2453,15 @@
       filter: none;
       background-size: 220% 220%;
       background-position: 40% 45%;
-      /* Static backdrop: drifting + filter animation caused visible flashes and GPU jank */
-      animation: none;
       z-index: 0;
+    }
+    /* Light GPU-cheap motion while unboxing (reveal uses rarity classes instead) */
+    .pack-opening-modal-unbox:not(.pack-unbox-celebrate) .modal-background#opening-modal-bg {
+      animation: packOpeningBgDriftSubtle 22s ease-in-out infinite;
+    }
+    @keyframes packOpeningBgDriftSubtle {
+      0%, 100% { background-position: 38% 44%; }
+      50% { background-position: 42% 47%; }
     }
     @keyframes packBgGradientDrift {
       0%, 100% { background-position: 35% 40%; filter: brightness(1) saturate(1); }
@@ -2581,6 +2598,19 @@
       min-height: 100vh;
       flex: 1;
     }
+    .pack-unbox-body-lively::before {
+      content: '';
+      position: absolute;
+      inset: -5%;
+      z-index: 4;
+      pointer-events: none;
+      background: radial-gradient(ellipse 70% 55% at 50% 42%, rgba(42, 255, 158, 0.07), transparent 62%);
+      animation: packUnboxBodyGlow 5.5s ease-in-out infinite;
+    }
+    @keyframes packUnboxBodyGlow {
+      0%, 100% { opacity: 0.65; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.03); }
+    }
     .pack-unbox-pack-center {
       position: absolute;
       inset: 0;
@@ -2617,10 +2647,10 @@
       animation: packRevealCardIn 0.82s cubic-bezier(0.18, 1.2, 0.28, 1) both;
     }
     @keyframes packRevealCardIn {
-      0% { opacity: 0; transform: scale(0.72) translateY(36px) rotate(-3deg); filter: blur(14px); box-shadow: 0 0 0 rgba(42,255,158,0); }
-      38% { opacity: 1; transform: scale(1.09) translateY(-10px) rotate(1deg); filter: blur(0); box-shadow: 0 0 48px rgba(42,255,158,0.35); }
-      65% { transform: scale(0.96) translateY(4px) rotate(-0.5deg); box-shadow: 0 12px 40px rgba(0,0,0,0.5); }
-      100% { opacity: 1; transform: scale(1) translateY(0) rotate(0); filter: blur(0); box-shadow: 0 16px 48px rgba(0,0,0,0.55); }
+      0% { opacity: 0; transform: scale(0.88) translateY(28px) rotate(-2deg); filter: blur(6px); box-shadow: 0 0 0 rgba(42,255,158,0); }
+      40% { opacity: 1; transform: scale(1.04) translateY(-6px) rotate(0.6deg); filter: blur(0); box-shadow: 0 0 36px rgba(42,255,158,0.28); }
+      70% { transform: scale(0.98) translateY(3px) rotate(-0.3deg); box-shadow: 0 12px 36px rgba(0,0,0,0.45); }
+      100% { opacity: 1; transform: scale(1) translateY(0) rotate(0); filter: blur(0); box-shadow: 0 14px 44px rgba(0,0,0,0.5); }
     }
     .pack-reveal-card {
       width: min(92vw, 400px);
@@ -2875,8 +2905,9 @@
       width: 10px;
       height: 10px;
       border-radius: 2px;
-      opacity: 0.95;
-      will-change: transform, opacity;
+      opacity: 0.92;
+      will-change: transform;
+      contain: strict;
     }
     .pack-unbox-half {
       position: absolute;
@@ -3008,6 +3039,16 @@
         transform: translate3d(var(--cf-dx, 0px), 110vh, 0) rotate(var(--cf-rot, 720deg));
         opacity: 0.35;
       }
+    }
+    .pack-confetti-piece.pack-confetti-grad {
+      background-size: 220% 220% !important;
+      animation:
+        packConfettiFall var(--cf-dur, 2.8s) linear forwards,
+        packConfettiGradDrift 3.2s ease-in-out infinite !important;
+    }
+    @keyframes packConfettiGradDrift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
 
     .modal-body {
@@ -7051,35 +7092,49 @@
       }
     }
 
-    function spawnPackConfettiBurst(n, colorPalette) {
+    function getRarityConfettiGradientCss(rarity) {
+      const d = getRarityDef(rarity);
+      if (!d.isGradient || !d.gradientColors || d.gradientColors.length < 2) return '';
+      const g = d.gradientColors.join(', ');
+      return `linear-gradient(125deg, ${g})`;
+    }
+
+    function spawnPackConfettiBurst(n, colorPalette, rarityForGrad) {
       if (!packConfettiLayer) return;
       const colors = Array.isArray(colorPalette) && colorPalette.length
         ? colorPalette
         : ['#2AFF9E', '#FF3D6C', '#FFC107', '#42A5F5', '#AB47BC', '#ffffff'];
+      const grad = rarityForGrad ? getRarityConfettiGradientCss(rarityForGrad) : '';
       const count = Math.max(1, Math.floor(n));
       for (let i = 0; i < count; i++) {
         const el = document.createElement('div');
         el.className = 'pack-confetti-piece';
+        if (grad && Math.random() > 0.35) {
+          el.classList.add('pack-confetti-grad');
+          el.style.background = grad;
+        } else {
+          el.style.background = colors[Math.floor(Math.random() * colors.length)];
+        }
         el.style.left = `${Math.random() * 100}%`;
-        el.style.background = colors[Math.floor(Math.random() * colors.length)];
-        el.style.width = `${6 + Math.random() * 10}px`;
-        el.style.height = `${6 + Math.random() * 10}px`;
+        el.style.width = `${6 + Math.random() * 8}px`;
+        el.style.height = `${6 + Math.random() * 8}px`;
         el.style.borderRadius = Math.random() > 0.45 ? '50%' : '2px';
-        const dur = 2.2 + Math.random() * 2.2;
-        el.style.setProperty('--cf-dx', `${(Math.random() - 0.5) * 160}px`);
-        el.style.setProperty('--cf-rot', `${420 + Math.random() * 540}deg`);
+        const dur = 2.4 + Math.random() * 1.8;
+        el.style.setProperty('--cf-dur', `${dur}s`);
+        el.style.setProperty('--cf-dx', `${(Math.random() - 0.5) * 140}px`);
+        el.style.setProperty('--cf-rot', `${380 + Math.random() * 480}deg`);
         el.style.animation = `packConfettiFall ${dur}s linear forwards`;
         packConfettiLayer.appendChild(el);
         setTimeout(() => { try { el.remove(); } catch (e) {} }, dur * 1000 + 120);
       }
     }
 
-    function startPackConfetti(durationMs, colorPalette) {
+    function startPackConfetti(durationMs, colorPalette, rarityForGrad) {
       stopPackConfetti();
       if (packConfettiLayer) packConfettiLayer.style.display = 'block';
-      spawnPackConfettiBurst(32, colorPalette);
-      packConfettiInterval = setInterval(() => spawnPackConfettiBurst(18, colorPalette), 360);
-      packConfettiStopTimer = setTimeout(() => stopPackConfetti(), durationMs || 15000);
+      spawnPackConfettiBurst(22, colorPalette, rarityForGrad);
+      packConfettiInterval = setInterval(() => spawnPackConfettiBurst(12, colorPalette, rarityForGrad), 520);
+      packConfettiStopTimer = setTimeout(() => stopPackConfetti(), durationMs || 9000);
     }
 
     function ymdUTC(d) {
@@ -7431,7 +7486,7 @@
       if (packRevealCard) packRevealCard.classList.remove('pack-unbox-reveal-anim');
       if (packUnboxBoost) packUnboxBoost.style.display = 'none';
       packOpeningModalInner?.classList.remove('pack-opening-modal-unbox');
-      packOpeningModalBody?.classList.remove('pack-unbox-body', 'pack-unbox-revealed');
+      packOpeningModalBody?.classList.remove('pack-unbox-body', 'pack-unbox-body-lively', 'pack-unbox-revealed');
       if (packUnboxPackCenter) packUnboxPackCenter.style.display = '';
       giftAnimation.classList.remove('pack-unbox-stage', 'torn', 'pack-unbox-peek', 'pack-unbox-cover-drop', 'pack-unbox-reveal', 'pack-unbox-anim');
       giftAnimation.innerHTML = '';
@@ -7477,6 +7532,30 @@
       };
     }
 
+    /** Same gradient as #pack-reveal-card default (unpacking card look). */
+    function getRevealCardBackdropStyle(innerHex, outerHex) {
+      const inner = innerHex || '#5a6a8a';
+      const outer = outerHex || '#1a2233';
+      return {
+        backgroundImage: `linear-gradient(155deg, ${inner} 0%, ${outer} 55%, #05070c 100%)`,
+        backgroundSize: '100% 100%',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundBlendMode: ''
+      };
+    }
+
+    function getRarityDetailBackdropStyle(rarity) {
+      const bg = getRarityBackgroundGradientCss(rarity);
+      return {
+        backgroundImage: bg.image,
+        backgroundSize: bg.size,
+        backgroundRepeat: bg.repeat,
+        backgroundPosition: bg.position,
+        backgroundBlendMode: ''
+      };
+    }
+
     function applyPackOpeningModalBackdrop(innerHex, outerHex) {
       if (!openingModalBg) return;
       const s = getPackOpeningBackdropStyle(innerHex, outerHex);
@@ -7497,7 +7576,7 @@
       applyPackOpeningModalBackdrop(inner, outer);
 
       packOpeningModalInner?.classList.add('pack-opening-modal-unbox');
-      packOpeningModalBody?.classList.add('pack-unbox-body');
+      packOpeningModalBody?.classList.add('pack-unbox-body', 'pack-unbox-body-lively');
 
       openedGiftName.textContent = item.name || '';
       const rKey = (item.rarity || 'common').toLowerCase();
@@ -7645,6 +7724,7 @@
           openingModalBg.style.backgroundPosition = bg.position;
           openingModalBg.style.backgroundBlendMode = '';
         }
+        packOpeningModalBody?.classList.remove('pack-unbox-body-lively');
         packOpeningModalInner?.classList.add('pack-unbox-celebrate');
         packOpeningModalInner?.classList.remove('pack-unbox-peek-mood');
       };
@@ -7668,7 +7748,7 @@
         giftAnimation.classList.remove('pack-unbox-peek');
         applyRarityCelebrateBg();
         const confettiColors = getRarityConfettiColors(item.rarity);
-        startPackConfetti(15000, confettiColors);
+        startPackConfetti(9000, confettiColors, item.rarity);
         setTimeout(finishRevealCard, 620);
       };
 
@@ -7729,9 +7809,9 @@
       return null;
     }
 
-    function applyInvPanelPackBackground(packDoc) {
+    function applyInvPanelDetailBackground(packDoc, rarityKey) {
       if (!invBlookDetailPanel) return;
-      invBlookDetailPanel.classList.remove('inv-blook-detail--opening-bg');
+      invBlookDetailPanel.classList.remove('inv-blook-detail--opening-bg', 'inv-blook-detail--reveal-bg');
       invBlookDetailPanel.style.backgroundColor = '#07090e';
       if (!packDoc) {
         invBlookDetailPanel.style.backgroundImage = 'none';
@@ -7744,8 +7824,10 @@
       const fc = marketPackFrameColors(packDoc);
       const inner = fc.inner || '#5a6a8a';
       const outer = fc.outer || '#1a2233';
-      const s = getPackOpeningBackdropStyle(inner, outer);
-      invBlookDetailPanel.classList.add('inv-blook-detail--opening-bg');
+      const d = getRarityDef(rarityKey);
+      const useRarity = d.isGradient && d.gradientColors && d.gradientColors.length >= 2;
+      const s = useRarity ? getRarityDetailBackdropStyle(rarityKey) : getRevealCardBackdropStyle(inner, outer);
+      invBlookDetailPanel.classList.add('inv-blook-detail--reveal-bg');
       invBlookDetailPanel.style.backgroundImage = s.backgroundImage;
       invBlookDetailPanel.style.backgroundSize = s.backgroundSize;
       invBlookDetailPanel.style.backgroundRepeat = s.backgroundRepeat;
@@ -7761,7 +7843,7 @@
         invBlookDetailBody.style.flexDirection = 'column';
       }
       if (invPanelActions) invPanelActions.style.display = 'none';
-      applyInvPanelPackBackground(null);
+      applyInvPanelDetailBackground(null);
       document.querySelectorAll('.inv-blook-slot.selected').forEach(el => el.classList.remove('selected'));
     }
 
@@ -7800,13 +7882,14 @@
       const stars = Number(rep.starsGained != null ? rep.starsGained : catalogDef?.starsGained) || 0;
       const imageUrl = String(rep.imageUrl || catalogDef?.imageUrl || '').trim();
       const packDoc = catalogDef?.packDoc || resolvePackDocForInvDetail(rep);
+      const rKey = (rep.rarity || catalogDef?.rarity || 'common').toLowerCase();
 
       if (invBlookDetailPlaceholder) invBlookDetailPlaceholder.style.display = 'none';
       if (invBlookDetailBody) {
         invBlookDetailBody.style.display = 'flex';
         invBlookDetailBody.style.flexDirection = 'column';
       }
-      applyInvPanelPackBackground(packDoc);
+      applyInvPanelDetailBackground(packDoc, rKey);
 
       if (invPanelTitle) invPanelTitle.textContent = name;
       if (invPanelStars) invPanelStars.textContent = String(stars);
@@ -7822,21 +7905,21 @@
         } else if (imageUrl) {
           invPanelVisual.innerHTML = `<div class="inv-blook-detail-silhouette"><img src="${panelImg}" alt="" decoding="async"><div class="inv-blook-lock-overlay" aria-hidden="true"><span class="material-symbols-outlined">lock</span></div></div>`;
         } else {
-          const rc = getRarityColor((rep.rarity || 'common').toLowerCase());
+          const rc = getRarityColor(rKey);
           invPanelVisual.innerHTML = `<div class="inv-blook-detail-silhouette" style="background:#0a0c10;"><span class="inv-blook-ph" style="color:${rc};font-size:3rem;"><i class="fas fa-dragon"></i></span><div class="inv-blook-lock-overlay" aria-hidden="true"><span class="material-symbols-outlined">lock</span></div></div>`;
         }
       }
 
       if (invPanelActions) invPanelActions.style.display = unlocked ? 'flex' : 'none';
 
-      const r = (rep.rarity || 'common').toLowerCase();
+      const r = rKey;
       const qty = cop.length || 0;
       const sell = invSellPriceForStars(stars);
       const rc = getRarityColor(r);
       const vis = document.getElementById('inv-blook-modal-visual');
       if (vis) {
-        vis.innerHTML = rep.imageUrl
-          ? `<img src="${escapeHtml(mediaThumbUrl(rep.imageUrl, 320, 85))}" alt="" decoding="async">`
+        vis.innerHTML = imageUrl
+          ? `<img src="${escapeHtml(mediaThumbUrl(imageUrl, 320, 85))}" alt="" decoding="async">`
           : `<span class="inv-blook-ph" style="color:${rc};"><i class="fas fa-dragon"></i></span>`;
       }
       const nm = document.getElementById('inv-blook-modal-name');
@@ -7861,6 +7944,10 @@
     async function sellOneInvBlookFromDetail() {
       if (!currentUser || !invBlookDetailContext) return;
       const { copies } = invBlookDetailContext;
+      if (!copies || !copies.length || !copies[0].id) {
+        showNotification('This blook is not in your inventory.', 'error');
+        return;
+      }
       const docId = copies[0].id;
       const rep = copies[0];
       const price = invSellPriceForStars(rep.starsGained || 0);
@@ -7887,6 +7974,10 @@
     function openInvSendFromDetail() {
       if (!invBlookDetailContext || !currentUser) return;
       const { copies } = invBlookDetailContext;
+      if (!copies || !copies.length || !copies[0].id) {
+        showNotification('Unlock this blook before sending.', 'error');
+        return;
+      }
       const rep = copies[0];
       currentCard = {
         id: rep.id,
