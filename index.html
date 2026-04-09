@@ -240,9 +240,8 @@
       color: var(--text-secondary);
       text-align: left;
       padding: 16px 20px;
-      font-family: 'Nunito', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 600;
+      font-size: 0.98rem;
+      font-weight: 400;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -303,11 +302,11 @@
       min-height: 0;
     }
     .page.active {
-      animation: sitePageFade 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+      animation: sitePageFade 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
     @keyframes sitePageFade {
-      from { opacity: 0; transform: translateY(18px) scale(0.985); filter: blur(4px); }
-      to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* Main Page */
@@ -787,6 +786,24 @@
       font-family: 'Titan One', 'Nunito', sans-serif;
       font-weight: 400;
       letter-spacing: 0.02em;
+    }
+    /* Primary / CTA buttons site-wide (Titan One display face) */
+    .font-titan-btn,
+    .collect-btn, .confirm-btn, .cancel-btn,
+    .buy-btn, .chance-btn,
+    .settings-btn, .auth-btn,
+    .confirm-yes, .confirm-no,
+    .submit-btn,
+    .send-card-btn,
+    .daily-reward-btn, .claim-btn,
+    .slide-play-button,
+    .tab-button,
+    .staff-btn,
+    .staff-sub-tab,
+    #logout-btn {
+      font-family: 'Titan One', 'Nunito', sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.03em;
     }
 
     /* Profile Page */
@@ -1595,6 +1612,7 @@
       margin-bottom: 0;
     }
     .inv-blook-pack-title {
+      font-family: 'Titan One', 'Nunito', sans-serif;
       font-size: clamp(1.15rem, 2.5vw, 1.55rem);
       font-weight: 400;
       letter-spacing: 0.02em;
@@ -4168,8 +4186,8 @@
     .staff-btn {
       padding: 11px 22px;
       border-radius: 12px;
-      font-weight: 800;
-      font-size: 0.82rem;
+      font-weight: 400;
+      font-size: 0.78rem;
       cursor: pointer;
       border: 1px solid rgba(255,255,255,0.12);
       transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease, border-color 0.18s;
@@ -4181,7 +4199,6 @@
       justify-content: center;
       gap: 8px;
       line-height: 1.2;
-      font-family: 'Nunito', sans-serif;
     }
     .staff-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.45); }
     .staff-btn:active { transform: translateY(0); box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
@@ -7324,9 +7341,9 @@
     function startPackConfetti(durationMs, colorPalette, rarityForGrad) {
       stopPackConfetti();
       if (packConfettiLayer) packConfettiLayer.style.display = 'block';
-      spawnPackConfettiBurst(38, colorPalette, rarityForGrad);
-      packConfettiInterval = setInterval(() => spawnPackConfettiBurst(22, colorPalette, rarityForGrad), 400);
-      packConfettiStopTimer = setTimeout(() => stopPackConfetti(), durationMs || 13000);
+      spawnPackConfettiBurst(18, colorPalette, rarityForGrad);
+      packConfettiInterval = setInterval(() => spawnPackConfettiBurst(10, colorPalette, rarityForGrad), 520);
+      packConfettiStopTimer = setTimeout(() => stopPackConfetti(), Math.min(durationMs || 9000, 9000));
     }
 
     function ymdUTC(d) {
@@ -7832,7 +7849,7 @@
         const maxH = Math.min(window.innerHeight * 0.62, 560);
         const w = nw > 0 ? nw : 280;
         const h = nh > 0 ? nh : 280;
-        const scale = Math.min(1, maxW / w, maxH / h) * 0.9;
+        const scale = Math.min(1, maxW / w, maxH / h) * 0.78;
         stack.style.width = `${Math.round(w * scale)}px`;
         stack.style.height = `${Math.round(h * scale)}px`;
       };
@@ -8444,7 +8461,7 @@
         const section = document.createElement('section');
         section.className = 'inv-blook-pack-section';
         const title = document.createElement('h3');
-        title.className = 'inv-blook-pack-title';
+        title.className = 'inv-blook-pack-title font-titan-header';
         title.textContent = pack.name || 'Pack';
         section.appendChild(title);
         const rule = document.createElement('div');
