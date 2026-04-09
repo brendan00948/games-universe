@@ -83,6 +83,25 @@
       0% { transform: translate(0, 0) rotate(-4deg); }
       100% { transform: translate(36px, -175px) rotate(4deg); }
     }
+    /* After load, freeze heavy ambient motion to reduce jank (still shows ~7s of movement). */
+    body.site-bg-motion-done::before,
+    body.site-bg-motion-done::after {
+      animation: none !important;
+      transform: none !important;
+    }
+    body.site-bg-motion-done .site-bg-atlas {
+      animation: none !important;
+      transform: none !important;
+    }
+    body.site-bg-motion-done .site-bg-atlas::before {
+      animation: none !important;
+    }
+    body.site-bg-motion-done .page-content::before,
+    body.site-bg-motion-done .main-page::before {
+      animation: none !important;
+      transform: rotate(-2.4deg) scale(1.09) !important;
+      background-position: 0 0 !important;
+    }
     @keyframes siteOrbitGlow {
       to { transform: rotate(360deg); }
     }
@@ -130,6 +149,8 @@
     }
     @media (prefers-reduced-motion: reduce) {
       body::before, body::after { animation: none !important; transform: none !important; }
+      body.site-bg-motion-done::before,
+      body.site-bg-motion-done::after { animation: none !important; transform: none !important; }
       .site-bg-atlas { animation: none !important; transform: none !important; }
       .site-bg-atlas::before, .site-bg-atlas::after { animation: none !important; }
       .page.active, #chat-page.active { animation: none !important; }
@@ -1739,6 +1760,19 @@
       line-height: 1.15;
       text-shadow: 0 2px 14px rgba(0,0,0,0.55);
     }
+    .inv-blook-detail-rarity {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin: 0 0 10px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.35);
+      color: var(--text-secondary);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.45);
+    }
     .inv-blook-detail-stars {
       font-size: 0.88rem;
       font-weight: 800;
@@ -2492,6 +2526,14 @@
       35% { opacity: 1; background: radial-gradient(ellipse 85% 65% at 50% 45%, rgba(255,255,255,0.14), transparent 62%); }
       100% { opacity: 0; background: transparent; }
     }
+    .pack-rip-overlay.pack-bg-rip-flash-dark {
+      animation: packRipOverlayFlashDark 0.65s ease-out 1;
+    }
+    @keyframes packRipOverlayFlashDark {
+      0% { opacity: 0; }
+      35% { opacity: 1; background: radial-gradient(ellipse 85% 65% at 50% 45%, rgba(0,0,0,0.22), transparent 62%); }
+      100% { opacity: 0; background: transparent; }
+    }
     @keyframes packBgCelebratePulse {
       0%, 100% { filter: brightness(0.94) saturate(1.06); }
       50% { filter: brightness(1.12) saturate(1.28) contrast(1.03); }
@@ -3024,7 +3066,7 @@
     }
     #opening-modal-bg.pack-rarity-celebrate {
       filter: brightness(1.02) saturate(1.08);
-      transition: background-image 0.45s ease, background-size 0.45s ease, filter 0.35s ease;
+      transition: filter 0.35s ease;
       animation:
         packBgCelebrateFlash 0.55s ease-out 1,
         packBgCelebratePulseSoft 3.2s ease-in-out 0.55s infinite;
@@ -4976,6 +5018,7 @@
             <p class="inv-blook-detail-placeholder" id="inv-blook-detail-placeholder">Select a blook to view stars, art, and how many you own.</p>
             <div id="inv-blook-detail-body" style="display:none;width:100%;flex-direction:column;align-items:center;flex:1;">
               <h3 class="inv-blook-detail-title" id="inv-panel-title">Blook</h3>
+              <div class="inv-blook-detail-rarity" id="inv-panel-rarity" style="display:none;">—</div>
               <div class="inv-blook-detail-stars" id="inv-panel-stars-row"><i class="fas fa-star"></i> <span id="inv-panel-stars">0</span></div>
               <div class="inv-blook-detail-visual" id="inv-panel-visual"></div>
               <div class="inv-blook-detail-owned" id="inv-panel-owned">×0</div>
@@ -5842,6 +5885,7 @@
     const invBlookDetailPlaceholder = document.getElementById('inv-blook-detail-placeholder');
     const invBlookDetailBody = document.getElementById('inv-blook-detail-body');
     const invPanelTitle = document.getElementById('inv-panel-title');
+    const invPanelRarity = document.getElementById('inv-panel-rarity');
     const invPanelStars = document.getElementById('inv-panel-stars');
     const invPanelVisual = document.getElementById('inv-panel-visual');
     const invPanelOwned = document.getElementById('inv-panel-owned');
@@ -6916,6 +6960,8 @@
     // ========== Purchase pack and award stars immediately ==========
     async function purchasePack(pack) {
       if (!currentUser) return;
+      if (packOpeningBusy) return;
+      packOpeningBusy = true;
       try {
         const userDoc = await getDoc(doc(db, "users", currentUser.uid));
         if (!userDoc.exists()) { showNotification("User data not found", "error"); return; }
@@ -6924,8 +6970,9 @@
         await updateDoc(doc(db, "users", currentUser.uid), { coins: userData.coins - pack.price });
         updateMissionProgress('spending', pack.price);
         loadUserBalance(currentUser.uid);
-        openPack(pack, currentUser.uid);
+        await openPack(pack, currentUser.uid);
       } catch(e) { showNotification("Error purchasing pack: " + e.message, "error"); }
+      finally { packOpeningBusy = false; }
     }
 
     // Get item based on weighted chance
@@ -7015,29 +7062,19 @@
       return d.solid || '#a8b0c8';
     }
 
-    /** Pack reveal title / rarity label — uses admin gradient on text when configured. */
+    /** Pack reveal: rarity label uses admin gradient on text when configured (blook name stays plain). */
     function applyPackRevealRarityTextStyles(rarity) {
       const d = getRarityDef(rarity);
       const nameEl = document.getElementById('opened-gift-name');
       const rareEl = document.getElementById('opened-gift-rarity');
       if (nameEl) {
         nameEl.classList.remove('pack-reveal-title-gradient');
-        if (d.isGradient && d.gradientColors && d.gradientColors.length >= 2) {
-          nameEl.classList.add('pack-reveal-title-gradient');
-          const g = d.gradientColors.join(', ');
-          nameEl.style.color = 'transparent';
-          nameEl.style.webkitTextFillColor = 'transparent';
-          nameEl.style.backgroundImage = `linear-gradient(135deg, ${g})`;
-          nameEl.style.backgroundSize = d.isRunning ? '200% 200%' : '100% 100%';
-          nameEl.style.backgroundRepeat = 'no-repeat';
-          nameEl.style.animation = d.isRunning ? 'runGradient 3s linear infinite' : '';
-        } else {
-          nameEl.style.backgroundImage = '';
-          nameEl.style.backgroundSize = '';
-          nameEl.style.animation = '';
-          nameEl.style.webkitTextFillColor = '';
-          nameEl.style.color = d.solid || '#fff';
-        }
+        nameEl.style.backgroundImage = '';
+        nameEl.style.backgroundSize = '';
+        nameEl.style.backgroundRepeat = '';
+        nameEl.style.animation = '';
+        nameEl.style.webkitTextFillColor = '';
+        nameEl.style.color = '#fff';
       }
       if (rareEl) {
         rareEl.classList.remove('pack-reveal-rarity-gradient');
@@ -7091,6 +7128,8 @@
     let packConfettiInterval = null;
     let packConfettiStopTimer = null;
     let packAutoUnboxTimer = null;
+    let packRipFlashTimer = null;
+    let packOpeningBusy = false;
 
     function hexToRgbTriplet(hex) {
       const s = String(hex || '').trim();
@@ -7525,6 +7564,10 @@
         clearTimeout(packAutoUnboxTimer);
         packAutoUnboxTimer = null;
       }
+      if (packRipFlashTimer) {
+        clearTimeout(packRipFlashTimer);
+        packRipFlashTimer = null;
+      }
       stopPackConfetti();
       packOpeningModalInner?.classList.remove('pack-unbox-celebrate', 'pack-unbox-peek-mood');
       if (packOpeningModalInner) {
@@ -7535,7 +7578,7 @@
         openingModalBg.style.animation = '';
       }
       if (packRipOverlay) {
-        packRipOverlay.classList.remove('pack-bg-rip-flash');
+        packRipOverlay.classList.remove('pack-bg-rip-flash', 'pack-bg-rip-flash-dark');
       }
       if (packUnboxClickLayer && packUnboxClickHandler) {
         packUnboxClickLayer.removeEventListener('click', packUnboxClickHandler);
@@ -7653,8 +7696,9 @@
       const revealUrl = (pack.revealCardBgUrl || '').trim();
       if (packRevealCard) {
         if (revealUrl) {
+          const revealThumb = /^https?:\/\//i.test(revealUrl) ? mediaThumbUrl(revealUrl, 900, 82) : revealUrl;
           packRevealCard.style.backgroundColor = '#0b0e14';
-          packRevealCard.style.backgroundImage = `url(${JSON.stringify(revealUrl)})`;
+          packRevealCard.style.backgroundImage = `url(${JSON.stringify(revealThumb)})`;
           packRevealCard.style.backgroundSize = 'cover';
         } else {
           const rbg = getRarityBackgroundGradientCss(item.rarity);
@@ -7669,8 +7713,9 @@
         packRevealBlookSlot.innerHTML = '';
         if (item.imageUrl) {
           const im = document.createElement('img');
-          im.src = item.imageUrl;
+          im.src = mediaThumbUrl(item.imageUrl, 420, 85);
           im.alt = item.name || '';
+          im.decoding = 'async';
           packRevealBlookSlot.appendChild(im);
         } else {
           packRevealBlookSlot.innerHTML = `<i class="fas fa-gift" style="font-size:3rem;color:${getRarityColor(item.rarity)};"></i>`;
@@ -7687,7 +7732,8 @@
       giftAnimation.innerHTML = '';
       giftAnimation.classList.add('pack-unbox-stage');
 
-      const artUrl = (marketPackArtUrl(pack) || (pack.backgroundImage || '').trim() || (pack.items?.find(it => it.imageUrl)?.imageUrl) || 'https://placehold.co/280x280/1a1f2e/8899aa?text=Pack').replace(/\\/g, '/');
+      const artUrlRaw = (marketPackArtUrl(pack) || (pack.backgroundImage || '').trim() || (pack.items?.find(it => it.imageUrl)?.imageUrl) || 'https://placehold.co/280x280/1a1f2e/8899aa?text=Pack').replace(/\\/g, '/');
+      const artUrl = /^https?:\/\//i.test(artUrlRaw) ? mediaThumbUrl(artUrlRaw, 640, 82) : artUrlRaw;
 
       const stack = document.createElement('div');
       stack.className = 'pack-unbox-stack';
@@ -7708,8 +7754,9 @@
       blookClip.className = 'pack-unbox-blook-clip';
       if (item.imageUrl) {
         const bi = document.createElement('img');
-        bi.src = item.imageUrl;
+        bi.src = mediaThumbUrl(item.imageUrl, 420, 85);
         bi.alt = item.name || '';
+        bi.decoding = 'async';
         blookClip.appendChild(bi);
       } else {
         const ic = document.createElement('i');
@@ -7725,6 +7772,7 @@
         im.src = artUrl;
         im.alt = '';
         im.draggable = false;
+        im.decoding = 'async';
         return im;
       };
 
@@ -7796,18 +7844,23 @@
         packOpeningModalInner?.classList.remove('pack-unbox-peek-mood');
       };
 
-      let packUnboxStarted = false;
-
       const firstRip = () => {
         if (giftAnimation.classList.contains('torn')) return;
         giftAnimation.classList.add('torn', 'pack-unbox-peek');
         packOpeningModalInner?.classList.add('pack-unbox-peek-mood');
         if (packRipOverlay) {
           requestAnimationFrame(() => {
-            packRipOverlay.classList.remove('pack-bg-rip-flash');
+            if (packRipFlashTimer) {
+              clearTimeout(packRipFlashTimer);
+              packRipFlashTimer = null;
+            }
+            packRipOverlay.classList.remove('pack-bg-rip-flash', 'pack-bg-rip-flash-dark');
             void packRipOverlay.offsetWidth;
-            packRipOverlay.classList.add('pack-bg-rip-flash');
-            setTimeout(() => { packRipOverlay?.classList.remove('pack-bg-rip-flash'); }, 700);
+            packRipOverlay.classList.add('pack-bg-rip-flash-dark');
+            packRipFlashTimer = setTimeout(() => {
+              packRipOverlay?.classList.remove('pack-bg-rip-flash-dark');
+              packRipFlashTimer = null;
+            }, 700);
           });
         }
         if (packUnboxBoost) packUnboxBoost.style.display = 'none';
@@ -7827,8 +7880,6 @@
         e.preventDefault();
         e.stopPropagation();
         if (giftAnimation.classList.contains('torn')) return;
-        if (packUnboxStarted) return;
-        packUnboxStarted = true;
         firstRip();
         const preConfettiMs = 1000;
         if (packAutoUnboxTimer) clearTimeout(packAutoUnboxTimer);
@@ -7900,15 +7951,24 @@
       const fc = marketPackFrameColors(packDoc);
       const inner = fc.inner || '#5a6a8a';
       const outer = fc.outer || '#1a2233';
-      const d = getRarityDef(rarityKey);
-      const useRarity = d.isGradient && d.gradientColors && d.gradientColors.length >= 2;
-      const s = useRarity ? getRarityDetailBackdropStyle(rarityKey) : getRevealCardBackdropStyle(inner, outer);
+      const revealUrl = String(packDoc.revealCardBgUrl || '').trim();
       invBlookDetailPanel.classList.add('inv-blook-detail--reveal-bg');
-      invBlookDetailPanel.style.backgroundImage = s.backgroundImage;
-      invBlookDetailPanel.style.backgroundSize = s.backgroundSize;
-      invBlookDetailPanel.style.backgroundRepeat = s.backgroundRepeat;
-      invBlookDetailPanel.style.backgroundPosition = s.backgroundPosition;
-      invBlookDetailPanel.style.backgroundBlendMode = s.backgroundBlendMode;
+      if (revealUrl) {
+        const thumb = /^https?:\/\//i.test(revealUrl) ? mediaThumbUrl(revealUrl, 800, 82) : revealUrl;
+        invBlookDetailPanel.style.backgroundColor = '#0b0e14';
+        invBlookDetailPanel.style.backgroundImage = `url(${JSON.stringify(thumb)})`;
+        invBlookDetailPanel.style.backgroundSize = 'cover';
+        invBlookDetailPanel.style.backgroundRepeat = 'no-repeat';
+        invBlookDetailPanel.style.backgroundPosition = 'center';
+        invBlookDetailPanel.style.backgroundBlendMode = '';
+      } else {
+        const s = getRevealCardBackdropStyle(inner, outer);
+        invBlookDetailPanel.style.backgroundImage = s.backgroundImage;
+        invBlookDetailPanel.style.backgroundSize = s.backgroundSize;
+        invBlookDetailPanel.style.backgroundRepeat = s.backgroundRepeat;
+        invBlookDetailPanel.style.backgroundPosition = s.backgroundPosition;
+        invBlookDetailPanel.style.backgroundBlendMode = s.backgroundBlendMode;
+      }
     }
 
     function clearInvBlookDetailPanel() {
@@ -7918,6 +7978,7 @@
         invBlookDetailBody.style.display = 'none';
         invBlookDetailBody.style.flexDirection = 'column';
       }
+      if (invPanelRarity) invPanelRarity.style.display = 'none';
       if (invPanelActions) invPanelActions.style.display = 'none';
       applyInvPanelDetailBackground(null);
       document.querySelectorAll('.inv-blook-slot.selected').forEach(el => el.classList.remove('selected'));
@@ -7968,6 +8029,15 @@
       applyInvPanelDetailBackground(packDoc, rKey);
 
       if (invPanelTitle) invPanelTitle.textContent = name;
+      if (invPanelRarity) {
+        const rDisp = (rep.rarity || catalogDef?.rarity || 'common').toString();
+        invPanelRarity.textContent = rDisp.toUpperCase();
+        invPanelRarity.style.display = '';
+        const rc = getRarityColor(rKey);
+        invPanelRarity.style.color = rc;
+        invPanelRarity.style.borderColor = `${rc}66`;
+        invPanelRarity.style.background = `${rc}22`;
+      }
       if (invPanelStars) invPanelStars.textContent = String(stars);
 
       if (invPanelOwned) {
@@ -7977,9 +8047,9 @@
       if (invPanelVisual) {
         const panelImg = imageUrl ? escapeHtml(mediaThumbUrl(imageUrl, unlocked ? 420 : 360, 85)) : '';
         if (unlocked && imageUrl) {
-          invPanelVisual.innerHTML = `<img src="${panelImg}" alt="" decoding="async">`;
+          invPanelVisual.innerHTML = `<img src="${panelImg}" alt="" loading="lazy" decoding="async">`;
         } else if (imageUrl) {
-          invPanelVisual.innerHTML = `<div class="inv-blook-detail-silhouette"><img src="${panelImg}" alt="" decoding="async"><div class="inv-blook-lock-overlay" aria-hidden="true"><span class="material-symbols-outlined">lock</span></div></div>`;
+          invPanelVisual.innerHTML = `<div class="inv-blook-detail-silhouette"><img src="${panelImg}" alt="" loading="lazy" decoding="async"><div class="inv-blook-lock-overlay" aria-hidden="true"><span class="material-symbols-outlined">lock</span></div></div>`;
         } else {
           const rc = getRarityColor(rKey);
           invPanelVisual.innerHTML = `<div class="inv-blook-detail-silhouette" style="background:#0a0c10;"><span class="inv-blook-ph" style="color:${rc};font-size:3rem;"><i class="fas fa-dragon"></i></span><div class="inv-blook-lock-overlay" aria-hidden="true"><span class="material-symbols-outlined">lock</span></div></div>`;
@@ -8285,7 +8355,7 @@
         const section = document.createElement('section');
         section.className = 'inv-blook-pack-section';
         const title = document.createElement('h3');
-        title.className = 'inv-blook-pack-title font-titan-header';
+        title.className = 'inv-blook-pack-title';
         title.textContent = pack.name || 'Pack';
         section.appendChild(title);
         const rule = document.createElement('div');
@@ -10580,6 +10650,7 @@
 
     init().catch(() => hidePageLoading());
     setTimeout(hidePageLoading, 12000);
+    setTimeout(() => document.body.classList.add('site-bg-motion-done'), 7000);
 
     // ========== Event Listeners ==========
     document.getElementById('daily-reward-claim-btn')?.addEventListener('click', () => claimDailyReward());
