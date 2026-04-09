@@ -6,6 +6,7 @@
   <title>Game Universe - All Games</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Titan+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
   <style>
     /* Existing CSS styles remain unchanged */
     :root {
@@ -1530,76 +1531,273 @@
       color: #000;
       border-color: var(--neon-green);
     }
-    .inv-blooks-grid-wrap {
+    .inv-blooks-layout {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      align-items: stretch;
+      min-height: 420px;
+    }
+    @media (min-width: 960px) {
+      .inv-blooks-layout {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 28px;
+      }
+      .inv-blooks-catalog {
+        flex: 1 1 58%;
+        min-width: 0;
+        max-height: min(78vh, 820px);
+        overflow-y: auto;
+        padding-right: 6px;
+      }
+      .inv-blook-detail {
+        flex: 0 0 340px;
+        position: sticky;
+        top: 88px;
+        align-self: flex-start;
+        max-height: min(78vh, 820px);
+      }
+    }
+    .inv-blooks-catalog {
       min-height: 200px;
     }
-    .inv-blooks-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 12px 10px;
+    .inv-blook-pack-section {
+      margin-bottom: 28px;
     }
-    @media (min-width: 600px) {
-      .inv-blooks-grid { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 16px 14px; }
+    .inv-blook-pack-section:last-child {
+      margin-bottom: 0;
     }
-    .inv-blook-cell {
+    .inv-blook-pack-title {
+      font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+      margin: 0 0 10px;
+      line-height: 1.2;
+    }
+    .inv-blook-pack-rule {
+      height: 2px;
+      width: 100%;
+      background: linear-gradient(90deg, rgba(42,255,158,0.55), rgba(255,61,108,0.35), transparent);
+      border-radius: 2px;
+      margin-bottom: 14px;
+    }
+    .inv-blook-pack-empty {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+    .inv-blook-empty-msg {
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      margin: 12px 0;
+    }
+    .inv-blook-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 12px;
+      align-items: flex-end;
+    }
+    .inv-blook-slot {
       position: relative;
+      flex: 0 0 auto;
+      width: 72px;
+      padding: 0;
+      margin: 0;
+      border: none;
+      background: transparent;
       cursor: pointer;
-      border-radius: 14px;
-      background: rgba(255,255,255,0.06);
-      border: 2px solid rgba(255,255,255,0.1);
-      padding: 10px 8px 8px;
-      text-align: center;
-      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s;
+      border-radius: 0;
+      transition: transform 0.15s ease, filter 0.15s ease;
     }
-    .inv-blook-cell:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
-      border-color: rgba(42,255,158,0.35);
+    .inv-blook-slot:focus-visible {
+      outline: 2px solid var(--neon-green);
+      outline-offset: 3px;
     }
-    .inv-blook-cell-inner {
-      aspect-ratio: 1;
+    .inv-blook-slot:hover {
+      transform: scale(1.06);
+    }
+    .inv-blook-slot.selected {
+      filter: drop-shadow(0 0 10px rgba(42,255,158,0.55));
+    }
+    .inv-blook-slot-inner {
+      width: 72px;
+      height: 72px;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 6px;
     }
-    .inv-blook-cell-inner img {
+    .inv-blook-slot.unlocked .inv-blook-slot-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+    }
+    .inv-blook-silhouette-wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #050608;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .inv-blook-silhouette-img {
       width: 88%;
       height: 88%;
       object-fit: contain;
-      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.35));
+      filter: brightness(0) saturate(100%);
+      opacity: 0.95;
+      pointer-events: none;
     }
-    .inv-blook-cell-inner .inv-blook-ph {
-      font-size: 2.4rem;
-      opacity: 0.75;
+    .inv-blook-lock-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.42);
     }
-    .inv-blook-cell-name {
-      font-size: 0.72rem;
-      font-weight: 800;
-      color: var(--text-primary);
-      line-height: 1.2;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      min-height: 2.2em;
+    .inv-blook-lock-overlay .material-symbols-outlined {
+      font-size: 28px;
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+      color: rgba(255,255,255,0.92);
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.6));
     }
     .inv-blook-qty-badge {
       position: absolute;
-      top: 6px;
-      right: 6px;
-      min-width: 22px;
-      height: 22px;
-      padding: 0 6px;
+      top: -4px;
+      right: -4px;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 5px;
       border-radius: 999px;
-      background: rgba(0,0,0,0.72);
+      background: rgba(0,0,0,0.85);
       color: #fff;
-      font-size: 0.72rem;
+      font-size: 0.65rem;
       font-weight: 900;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.25);
+      z-index: 2;
+    }
+    .inv-blook-detail {
+      border-radius: 20px;
+      border: 1px solid rgba(42,255,158,0.22);
+      background: linear-gradient(168deg, #3d4a5c 0%, #1a2233 42%, #080b10 88%);
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.04);
+      padding: 22px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-height: 360px;
+      overflow: hidden;
+      position: relative;
+    }
+    .inv-blook-detail::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 90% 70% at 50% 20%, rgba(255,255,255,0.06), transparent 55%);
+      pointer-events: none;
+    }
+    .inv-blook-detail > * {
+      position: relative;
+      z-index: 1;
+    }
+    .inv-blook-detail-title {
+      font-family: 'Titan One', 'Nunito', sans-serif;
+      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      font-weight: 400;
+      color: #fff;
+      margin: 0 0 8px;
+      line-height: 1.15;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.55);
+    }
+    .inv-blook-detail-stars {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #ffe066;
+      margin: 0 0 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.5);
+    }
+    .inv-blook-detail-stars .fa-star {
+      color: #FFC107;
+      font-size: 0.95rem;
+    }
+    .inv-blook-detail-visual {
+      width: min(200px, 70vw);
+      height: min(200px, 70vw);
+      margin: 0 auto 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .inv-blook-detail-visual img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 28px rgba(0,0,0,0.5));
+    }
+    .inv-blook-detail-visual .inv-blook-detail-silhouette {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #030508;
+      border-radius: 14px;
+    }
+    .inv-blook-detail-visual .inv-blook-detail-silhouette img {
+      width: 82%;
+      height: 82%;
+      object-fit: contain;
+      filter: brightness(0) saturate(100%);
+      opacity: 0.95;
+    }
+    .inv-blook-detail-visual .inv-blook-lock-overlay .material-symbols-outlined {
+      font-size: 48px;
+    }
+    .inv-blook-detail-owned {
+      font-family: 'Titan One', 'Nunito', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 400;
+      color: #fff;
+      margin: auto 0 0;
+      padding-top: 12px;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.55);
+    }
+    .inv-blook-detail-actions {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .inv-blook-detail-actions .collect-btn,
+    .inv-blook-detail-actions .cancel-btn {
+      flex: 1;
+      min-width: 112px;
+    }
+    .inv-blook-detail-placeholder {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.75);
+      margin: auto;
+      padding: 24px 12px;
+      line-height: 1.5;
     }
     .inv-blook-modal .inv-blook-modal-content {
       max-width: 400px;
@@ -4688,10 +4886,25 @@
             <span class="inv-token-pill"><i class="fas fa-coins"></i> <span id="inv-tokens-display">0</span></span>
           </div>
         </div>
-        <p class="inv-blooks-sub">View and manage your blooks. Tap a blook for details.</p>
+        <p class="inv-blooks-sub">Browse every blook by pack. Locked blooks show as silhouettes. Select a blook to see details on the right.</p>
         <div class="inv-pack-tabs" id="inv-pack-tabs"></div>
-        <div class="inv-blooks-grid-wrap">
-          <div class="inv-blooks-grid" id="inventory-container"></div>
+        <div class="inv-blooks-layout">
+          <div class="inv-blooks-catalog" id="inv-blooks-catalog">
+            <div id="inventory-container"></div>
+          </div>
+          <aside class="inv-blook-detail" id="inv-blook-detail-panel" aria-live="polite">
+            <p class="inv-blook-detail-placeholder" id="inv-blook-detail-placeholder">Select a blook to view stars, art, and how many you own.</p>
+            <div id="inv-blook-detail-body" style="display:none;width:100%;flex-direction:column;align-items:center;flex:1;">
+              <h3 class="inv-blook-detail-title" id="inv-panel-title">Blook</h3>
+              <div class="inv-blook-detail-stars" id="inv-panel-stars-row"><i class="fas fa-star"></i> <span id="inv-panel-stars">0</span></div>
+              <div class="inv-blook-detail-visual" id="inv-panel-visual"></div>
+              <div class="inv-blook-detail-owned" id="inv-panel-owned">×0</div>
+              <div class="inv-blook-detail-actions" id="inv-panel-actions">
+                <button type="button" class="collect-btn" id="inv-panel-sell-btn">Sell one</button>
+                <button type="button" class="cancel-btn" id="inv-panel-send-btn">Send</button>
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </div>
@@ -5552,6 +5765,16 @@
     const shopPacks = document.getElementById('shop-packs');
     const shopBanners = document.getElementById('shop-banners');
     const inventoryContainer = document.getElementById('inventory-container');
+    const invBlookDetailPanel = document.getElementById('inv-blook-detail-panel');
+    const invBlookDetailPlaceholder = document.getElementById('inv-blook-detail-placeholder');
+    const invBlookDetailBody = document.getElementById('inv-blook-detail-body');
+    const invPanelTitle = document.getElementById('inv-panel-title');
+    const invPanelStars = document.getElementById('inv-panel-stars');
+    const invPanelVisual = document.getElementById('inv-panel-visual');
+    const invPanelOwned = document.getElementById('inv-panel-owned');
+    const invPanelActions = document.getElementById('inv-panel-actions');
+    const invPanelSellBtn = document.getElementById('inv-panel-sell-btn');
+    const invPanelSendBtn = document.getElementById('inv-panel-send-btn');
     const friendsList = document.getElementById('friends-list');
     const globalChatContainer = document.getElementById('global-chat-container');
     const globalChatInput = document.getElementById('global-chat-input');
@@ -5647,6 +5870,8 @@
     let friendChatRenderedIds = new Set();
     let currentCard = null;
     let inventoryUnsubscribe = null;
+    let inventoryCatalogCache = null;
+    let inventoryCatalogLoaded = false;
     let giftWallUnsubscribe = null;
     let userUnsubscribe = null;
     let currentGiftCard = null;
@@ -7406,6 +7631,7 @@
     let currentInventoryFilter = 'all';
     let inventoryItems = [];
     let invBlookDetailContext = null;
+    let selectedInvSlotKey = null;
     let packBuilderItems = [];
     let staffEditUserInitialBanner = '';
 
@@ -7414,10 +7640,51 @@
       return Math.max(1, Math.floor(n * 0.5));
     }
 
+    function applyInvPanelPackBackground(packDoc) {
+      if (!invBlookDetailPanel) return;
+      const fc = marketPackFrameColors(packDoc);
+      const inner = fc.inner || '#5a6a8a';
+      const outer = fc.outer || '#1a2233';
+      const art = packDoc ? (marketPackArtUrl(packDoc) || '').trim() : '';
+      const baseGrad = `linear-gradient(168deg, ${inner} 0%, ${outer} 42%, #030509 88%)`;
+      if (art) {
+        invBlookDetailPanel.style.backgroundImage = `${baseGrad}, url(${JSON.stringify(art)})`;
+        invBlookDetailPanel.style.backgroundSize = '100% 100%, cover';
+        invBlookDetailPanel.style.backgroundPosition = '0 0, center';
+        invBlookDetailPanel.style.backgroundRepeat = 'no-repeat, no-repeat';
+        invBlookDetailPanel.style.backgroundBlendMode = 'normal, multiply';
+      } else {
+        invBlookDetailPanel.style.backgroundImage = baseGrad;
+        invBlookDetailPanel.style.backgroundSize = '';
+        invBlookDetailPanel.style.backgroundPosition = '';
+        invBlookDetailPanel.style.backgroundRepeat = '';
+        invBlookDetailPanel.style.backgroundBlendMode = '';
+      }
+    }
+
+    function clearInvBlookDetailPanel() {
+      selectedInvSlotKey = null;
+      if (invBlookDetailPlaceholder) invBlookDetailPlaceholder.style.display = '';
+      if (invBlookDetailBody) {
+        invBlookDetailBody.style.display = 'none';
+        invBlookDetailBody.style.flexDirection = 'column';
+      }
+      if (invPanelActions) invPanelActions.style.display = 'none';
+      applyInvPanelPackBackground(null);
+      document.querySelectorAll('.inv-blook-slot.selected').forEach(el => el.classList.remove('selected'));
+    }
+
+    function refreshInvSlotSelectionUI() {
+      document.querySelectorAll('.inv-blook-slot').forEach((el) => {
+        el.classList.toggle('selected', !!selectedInvSlotKey && el.dataset.slotKey === selectedInvSlotKey);
+      });
+    }
+
     function closeInvBlookModal() {
       const m = document.getElementById('inv-blook-modal');
       if (m) m.style.display = 'none';
       invBlookDetailContext = null;
+      clearInvBlookDetailPanel();
     }
 
     function populateRecipientSelectForInvSend() {
@@ -7431,14 +7698,49 @@
       });
     }
 
-    function openInvBlookDetail(rep, copies) {
-      invBlookDetailContext = { rep, copies: copies || [rep] };
+    function openInvBlookDetail(rep, copies, catalogDef, slotKey) {
+      const cop = copies && copies.length ? copies : [];
+      const unlocked = cop.length > 0;
+      invBlookDetailContext = { rep, copies: cop, catalogDef: catalogDef || null };
+      selectedInvSlotKey = slotKey || null;
+      refreshInvSlotSelectionUI();
+
+      const name = rep.itemName || catalogDef?.name || 'Blook';
+      const stars = Number(rep.starsGained != null ? rep.starsGained : catalogDef?.starsGained) || 0;
+      const imageUrl = String(rep.imageUrl || catalogDef?.imageUrl || '').trim();
+      const packDoc = catalogDef?.packDoc || null;
+
+      if (invBlookDetailPlaceholder) invBlookDetailPlaceholder.style.display = 'none';
+      if (invBlookDetailBody) {
+        invBlookDetailBody.style.display = 'flex';
+        invBlookDetailBody.style.flexDirection = 'column';
+      }
+      applyInvPanelPackBackground(packDoc);
+
+      if (invPanelTitle) invPanelTitle.textContent = name;
+      if (invPanelStars) invPanelStars.textContent = String(stars);
+
+      if (invPanelOwned) {
+        invPanelOwned.textContent = unlocked ? `×${cop.length}` : '×0';
+      }
+
+      if (invPanelVisual) {
+        if (unlocked && imageUrl) {
+          invPanelVisual.innerHTML = `<img src="${escapeHtml(imageUrl)}" alt="" decoding="async">`;
+        } else if (imageUrl) {
+          invPanelVisual.innerHTML = `<div class="inv-blook-detail-silhouette"><img src="${escapeHtml(imageUrl)}" alt="" decoding="async"><div class="inv-blook-lock-overlay" aria-hidden="true"><span class="material-symbols-outlined">lock</span></div></div>`;
+        } else {
+          const rc = getRarityColor((rep.rarity || 'common').toLowerCase());
+          invPanelVisual.innerHTML = `<div class="inv-blook-detail-silhouette" style="background:#0a0c10;"><span class="inv-blook-ph" style="color:${rc};font-size:3rem;"><i class="fas fa-dragon"></i></span><div class="inv-blook-lock-overlay" aria-hidden="true"><span class="material-symbols-outlined">lock</span></div></div>`;
+        }
+      }
+
+      if (invPanelActions) invPanelActions.style.display = unlocked ? 'flex' : 'none';
+
       const r = (rep.rarity || 'common').toLowerCase();
-      const qty = (copies && copies.length) ? copies.length : 1;
-      const stars = rep.starsGained || 0;
+      const qty = cop.length || 0;
       const sell = invSellPriceForStars(stars);
       const rc = getRarityColor(r);
-
       const vis = document.getElementById('inv-blook-modal-visual');
       if (vis) {
         vis.innerHTML = rep.imageUrl
@@ -7446,7 +7748,7 @@
           : `<span class="inv-blook-ph" style="color:${rc};"><i class="fas fa-dragon"></i></span>`;
       }
       const nm = document.getElementById('inv-blook-modal-name');
-      if (nm) nm.textContent = rep.itemName || 'Blook';
+      if (nm) nm.textContent = name;
       const rr = document.getElementById('inv-blook-modal-rarity');
       if (rr) {
         rr.textContent = r;
@@ -7455,16 +7757,13 @@
         rr.style.background = `${rc}22`;
       }
       const pk = document.getElementById('inv-blook-modal-pack');
-      if (pk) pk.textContent = rep.packName || '—';
+      if (pk) pk.textContent = rep.packName || catalogDef?.packDoc?.name || '—';
       const q = document.getElementById('inv-blook-modal-qty');
-      if (q) q.textContent = String(qty);
+      if (q) q.textContent = String(qty || (unlocked ? cop.length : 0));
       const st = document.getElementById('inv-blook-modal-stars');
       if (st) st.textContent = String(stars);
       const sl = document.getElementById('inv-blook-modal-sell');
       if (sl) sl.textContent = `${sell} tokens (each)`;
-
-      const m = document.getElementById('inv-blook-modal');
-      if (m) m.style.display = 'flex';
     }
 
     async function sellOneInvBlookFromDetail() {
@@ -7484,7 +7783,10 @@
           transaction.update(uref, { coins: increment(price) });
         });
         showNotification(`Sold for ${price} tokens`, 'success');
-        closeInvBlookModal();
+        invBlookDetailContext = null;
+        const ibm = document.getElementById('inv-blook-modal');
+        if (ibm) ibm.style.display = 'none';
+        clearInvBlookDetailPanel();
       } catch (e) {
         showNotification('Could not sell: ' + (e.message || 'error'), 'error');
       }
@@ -7501,7 +7803,8 @@
         image: rep.imageUrl || '',
         starsGained: rep.starsGained || 0
       };
-      closeInvBlookModal();
+      const ibm = document.getElementById('inv-blook-modal');
+      if (ibm) ibm.style.display = 'none';
       populateRecipientSelectForInvSend();
       if (sendCardName) sendCardName.textContent = rep.itemName || 'Blook';
       if (sendCardType) {
@@ -7513,6 +7816,8 @@
           : '🎁';
       }
       if (sendCardModal) sendCardModal.style.display = 'flex';
+      invBlookDetailContext = null;
+      clearInvBlookDetailPanel();
     }
 
     function openSendCardModal() {
@@ -7648,26 +7953,46 @@
       document.getElementById('staff-blook-editor-modal').style.display = 'none';
     }
 
+    async function refreshInventoryCatalog() {
+      try {
+        const snap = await getDocs(collection(db, 'packs'));
+        inventoryCatalogCache = snap.docs
+          .map(d => ({ id: d.id, ...d.data() }))
+          .filter(p => p.shopType !== 'banner');
+        inventoryCatalogLoaded = true;
+      } catch (e) {
+        console.error('Inventory catalog load failed', e);
+        inventoryCatalogCache = [];
+        inventoryCatalogLoaded = true;
+      }
+    }
+
+    function invPackMatchesItem(pack, item) {
+      const pid = item.packId;
+      if (pid && pack.id === pid) return true;
+      const pn = (item.packName || '').trim();
+      const pname = (pack.name || '').trim();
+      return pn && pname && pn === pname;
+    }
+
     function renderInventory() {
       if (!inventoryContainer) return;
       inventoryContainer.innerHTML = '';
       const packTabs = document.getElementById('inv-pack-tabs');
 
-      if (inventoryItems.length === 0) {
+      if (!inventoryCatalogLoaded) {
         if (packTabs) packTabs.innerHTML = '';
-        inventoryContainer.innerHTML = '<p class="empty-message">No blooks yet — open some packs!</p>';
+        inventoryContainer.innerHTML = '<p class="inv-blook-empty-msg">Loading your collection…</p>';
         return;
       }
 
-      const packCounts = {};
-      inventoryItems.forEach(item => {
-        const pn = item.packName || 'Unknown pack';
-        packCounts[pn] = (packCounts[pn] || 0) + 1;
-      });
-      const packNames = Object.keys(packCounts).sort();
-      if (!packNames.includes(currentInventoryFilter) && currentInventoryFilter !== 'all') {
-        currentInventoryFilter = 'all';
-      }
+      const catalogPacks = inventoryCatalogCache || [];
+      const itemPacks = catalogPacks.filter(p => (p.items || []).length > 0);
+
+      const countForPack = (pack) => inventoryItems.filter(it => invPackMatchesItem(pack, it)).length;
+
+      const validFilters = new Set(['all', ...itemPacks.map(p => p.id)]);
+      if (!validFilters.has(currentInventoryFilter)) currentInventoryFilter = 'all';
 
       if (packTabs) {
         packTabs.innerHTML = '';
@@ -7684,47 +8009,148 @@
           packTabs.appendChild(b);
         };
         mkTab('All', 'all', inventoryItems.length);
-        packNames.forEach(pn => mkTab(pn, pn, packCounts[pn]));
+        itemPacks.forEach(p => mkTab(p.name || 'Pack', p.id, countForPack(p)));
       }
 
-      const filtered = currentInventoryFilter === 'all' ? inventoryItems : inventoryItems.filter(i => (i.packName || 'Unknown pack') === currentInventoryFilter);
-      const byName = {};
-      filtered.forEach(item => {
-        const key = item.itemName || '?';
-        if (!byName[key]) byName[key] = [];
-        byName[key].push(item);
+      const packsToRender = currentInventoryFilter === 'all'
+        ? itemPacks
+        : itemPacks.filter(p => p.id === currentInventoryFilter);
+
+      const usedItemIds = new Set();
+
+      const pickRep = (copies) => copies.reduce((a, b) => (raritySortIndex(a.rarity) > raritySortIndex(b.rarity) ? a : b));
+
+      const renderPackSection = (pack, defs, orphanBucket) => {
+        if (!defs.length) return;
+        const isOrphanSection = pack.id === '__orphan__';
+        const section = document.createElement('section');
+        section.className = 'inv-blook-pack-section';
+        const title = document.createElement('h3');
+        title.className = 'inv-blook-pack-title font-titan-header';
+        title.textContent = pack.name || 'Pack';
+        section.appendChild(title);
+        const rule = document.createElement('div');
+        rule.className = 'inv-blook-pack-rule';
+        section.appendChild(rule);
+        const row = document.createElement('div');
+        row.className = 'inv-blook-row';
+        const sortedDefs = [...defs].sort((a, b) => {
+          const rd = raritySortIndex(a.rarity) - raritySortIndex(b.rarity);
+          if (rd !== 0) return rd;
+          return (a.name || '').localeCompare(b.name || '');
+        });
+        sortedDefs.forEach((def) => {
+          const blookName = def.name || '';
+          const copies = isOrphanSection
+            ? (orphanBucket || []).filter(it => (it.itemName || '') === blookName)
+            : inventoryItems.filter(
+              it => invPackMatchesItem(pack, it) && (it.itemName || '') === blookName
+            );
+          if (!isOrphanSection) copies.forEach(c => usedItemIds.add(c.id));
+          const unlocked = copies.length > 0;
+          const rep = unlocked ? pickRep(copies) : {
+            itemName: blookName,
+            rarity: def.rarity,
+            starsGained: def.starsGained,
+            imageUrl: def.imageUrl || '',
+            packName: pack.name,
+            packId: pack.id
+          };
+          const slotKey = `${pack.id}:${encodeURIComponent(blookName)}`;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = `inv-blook-slot${unlocked ? ' unlocked' : ''}`;
+          btn.dataset.slotKey = slotKey;
+          btn.setAttribute('aria-label', unlocked ? `${blookName}, owned ${copies.length}` : `${blookName}, locked`);
+          const inner = document.createElement('div');
+          inner.className = 'inv-blook-slot-inner';
+          const imgUrl = String(def.imageUrl || rep.imageUrl || '').trim();
+          if (unlocked) {
+            const rc = getRarityColor((def.rarity || rep.rarity || 'common').toLowerCase());
+            if (imgUrl) {
+              inner.innerHTML = `<img src="${escapeHtml(imgUrl)}" alt="" loading="lazy" decoding="async">`;
+            } else {
+              inner.innerHTML = `<span class="inv-blook-ph" style="color:${rc};font-size:1.75rem;"><i class="fas fa-dragon"></i></span>`;
+            }
+            if (copies.length > 1) {
+              const badge = document.createElement('span');
+              badge.className = 'inv-blook-qty-badge';
+              badge.textContent = String(copies.length);
+              btn.appendChild(badge);
+            }
+          } else if (imgUrl) {
+            inner.innerHTML = `
+              <div class="inv-blook-silhouette-wrap">
+                <img class="inv-blook-silhouette-img" src="${escapeHtml(imgUrl)}" alt="" loading="lazy" decoding="async">
+                <div class="inv-blook-lock-overlay" aria-hidden="true"><span class="material-symbols-outlined">lock</span></div>
+              </div>`;
+          } else {
+            const rc = getRarityColor((def.rarity || 'common').toLowerCase());
+            inner.innerHTML = `
+              <div class="inv-blook-silhouette-wrap">
+                <span class="inv-blook-ph" style="color:${rc};font-size:1.75rem;"><i class="fas fa-dragon"></i></span>
+                <div class="inv-blook-lock-overlay" aria-hidden="true"><span class="material-symbols-outlined">lock</span></div>
+              </div>`;
+          }
+          btn.appendChild(inner);
+          const catalogDef = {
+            name: blookName,
+            imageUrl: def.imageUrl,
+            starsGained: def.starsGained,
+            rarity: def.rarity,
+            packDoc: isOrphanSection ? null : pack
+          };
+          btn.addEventListener('click', () => openInvBlookDetail(rep, copies, catalogDef, slotKey));
+          row.appendChild(btn);
+        });
+        section.appendChild(row);
+        inventoryContainer.appendChild(section);
+      };
+
+      packsToRender.forEach((pack) => {
+        const defs = (pack.items || []).map(it => ({
+          name: it.name,
+          rarity: it.rarity,
+          starsGained: it.starsGained,
+          imageUrl: it.imageUrl
+        })).filter(d => d.name);
+        renderPackSection(pack, defs, null);
       });
 
-      const rows = Object.keys(byName).map(k => {
-        const copies = byName[k];
-        const rep = copies.reduce((a, b) => (raritySortIndex(a.rarity) > raritySortIndex(b.rarity) ? a : b));
-        return { copies, rep, count: copies.length };
-      });
-      rows.sort((a, b) => {
-        const rd = raritySortIndex(a.rep.rarity) - raritySortIndex(b.rep.rarity);
-        if (rd !== 0) return rd;
-        return (a.rep.itemName || '').localeCompare(b.rep.itemName || '');
-      });
+      const orphanItems = inventoryItems.filter(it => !usedItemIds.has(it.id));
+      if (orphanItems.length) {
+        const byName = {};
+        orphanItems.forEach(it => {
+          const k = it.itemName || '?';
+          if (!byName[k]) byName[k] = [];
+          byName[k].push(it);
+        });
+        const defs = Object.keys(byName).map(k => {
+          const cop = byName[k];
+          const r = pickRep(cop);
+          return {
+            name: k,
+            rarity: r.rarity,
+            starsGained: r.starsGained,
+            imageUrl: r.imageUrl
+          };
+        });
+        renderPackSection({ id: '__orphan__', name: 'Your blooks', items: defs, shopType: 'item' }, defs, orphanItems);
+      }
 
-      rows.forEach(({ rep, copies, count }) => {
-        const r = (rep.rarity || 'common').toLowerCase();
-        const rc = getRarityColor(r);
-        const cell = document.createElement('div');
-        cell.className = 'inv-blook-cell';
-        cell.innerHTML = `
-          ${count > 1 ? `<span class="inv-blook-qty-badge" style="color:${rc};border-color:${rc}44;">${count}</span>` : ''}
-          <div class="inv-blook-cell-inner">
-            ${rep.imageUrl ? `<img src="${escapeHtml(rep.imageUrl)}" alt="" loading="lazy" decoding="async">` : `<span class="inv-blook-ph" style="color:${rc};"><i class="fas fa-dragon"></i></span>`}
-          </div>
-          <div class="inv-blook-cell-name" title="${escapeHtml(rep.itemName)}">${escapeHtml(rep.itemName)}</div>
-        `;
-        cell.addEventListener('click', () => openInvBlookDetail(rep, copies));
-        inventoryContainer.appendChild(cell);
-      });
+      if (!inventoryContainer.children.length) {
+        inventoryContainer.innerHTML = '<p class="inv-blook-empty-msg">No packs in the shop yet. When packs are added, every blook appears here — unlock them by opening packs.</p>';
+      }
+
+      refreshInvSlotSelectionUI();
     }
 
     async function loadInventory(userId) {
       if (inventoryUnsubscribe) inventoryUnsubscribe();
+      inventoryCatalogLoaded = false;
+      renderInventory();
+      await refreshInventoryCatalog();
+      renderInventory();
       const inventoryQuery = query(collection(db, "inventory"), where("userId", "==", userId));
       inventoryUnsubscribe = onSnapshot(inventoryQuery, (snapshot) => {
         inventoryItems = [];
@@ -9943,6 +10369,8 @@
     document.getElementById('inv-blook-modal-close')?.addEventListener('click', closeInvBlookModal);
     document.getElementById('inv-blook-sell-btn')?.addEventListener('click', () => sellOneInvBlookFromDetail());
     document.getElementById('inv-blook-send-btn')?.addEventListener('click', () => openInvSendFromDetail());
+    invPanelSellBtn?.addEventListener('click', () => sellOneInvBlookFromDetail());
+    invPanelSendBtn?.addEventListener('click', () => openInvSendFromDetail());
     cancelSendBtn?.addEventListener('click', () => { if (sendCardModal) sendCardModal.style.display = 'none'; currentCard = null; });
     sendCardBtn?.addEventListener('click', async () => {
       if (!currentUser || !currentCard) return;
