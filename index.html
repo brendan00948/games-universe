@@ -2978,22 +2978,26 @@
       filter: blur(2px) brightness(0.5);
     }
     #opening-modal-bg.pack-rarity-celebrate {
-      filter: brightness(0.92);
-      transition: background-image 0.55s ease, background-size 0.55s ease, filter 0.4s ease;
+      filter: brightness(1.02) saturate(1.08);
+      transition: background-image 0.45s ease, background-size 0.45s ease, filter 0.35s ease;
       animation:
-        packBgCelebrateFlash 0.65s ease-out 1,
-        packBgCelebratePulse 2.6s ease-in-out 0.65s infinite;
+        packBgCelebrateFlash 0.55s ease-out 1,
+        packBgCelebratePulseSoft 3.2s ease-in-out 0.55s infinite;
     }
     #opening-modal-bg.pack-rarity-celebrate.pack-bg-rarity-animated {
       animation:
-        packBgCelebrateFlash 0.65s ease-out 1,
-        packRarityBgRun 7s linear 0.65s infinite,
-        packBgCelebratePulse 2.4s ease-in-out 0.65s infinite;
+        packBgCelebrateFlash 0.55s ease-out 1,
+        packRarityBgRun 7s linear 0.55s infinite,
+        packBgCelebratePulseSoft 3s ease-in-out 0.55s infinite;
+    }
+    @keyframes packBgCelebratePulseSoft {
+      0%, 100% { filter: brightness(1.02) saturate(1.06); }
+      50% { filter: brightness(1.08) saturate(1.12); }
     }
     @keyframes packBgCelebrateFlash {
-      0% { filter: brightness(1.45) saturate(1.55) contrast(1.08); transform: scale(1.02); }
-      40% { filter: brightness(1.12) saturate(1.3); transform: scale(1); }
-      100% { filter: brightness(0.94) saturate(1.08); transform: scale(1); }
+      0% { filter: brightness(1.12) saturate(1.2); transform: scale(1.01); }
+      45% { filter: brightness(1.06) saturate(1.12); transform: scale(1); }
+      100% { filter: brightness(1.02) saturate(1.08); transform: scale(1); }
     }
     @keyframes packRarityBgRun {
       0% { background-position: 0% 50%; }
@@ -6950,22 +6954,28 @@
       return d.solid || '#ffffff';
     }
 
-    /** Full-area modal background from rarity (not text-clipped). */
+    /** Full-area modal background from rarity — vivid colors, softer darks (not near-black). */
     function getRarityBackgroundGradientCss(rarity) {
       const d = getRarityDef(rarity);
+      const baseHex = getRarityColor(rarity);
+      const rgb = hexToRgbTriplet(baseHex) || [100, 120, 150];
+      const lit = mixRgb(rgb, [255, 255, 255], 0.38);
+      const mid = mixRgb(rgb, [120, 135, 165], 0.42);
+      const deep = mixRgb(rgb, [38, 46, 62], 0.5);
+      const toRgb = (a) => `rgb(${a[0]},${a[1]},${a[2]})`;
       if (d.isGradient && d.gradientColors && d.gradientColors.length >= 2) {
         const g = d.gradientColors.join(', ');
         return {
-          image: `linear-gradient(145deg, ${g}, #080c14 78%, #030509 100%)`,
+          image: `linear-gradient(155deg, ${g} 0%, ${toRgb(lit)} 40%, ${toRgb(mid)} 72%, ${toRgb(deep)} 100%)`,
           size: d.isRunning ? '220% 220%' : '100% 100%',
           repeat: 'no-repeat',
           position: d.isRunning ? '0% 50%' : 'center',
           animated: !!d.isRunning
         };
       }
-      const c = d.solid || '#1a2233';
+      const c = toRgb(rgb);
       return {
-        image: `linear-gradient(165deg, ${c} 0%, #0d1218 45%, #030509 100%)`,
+        image: `linear-gradient(168deg, ${c} 0%, ${toRgb(lit)} 38%, ${toRgb(mid)} 70%, ${toRgb(deep)} 100%)`,
         size: '100% 100%',
         repeat: 'no-repeat',
         position: 'center',
@@ -7529,7 +7539,7 @@
         const maxH = Math.min(window.innerHeight * 0.62, 560);
         const w = nw > 0 ? nw : 280;
         const h = nh > 0 ? nh : 280;
-        const scale = Math.min(1, maxW / w, maxH / h);
+        const scale = Math.min(1, maxW / w, maxH / h) * 1.25;
         stack.style.width = `${Math.round(w * scale)}px`;
         stack.style.height = `${Math.round(h * scale)}px`;
       };
@@ -7613,6 +7623,16 @@
       };
 
       const applyRarityCelebrateBg = () => {
+        const bg = getRarityBackgroundGradientCss(item.rarity);
+        if (openingModalBg) {
+          openingModalBg.classList.add('pack-rarity-celebrate');
+          openingModalBg.classList.toggle('pack-bg-rarity-animated', !!bg.animated);
+          openingModalBg.style.backgroundImage = bg.image;
+          openingModalBg.style.backgroundSize = bg.size;
+          openingModalBg.style.backgroundRepeat = bg.repeat;
+          openingModalBg.style.backgroundPosition = bg.position;
+          openingModalBg.style.backgroundBlendMode = '';
+        }
         packOpeningModalInner?.classList.add('pack-unbox-celebrate');
         packOpeningModalInner?.classList.remove('pack-unbox-peek-mood');
       };
