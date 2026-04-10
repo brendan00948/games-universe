@@ -13,28 +13,16 @@
   <style>
     /* Existing CSS styles remain unchanged */
     :root {
-      /* Main field: #42f5bf mint. Panels: minty grey + white type. Bright mint chips: black type. */
-      --page-mint: #42f5bf;
-      --page-mint-soft: #6ef7ce;
-      --page-mint-deep: #2ed9a8;
-      --bg-dark: #2a3d38;
-      --card-bg: #556d66;
-      --panel-bg: #4d635c;
-      --panel-bg-elevated: #5a726a;
-      --panel-border: rgba(255, 255, 255, 0.14);
-      --neon-green: #42f5bf;
-      --neon-pink: #e11d48;
-      --theme-grey: #94a3a8;
-      --text-on-mint: #0a0f0e;
-      --text-on-mint-muted: rgba(10, 15, 14, 0.72);
-      --text-on-panel: #ffffff;
-      --text-on-panel-muted: rgba(255, 255, 255, 0.8);
-      --text-on-accent: #0a0a0a;
-      --text-primary: var(--text-on-mint);
-      --text-secondary: var(--text-on-mint-muted);
-      --star-filled: #fbbf24;
-      --star-empty: rgba(255, 255, 255, 0.35);
-      --sidebar-bg: #455a54;
+      --bg-dark: #0A0C10;
+      --card-bg: #1A1F2A;
+      --neon-green: #2AFF9E;
+      --neon-pink: #FF3D6C;
+      --theme-grey: #8A9BB5;
+      --text-primary: #FFFFFF;
+      --text-secondary: #8A9BB5;
+      --star-filled: #FFC107;
+      --star-empty: #2E3A48;
+      --sidebar-bg: #0E121B;
       --sidebar-width: 300px;
       --common: #c0c0c0;
       --uncommon: #2e7d32;
@@ -52,10 +40,10 @@
     }
 
     body {
-      background-color: var(--page-mint);
-      background-image: linear-gradient(155deg, var(--page-mint-deep) 0%, var(--page-mint) 45%, var(--page-mint-soft) 100%);
+      background-color: var(--bg-dark);
+      background-image: linear-gradient(165deg, #06080d 0%, #0b0f18 35%, #080a0f 70%, #0a1018 100%);
       font-family: 'Nunito', sans-serif;
-      color: var(--text-on-mint);
+      color: var(--text-primary);
       overflow-x: hidden;
       display: flex;
       position: relative;
@@ -67,10 +55,10 @@
       z-index: -3;
       pointer-events: none;
       background:
-        radial-gradient(ellipse 90% 55% at 15% 15%, rgba(255, 255, 255, 0.35), transparent 52%),
-        radial-gradient(ellipse 75% 50% at 92% 88%, rgba(66, 245, 191, 0.45), transparent 48%),
-        radial-gradient(ellipse 65% 45% at 48% 48%, rgba(255, 255, 255, 0.12), transparent 55%),
-        radial-gradient(ellipse 50% 40% at 75% 25%, rgba(46, 217, 168, 0.25), transparent 50%);
+        radial-gradient(ellipse 90% 55% at 15% 15%, rgba(42, 255, 158, 0.11), transparent 52%),
+        radial-gradient(ellipse 75% 50% at 92% 88%, rgba(255, 61, 108, 0.08), transparent 48%),
+        radial-gradient(ellipse 65% 45% at 48% 48%, rgba(66, 165, 245, 0.05), transparent 55%),
+        radial-gradient(ellipse 50% 40% at 75% 25%, rgba(171, 71, 188, 0.06), transparent 50%);
       animation: siteAmbienceShift 18s ease-in-out infinite;
     }
     body::after {
@@ -79,10 +67,10 @@
       inset: 0;
       z-index: -2;
       pointer-events: none;
-      opacity: 0.4;
+      opacity: 0.5;
       background-image:
-        linear-gradient(rgba(10, 15, 14, 0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(10, 15, 14, 0.05) 1px, transparent 1px);
+        linear-gradient(rgba(42, 255, 158, 0.042) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(42, 255, 158, 0.034) 1px, transparent 1px);
       background-size: 175px 175px;
       transform-origin: 50% 50%;
       animation: siteGridSwim 14s ease-in-out infinite alternate;
@@ -119,13 +107,13 @@
       background: conic-gradient(
         from 0deg at 50% 50%,
         transparent 0deg,
-        rgba(66, 245, 191, 0.2) 40deg,
+        rgba(42, 255, 158, 0.055) 40deg,
         transparent 85deg,
-        rgba(255, 255, 255, 0.18) 130deg,
+        rgba(255, 255, 255, 0.035) 130deg,
         transparent 175deg,
-        rgba(13, 148, 136, 0.14) 220deg,
+        rgba(66, 165, 245, 0.048) 220deg,
         transparent 265deg,
-        rgba(14, 116, 144, 0.1) 310deg,
+        rgba(255, 61, 108, 0.04) 310deg,
         transparent 360deg
       );
       animation: siteOrbitGlow 48s linear infinite;
@@ -135,7 +123,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 85% 70% at 50% 100%, rgba(10, 15, 14, 0.12) 0%, transparent 58%);
+      background: radial-gradient(ellipse 85% 70% at 50% 100%, rgba(0, 0, 0, 0.55) 0%, transparent 58%);
       animation: siteVignettePulse 8s ease-in-out infinite;
     }
     @keyframes siteVignettePulse {
@@ -197,10 +185,9 @@
     /* Sidebar */
     .sidebar {
       width: var(--sidebar-width);
-      color: var(--text-on-panel);
-      background: linear-gradient(180deg, #3d524c 0%, var(--sidebar-bg) 45%, #3a4f49 100%);
-      box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.08), 4px 0 24px rgba(0, 0, 0, 0.2);
-      border-right: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(180deg, #0c1018 0%, #0e121b 45%, #0a0d14 100%);
+      box-shadow: inset -1px 0 0 rgba(42, 255, 158, 0.12), 4px 0 32px rgba(0, 0, 0, 0.35);
+      border-right: 1px solid var(--neon-green);
       height: 100vh;
       position: fixed;
       left: calc(-1 * var(--sidebar-width));
@@ -225,7 +212,7 @@
 
     .sidebar-header {
       padding: 20px;
-      border-bottom: 1px solid var(--panel-border);
+      border-bottom: 1px solid rgba(42, 255, 158, 0.2);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -241,7 +228,6 @@
       font-size: 1.15rem;
       font-weight: 800;
       letter-spacing: 0.04em;
-      color: var(--text-on-panel);
     }
 
     .sidebar-tabs {
@@ -253,7 +239,7 @@
     .tab-button {
       background: none;
       border: none;
-      color: var(--text-on-panel-muted);
+      color: var(--text-secondary);
       text-align: left;
       padding: 16px 20px;
       font-family: 'Nunito', sans-serif;
@@ -266,16 +252,16 @@
       transition: background 0.22s ease, color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease, font-weight 0.15s;
     }
     .tab-button:hover {
-      background: rgba(66, 245, 191, 0.28);
-      color: var(--text-on-accent);
+      background: rgba(42, 255, 158, 0.12);
+      color: var(--neon-green);
       font-weight: 700;
       transform: translateX(4px);
-      box-shadow: inset 3px 0 0 rgba(66, 245, 191, 0.85);
+      box-shadow: inset 3px 0 0 rgba(42, 255, 158, 0.65);
     }
 
     .tab-button.active {
-      background: linear-gradient(90deg, rgba(66, 245, 191, 0.55) 0%, rgba(66, 245, 191, 0.22) 100%);
-      color: var(--text-on-accent);
+      background: linear-gradient(90deg, rgba(42, 255, 158, 0.18) 0%, rgba(42, 255, 158, 0.06) 100%);
+      color: var(--neon-green);
       font-weight: 800;
       box-shadow: inset 3px 0 0 var(--neon-green);
     }
@@ -340,10 +326,10 @@
       margin: 24px 5% 40px;
       padding: 28px 22px;
       border-radius: 16px;
-      border: 1px dashed rgba(255, 255, 255, 0.25);
-      background: var(--panel-bg-elevated);
+      border: 1px dashed rgba(42, 255, 158, 0.28);
+      background: rgba(0, 0, 0, 0.28);
       text-align: center;
-      color: var(--text-on-panel-muted);
+      color: var(--text-secondary);
       font-weight: 700;
       font-size: 0.92rem;
       line-height: 1.45;
@@ -357,7 +343,7 @@
       position: relative;
       height: 420px;
       overflow: hidden;
-      border-bottom: 1px solid rgba(13, 148, 136, 0.2);
+      border-bottom: 1px solid rgba(42, 255, 158, 0.2);
     }
     .carousel-container { position: relative; width: 100%; height: 100%; }
     .carousel-slide {
@@ -394,22 +380,21 @@
       position: relative;
       z-index: 2;
       max-width: 600px;
-      color: var(--text-on-panel);
-      background: rgba(74, 95, 89, 0.94);
+      background: rgba(6, 8, 12, 0.72);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       padding: 24px;
       border-radius: 20px;
-      border: 1px solid var(--panel-border);
+      border: 1px solid rgba(42, 255, 158, 0.2);
       border-left: 4px solid var(--neon-green);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 40px rgba(42, 255, 158, 0.06);
     }
-    .slide-info h2 { font-size: 2rem; font-weight: 900; margin-bottom: 8px; color: var(--text-on-panel); }
-    .slide-info p { font-size: 0.9rem; margin-bottom: 16px; opacity: 0.9; color: var(--text-on-panel-muted); }
+    .slide-info h2 { font-size: 2rem; font-weight: 900; margin-bottom: 8px; }
+    .slide-info p { font-size: 0.9rem; margin-bottom: 16px; opacity: 0.9; }
     .slide-info .game-meta { display: flex; gap: 20px; margin-bottom: 16px; font-size: 0.8rem; }
     .slide-play-button {
       background: var(--neon-green);
-      color: var(--text-on-accent);
+      color: #000;
       border: none;
       padding: 8px 24px;
       border-radius: 40px;
@@ -419,7 +404,7 @@
     }
     .slide-play-button:hover {
       transform: translateY(-3px) scale(1.04);
-      box-shadow: 0 10px 28px rgba(13, 148, 136, 0.45), 0 0 20px rgba(13, 148, 136, 0.25);
+      box-shadow: 0 10px 28px rgba(42, 255, 158, 0.45), 0 0 20px rgba(42, 255, 158, 0.25);
       filter: brightness(1.08);
     }
     .slide-play-button:active {
@@ -445,12 +430,12 @@
     .carousel-dot.active {
       width: 28px;
       background: var(--neon-green);
-      box-shadow: 0 0 14px rgba(13, 148, 136, 0.65);
+      box-shadow: 0 0 14px rgba(42, 255, 158, 0.65);
       animation: siteDotPulse 2.2s ease-in-out infinite;
     }
     @keyframes siteDotPulse {
-      0%, 100% { box-shadow: 0 0 12px rgba(13, 148, 136, 0.5); }
-      50% { box-shadow: 0 0 22px rgba(13, 148, 136, 0.85); }
+      0%, 100% { box-shadow: 0 0 12px rgba(42, 255, 158, 0.5); }
+      50% { box-shadow: 0 0 22px rgba(42, 255, 158, 0.85); }
     }
 
     /* Category rows */
@@ -499,13 +484,12 @@
       width: 260px;
       aspect-ratio: 16 / 9;
       border-radius: 16px;
-      background-color: var(--card-bg);
-      color: var(--text-on-panel);
+      background-color: #151A22;
       cursor: pointer;
       position: relative;
       overflow: hidden;
-      border: 1px solid var(--panel-border);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(42, 255, 158, 0.12);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
       transition: transform 0.28s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.28s ease, border-color 0.28s ease;
       scroll-snap-align: start;
     }
@@ -524,8 +508,8 @@
     }
     .game-card:hover {
       transform: translateY(-6px) scale(1.035);
-      border-color: rgba(13, 148, 136, 0.45);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 28px rgba(13, 148, 136, 0.2), 0 0 0 1px rgba(13, 148, 136, 0.15) inset;
+      border-color: rgba(42, 255, 158, 0.45);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), 0 0 28px rgba(42, 255, 158, 0.2), 0 0 0 1px rgba(42, 255, 158, 0.15) inset;
     }
     .card-overlay {
       position: absolute;
@@ -593,16 +577,14 @@
     /* Full games list */
     .full-games-list {
       padding: 40px 5% 60px;
-      background: var(--panel-bg);
-      border-top: 1px solid var(--panel-border);
-      color: var(--text-on-panel);
+      background: rgba(10, 12, 16, 0.95);
+      border-top: 1px solid rgba(42, 255, 158, 0.2);
     }
     .full-games-list h2 {
       font-size: 1.6rem;
       font-weight: 800;
       text-align: center;
       margin-bottom: 20px;
-      color: var(--text-on-panel);
     }
     .search-bar-container {
       display: flex;
@@ -613,10 +595,10 @@
       width: 100%;
       max-width: 400px;
       padding: 10px 18px;
-      background: rgba(0, 0, 0, 0.22);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: #1A1E26;
+      border: 1px solid #2E3A48;
       border-radius: 60px;
-      color: var(--text-on-panel);
+      color: white;
       font-size: 0.9rem;
     }
     .search-input:focus {
@@ -632,12 +614,12 @@
     .full-game-item {
       content-visibility: auto;
       contain-intrinsic-size: 200px 240px;
-      background: var(--panel-bg-elevated);
+      background: #151A22;
       border-radius: 16px;
       overflow: hidden;
       cursor: pointer;
       transition: transform 0.2s;
-      border: 1px solid var(--panel-border);
+      border: 1px solid #2A2F3A;
     }
     .full-game-item:hover {
       transform: translateY(-4px);
@@ -671,20 +653,18 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      color: var(--text-on-panel);
     }
     .full-game-meta {
       display: flex;
       justify-content: center;
       gap: 12px;
       font-size: 0.7rem;
-      color: var(--text-on-panel-muted);
+      color: var(--text-secondary);
     }
 
     /* Header */
     header {
-      background: rgba(74, 95, 89, 0.92);
-      color: var(--text-on-panel);
+      background: rgba(8, 10, 14, 0.78);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       padding: 12px 5%;
@@ -694,8 +674,8 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      border-bottom: 1px solid var(--panel-border);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      border-bottom: 1px solid rgba(42, 255, 158, 0.28);
+      box-shadow: 0 4px 28px rgba(0, 0, 0, 0.45), 0 0 40px rgba(42, 255, 158, 0.04);
     }
 
     .logo {
@@ -710,7 +690,7 @@
     .logo h1 {
       font-size: 1.4rem;
       font-weight: 900;
-      background: linear-gradient(120deg, #ffffff 0%, var(--page-mint) 45%, #b8fff0 70%, #ffffff 100%);
+      background: linear-gradient(120deg, #fff 0%, var(--neon-green) 45%, #7af5c8 75%, #fff 100%);
       background-size: 200% auto;
       -webkit-background-clip: text;
       background-clip: text;
@@ -729,19 +709,19 @@
       align-items: center;
     }
     nav a {
-      color: var(--text-on-panel);
+      color: #fff;
       text-decoration: none;
       font-size: 0.85rem;
       font-weight: 700;
       padding: 6px 14px;
       border-radius: 40px;
       transition: background 0.25s ease, color 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.2, 0.64, 1), box-shadow 0.25s ease;
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
     }
     nav a:hover, nav a.active {
       background: var(--neon-green);
-      color: var(--text-on-accent);
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+      color: #000;
+      box-shadow: 0 0 16px rgba(42, 255, 158, 0.55), 0 4px 14px rgba(0, 0, 0, 0.35);
       transform: translateY(-2px);
     }
     #user-info {
@@ -761,7 +741,6 @@
     #user-name {
       font-size: 0.8rem;
       font-weight: 700;
-      color: var(--text-on-panel);
     }
     #logout-btn {
       background: none;
@@ -787,9 +766,8 @@
       font-weight: 800;
       margin-bottom: 20px;
       padding-bottom: 12px;
-      border-bottom: 1px solid rgba(10, 15, 14, 0.12);
-      text-shadow: none;
-      color: var(--text-on-mint);
+      border-bottom: 1px solid rgba(42, 255, 158, 0.22);
+      text-shadow: 0 0 40px rgba(42, 255, 158, 0.12);
       position: relative;
     }
     .page-title::after {
@@ -873,7 +851,7 @@
       width: 100%;
       margin-top: 30px;
       padding-top: 20px;
-      border-top: 1px solid rgba(13, 148, 136, 0.2);
+      border-top: 1px solid rgba(42, 255, 158, 0.2);
     }
 
     .stat-item {
@@ -929,7 +907,7 @@
       background: rgba(255, 255, 255, 0.05);
       border-radius: 10px;
       margin-bottom: 15px;
-      border: 1px solid rgba(13, 148, 136, 0.1);
+      border: 1px solid rgba(42, 255, 158, 0.1);
     }
 
     .history-item img {
@@ -962,7 +940,7 @@
       align-items: center;
       margin-bottom: 30px;
       padding-bottom: 15px;
-      border-bottom: 1px solid rgba(13, 148, 136, 0.2);
+      border-bottom: 1px solid rgba(42, 255, 158, 0.2);
     }
 
     .balance-display {
@@ -1095,7 +1073,7 @@
       background: rgba(0,0,0,0.25);
       padding: 5px 14px;
       border-radius: 999px;
-      border: 1px solid rgba(13,148,136,0.2);
+      border: 1px solid rgba(42,255,158,0.2);
     }
     .market-pack-price .fa-coins { color: #ffe066; }
 
@@ -1113,7 +1091,7 @@
       cursor: pointer;
       border-radius: 12px;
       overflow: hidden;
-      border: 1px solid rgba(13,148,136,0.18);
+      border: 1px solid rgba(42,255,158,0.18);
       background: rgba(0,0,0,0.35);
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
       display: flex;
@@ -1123,7 +1101,7 @@
     .shop-banner-card:hover {
       transform: translateY(-3px);
       box-shadow: 0 10px 28px rgba(0,0,0,0.45);
-      border-color: rgba(13,148,136,0.45);
+      border-color: rgba(42,255,158,0.45);
     }
     .shop-banner-card-visual {
       width: 100%;
@@ -1165,7 +1143,7 @@
       background: rgba(0,0,0,0.28);
       padding: 4px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(13,148,136,0.15);
+      border: 1px solid rgba(42,255,158,0.15);
     }
 
     .staff-pack-preview-box {
@@ -1233,7 +1211,7 @@
       font-weight: 900;
       text-transform: uppercase;
       color: var(--neon-green);
-      text-shadow: 0 0 10px #0d9488, 0 0 20px #0d9488;
+      text-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14;
     }
 
     .pack-price {
@@ -1269,7 +1247,7 @@
 
     .buy-btn {
       background: var(--neon-green);
-      color: #fff;
+      color: #000;
       border: none;
       padding: 12px 20px;
       border-radius: 50px;
@@ -1284,8 +1262,7 @@
 
     .buy-btn:hover {
       background: #fff;
-      color: var(--text-on-accent);
-      box-shadow: 0 0 12px rgba(66, 245, 191, 0.55);
+      box-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14;
     }
 
     .chance-btn {
@@ -1305,14 +1282,14 @@
 
     .chance-btn:hover {
       background: var(--neon-green);
-      color: #fff;
+      color: #000;
     }
 
     /* Inventory Page - Blooket Style */
     .inventory-header {
       margin-bottom: 30px;
       padding-bottom: 15px;
-      border-bottom: 1px solid rgba(13, 148, 136, 0.2);
+      border-bottom: 1px solid rgba(42, 255, 158, 0.2);
     }
 
     .inventory-filter-bar {
@@ -1336,7 +1313,7 @@
 
     .filter-btn:hover, .filter-btn.active {
       background: var(--neon-green);
-      color: var(--text-on-accent);
+      color: #000;
       border-color: var(--neon-green);
     }
 
@@ -1350,7 +1327,7 @@
       gap: 12px;
       margin-bottom: 16px;
       padding-bottom: 10px;
-      border-bottom: 2px solid rgba(13, 148, 136, 0.15);
+      border-bottom: 2px solid rgba(42, 255, 158, 0.15);
     }
 
     #inventory-container .pack-title {
@@ -1360,7 +1337,7 @@
     }
 
     #inventory-container .pack-count {
-      background: rgba(13, 148, 136, 0.15);
+      background: rgba(42, 255, 158, 0.15);
       padding: 4px 12px;
       border-radius: 20px;
       font-size: 0.8rem;
@@ -1500,7 +1477,7 @@
 
     .card-action-btn.send-btn {
       background: var(--neon-green);
-      color: #fff;
+      color: #000;
     }
 
     .card-action-btn.use-btn {
@@ -1517,7 +1494,7 @@
 
     .inv-stat {
       background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(13, 148, 136, 0.15);
+      border: 1px solid rgba(42, 255, 158, 0.15);
       border-radius: 12px;
       padding: 12px 20px;
       display: flex;
@@ -1551,7 +1528,7 @@
     }
     .inv-blooks-sub {
       font-size: 0.88rem;
-      color: var(--text-on-mint-muted);
+      color: var(--text-secondary);
       margin: 0 0 20px;
       max-width: 520px;
     }
@@ -1559,13 +1536,13 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--panel-bg);
-      border: 1px solid var(--panel-border);
+      background: rgba(0,0,0,0.35);
+      border: 1px solid rgba(42,255,158,0.25);
       padding: 8px 16px;
       border-radius: 999px;
       font-weight: 800;
       font-size: 1rem;
-      color: var(--text-on-panel);
+      color: var(--neon-green);
     }
     .inv-blooks-tokens .fa-coins { color: #ffe066; }
     .inv-pack-tabs {
@@ -1581,9 +1558,9 @@
       flex: 0 0 auto;
       padding: 10px 18px;
       border-radius: 12px;
-      border: 2px solid rgba(10, 15, 14, 0.12);
-      background: rgba(255,255,255,0.22);
-      color: var(--text-on-mint-muted);
+      border: 2px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: var(--text-secondary);
       font-weight: 800;
       font-size: 0.82rem;
       cursor: pointer;
@@ -1591,13 +1568,13 @@
       transition: background 0.2s, border-color 0.2s, color 0.2s;
     }
     .inv-pack-tab:hover {
-      border-color: rgba(10, 15, 14, 0.2);
-      color: var(--text-on-mint);
+      border-color: rgba(42,255,158,0.35);
+      color: var(--text-primary);
     }
     .inv-pack-tab.active {
       background: var(--neon-green);
-      color: var(--text-on-accent);
-      border-color: rgba(0,0,0,0.06);
+      color: #000;
+      border-color: var(--neon-green);
     }
     .inv-blooks-layout {
       display: flex;
@@ -1688,7 +1665,7 @@
       transform: scale(1.06);
     }
     .inv-blook-slot.selected {
-      filter: drop-shadow(0 0 10px rgba(13,148,136,0.55));
+      filter: drop-shadow(0 0 10px rgba(42,255,158,0.55));
     }
     .inv-blook-slot-inner {
       width: 72px;
@@ -1760,14 +1737,13 @@
     }
     .inv-blook-detail {
       border-radius: 20px;
-      border: 1px solid var(--panel-border);
-      background-color: var(--panel-bg-elevated);
-      color: var(--text-on-panel);
+      border: 1px solid rgba(42,255,158,0.22);
+      background-color: #07090e;
       background-image: none;
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18), inset 0 0 0 1px rgba(255,255,255,0.08);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.04);
       padding: 22px 18px 20px;
       display: flex;
       flex-direction: column;
@@ -1781,15 +1757,15 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.28);
+      background: rgba(0, 0, 0, 0.52);
       pointer-events: none;
       z-index: 0;
     }
     .inv-blook-detail.inv-blook-detail--opening-bg::before {
-      background: rgba(0, 0, 0, 0.22);
+      background: rgba(0, 0, 0, 0.42);
     }
     .inv-blook-detail.inv-blook-detail--reveal-bg::before {
-      background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.38) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.38) 0%, rgba(0,0,0,0.52) 100%);
     }
     .inv-blook-detail > * {
       position: relative;
@@ -1799,10 +1775,10 @@
       font-family: 'Titan One', 'Nunito', sans-serif;
       font-size: clamp(1.05rem, 2.2vw, 1.35rem);
       font-weight: 400;
-      color: var(--text-on-panel);
+      color: #fff;
       margin: 0 0 8px;
       line-height: 1.15;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.35);
+      text-shadow: 0 2px 14px rgba(0,0,0,0.55);
     }
     .inv-blook-detail-rarity {
       font-size: 0.72rem;
@@ -1812,10 +1788,10 @@
       margin: 0 0 10px;
       padding: 4px 12px;
       border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.25);
-      background: rgba(0,0,0,0.25);
-      color: var(--text-on-panel-muted);
-      text-shadow: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.35);
+      color: var(--text-secondary);
+      text-shadow: 0 1px 8px rgba(0,0,0,0.45);
     }
     .inv-blook-detail-stars {
       font-size: 0.88rem;
@@ -1890,7 +1866,7 @@
     }
     .inv-blook-detail-placeholder {
       font-size: 0.9rem;
-      color: var(--text-on-panel-muted);
+      color: rgba(255,255,255,0.75);
       margin: auto;
       padding: 24px 12px;
       line-height: 1.5;
@@ -1898,7 +1874,7 @@
     .inv-blook-modal .inv-blook-modal-content {
       max-width: 400px;
       border-radius: 20px;
-      border: 1px solid rgba(13,148,136,0.25);
+      border: 1px solid rgba(42,255,158,0.25);
     }
     .inv-blook-modal-body {
       position: relative;
@@ -1915,7 +1891,7 @@
       border: none;
       border-radius: 50%;
       background: rgba(255,255,255,0.08);
-      color: var(--text-on-panel);
+      color: var(--text-primary);
       font-size: 1.4rem;
       line-height: 1;
       cursor: pointer;
@@ -1992,7 +1968,7 @@
       font-weight: 800;
       margin-bottom: 20px;
       padding-bottom: 10px;
-      border-bottom: 1px solid rgba(13, 148, 136, 0.2);
+      border-bottom: 1px solid rgba(42, 255, 158, 0.2);
     }
 
     .gifts-grid {
@@ -2149,7 +2125,7 @@
     .add-friend-form input {
       flex: 1;
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(13, 148, 136, 0.2);
+      border: 1px solid rgba(42, 255, 158, 0.2);
       border-radius: 20px;
       padding: 10px 15px;
       color: white;
@@ -2163,7 +2139,7 @@
 
     .add-friend-form button {
       background: var(--neon-green);
-      color: #fff;
+      color: #000;
       border: none;
       border-radius: 20px;
       padding: 10px 15px;
@@ -2187,7 +2163,7 @@
     }
 
     .friend-item:hover, .friend-item.active {
-      background: rgba(13, 148, 136, 0.1);
+      background: rgba(42, 255, 158, 0.1);
       border: 1px solid var(--neon-green);
     }
 
@@ -2241,7 +2217,7 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      border: 3px solid rgba(13,148,136,0.2);
+      border: 3px solid rgba(42,255,158,0.2);
       border-top-color: var(--neon-green);
       animation: chatSpin 0.75s linear infinite;
     }
@@ -2265,7 +2241,7 @@
     }
 
     .chat-message.user {
-      background: rgba(13, 148, 136, 0.08);
+      background: rgba(42, 255, 158, 0.08);
       margin-left: 15%;
     }
 
@@ -2356,7 +2332,7 @@
     }
     .chat-attach-btn {
       background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(13,148,136,0.25);
+      border: 1px solid rgba(42,255,158,0.25);
       color: var(--neon-green);
       border-radius: 50%;
       width: 42px;
@@ -2367,10 +2343,10 @@
       cursor: pointer;
       font-size: 1rem;
     }
-    .chat-attach-btn:hover { background: rgba(13,148,136,0.12); }
+    .chat-attach-btn:hover { background: rgba(42,255,158,0.12); }
     .chat-link-btn {
       background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(13,148,136,0.25);
+      border: 1px solid rgba(42,255,158,0.25);
       color: var(--neon-green);
       border-radius: 20px;
       padding: 0 12px;
@@ -2385,7 +2361,7 @@
     .chat-input input {
       flex: 1;
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(13, 148, 136, 0.2);
+      border: 1px solid rgba(42, 255, 158, 0.2);
       border-radius: 20px;
       padding: 12px 20px;
       color: white;
@@ -2399,7 +2375,7 @@
 
     .chat-input button {
       background: var(--neon-green);
-      color: #fff;
+      color: #000;
       border: none;
       border-radius: 20px;
       padding: 12px 20px;
@@ -2434,7 +2410,7 @@
       width: 100%;
       padding: 12px;
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(13, 148, 136, 0.2);
+      border: 1px solid rgba(42, 255, 158, 0.2);
       border-radius: 12px;
       color: white;
       font-size: 1rem;
@@ -2465,7 +2441,7 @@
       margin: 15px 0;
       padding: 10px;
       background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(13, 148, 136, 0.2);
+      border: 1px solid rgba(42, 255, 158, 0.2);
       border-radius: 12px;
       text-align: center;
       cursor: pointer;
@@ -2473,7 +2449,7 @@
 
     .settings-btn {
       background: var(--neon-green);
-      color: #fff;
+      color: #000;
       border: none;
       padding: 12px 20px;
       border-radius: 20px;
@@ -2503,8 +2479,8 @@
     }
 
     .modal-content {
-      background: var(--panel-bg-elevated);
-      border: 2px solid rgba(13, 148, 136, 0.35);
+      background: rgba(10, 12, 16, 0.95);
+      border: 2px solid var(--neon-green);
       border-radius: 24px;
       width: 550px;
       max-width: 90%;
@@ -2604,7 +2580,7 @@
       background:
         radial-gradient(ellipse 55% 45% at 25% 25%, var(--pack-aurora-inner, rgba(90, 106, 138, 0.42)), transparent 58%),
         radial-gradient(ellipse 50% 40% at 78% 72%, var(--pack-aurora-outer, rgba(26, 34, 51, 0.5)), transparent 55%),
-        radial-gradient(ellipse 40% 35% at 50% 50%, rgba(13, 148, 136, 0.1), transparent 60%);
+        radial-gradient(ellipse 40% 35% at 50% 50%, rgba(42, 255, 158, 0.1), transparent 60%);
       animation: packAuroraFloat 9s ease-in-out infinite;
       opacity: 0.88;
       mix-blend-mode: screen;
@@ -2613,9 +2589,9 @@
       animation: none;
       opacity: 0.55;
       background:
-        radial-gradient(ellipse 62% 52% at 32% 28%, var(--pack-aurora-rare-a, rgba(13, 148, 136, 0.32)), transparent 54%),
+        radial-gradient(ellipse 62% 52% at 32% 28%, var(--pack-aurora-rare-a, rgba(42, 255, 158, 0.32)), transparent 54%),
         radial-gradient(ellipse 58% 48% at 72% 68%, var(--pack-aurora-rare-b, rgba(255, 255, 255, 0.1)), transparent 52%),
-        radial-gradient(ellipse 48% 42% at 50% 50%, var(--pack-aurora-rare-c, rgba(13, 148, 136, 0.08)), transparent 58%);
+        radial-gradient(ellipse 48% 42% at 50% 50%, var(--pack-aurora-rare-c, rgba(42, 255, 158, 0.08)), transparent 58%);
     }
     @keyframes packAuroraFloat {
       0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
@@ -2641,15 +2617,15 @@
       inset: -50%;
       background: conic-gradient(from 0deg at 50% 50%,
         transparent 0deg,
-        rgba(13, 148, 136, 0.04) 25deg,
+        rgba(42, 255, 158, 0.04) 25deg,
         transparent 55deg,
         rgba(255, 255, 255, 0.03) 88deg,
         transparent 120deg,
-        rgba(13, 148, 136, 0.05) 160deg,
+        rgba(42, 255, 158, 0.05) 160deg,
         transparent 200deg,
         rgba(120, 140, 255, 0.04) 240deg,
         transparent 280deg,
-        rgba(13, 148, 136, 0.035) 310deg,
+        rgba(42, 255, 158, 0.035) 310deg,
         transparent 360deg);
       animation: packRaysSpin 48s linear infinite;
       opacity: 0.5;
@@ -2690,7 +2666,7 @@
       inset: -5%;
       z-index: 4;
       pointer-events: none;
-      background: radial-gradient(ellipse 70% 55% at 50% 42%, rgba(13, 148, 136, 0.07), transparent 62%);
+      background: radial-gradient(ellipse 70% 55% at 50% 42%, rgba(42, 255, 158, 0.07), transparent 62%);
       animation: packUnboxBodyGlow 5.5s ease-in-out infinite;
     }
     @keyframes packUnboxBodyGlow {
@@ -2733,8 +2709,8 @@
       animation: packRevealCardIn 0.82s cubic-bezier(0.18, 1.2, 0.28, 1) both;
     }
     @keyframes packRevealCardIn {
-      0% { opacity: 0; transform: scale(0.88) translateY(28px) rotate(-2deg); filter: blur(6px); box-shadow: 0 0 0 rgba(13,148,136,0); }
-      40% { opacity: 1; transform: scale(1.04) translateY(-6px) rotate(0.6deg); filter: blur(0); box-shadow: 0 0 36px rgba(13,148,136,0.28); }
+      0% { opacity: 0; transform: scale(0.88) translateY(28px) rotate(-2deg); filter: blur(6px); box-shadow: 0 0 0 rgba(42,255,158,0); }
+      40% { opacity: 1; transform: scale(1.04) translateY(-6px) rotate(0.6deg); filter: blur(0); box-shadow: 0 0 36px rgba(42,255,158,0.28); }
       70% { transform: scale(0.98) translateY(3px) rotate(-0.3deg); box-shadow: 0 12px 36px rgba(0,0,0,0.45); }
       100% { opacity: 1; transform: scale(1) translateY(0) rotate(0); filter: blur(0); box-shadow: 0 14px 44px rgba(0,0,0,0.5); }
     }
@@ -2743,7 +2719,7 @@
       min-height: min(72vh, 520px);
       margin: 0 auto;
       border-radius: 14px;
-      border: 2px solid rgba(13,148,136,0.35);
+      border: 2px solid rgba(42,255,158,0.35);
       padding: 18px 16px 14px;
       display: flex;
       flex-direction: column;
@@ -2767,7 +2743,7 @@
       font-size: 1.56rem;
       font-weight: 400;
       color: #fff;
-      text-shadow: 0 2px 12px rgba(0,0,0,0.75), 0 0 24px rgba(13,148,136,0.15);
+      text-shadow: 0 2px 12px rgba(0,0,0,0.75), 0 0 24px rgba(42,255,158,0.15);
       line-height: 1.15;
       margin-bottom: 6px;
     }
@@ -2880,7 +2856,7 @@
       height: 48px;
       border-radius: 14px;
       background: rgba(0,0,0,0.45);
-      border: 1px solid rgba(13,148,136,0.35);
+      border: 1px solid rgba(42,255,158,0.35);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -2896,7 +2872,7 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: var(--neon-green);
-      text-shadow: 0 0 12px rgba(13, 148, 136, 0.45);
+      text-shadow: 0 0 12px rgba(42, 255, 158, 0.45);
       animation: packUnboxHintPulse 1.4s ease-in-out infinite;
     }
     .pack-unbox-hint.is-hidden {
@@ -2984,7 +2960,7 @@
     }
     @keyframes packBlookPeekPulse {
       0%, 100% { transform: scale(1) translateY(0); filter: brightness(1) drop-shadow(0 8px 20px rgba(0,0,0,0.4)); }
-      33% { transform: scale(1.045) translateY(-2px); filter: brightness(1.1) drop-shadow(0 14px 28px rgba(13,148,136,0.2)); }
+      33% { transform: scale(1.045) translateY(-2px); filter: brightness(1.1) drop-shadow(0 14px 28px rgba(42,255,158,0.2)); }
       66% { transform: scale(1.02) translateY(1px); filter: brightness(1.05); }
     }
     @keyframes packBlookRevealPop {
@@ -3219,7 +3195,7 @@
 
     .collect-btn, .confirm-btn, .cancel-btn {
       background: var(--neon-green);
-      color: var(--text-on-accent);
+      color: #000;
       border: none;
       padding: 12px 30px;
       border-radius: 50px;
@@ -3233,19 +3209,18 @@
 
     .collect-btn:hover, .confirm-btn:hover {
       background: #fff;
-      color: var(--text-on-accent);
-      box-shadow: 0 0 12px rgba(66, 245, 191, 0.65);
+      box-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14;
     }
 
     .cancel-btn {
       background: transparent;
-      color: var(--text-on-panel);
-      border: 1px solid rgba(255, 255, 255, 0.45);
+      color: var(--neon-green);
+      border: 1px solid var(--neon-green);
       margin-left: 15px;
     }
 
     .cancel-btn:hover {
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(42, 255, 158, 0.1);
     }
 
     .send-form {
@@ -3269,7 +3244,7 @@
       padding: 12px 15px;
       border-radius: 8px;
       background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(13, 148, 136, 0.3);
+      border: 1px solid rgba(42, 255, 158, 0.3);
       color: white;
       font-size: 1rem;
     }
@@ -3326,7 +3301,7 @@
       align-items: center;
       margin-bottom: 20px;
       padding-bottom: 15px;
-      border-bottom: 1px solid rgba(13, 148, 136, 0.2);
+      border-bottom: 1px solid rgba(42, 255, 158, 0.2);
     }
 
     .user-profile-avatar {
@@ -3371,7 +3346,7 @@
       font-size: 1.2rem;
       margin-bottom: 15px;
       padding-bottom: 10px;
-      border-bottom: 1px solid rgba(13, 148, 136, 0.2);
+      border-bottom: 1px solid rgba(42, 255, 158, 0.2);
     }
 
     .user-profile-gifts {
@@ -3418,7 +3393,7 @@
       align-items: center;
       margin-bottom: 20px;
       padding-bottom: 15px;
-      border-bottom: 1px solid rgba(13, 148, 136, 0.2);
+      border-bottom: 1px solid rgba(42, 255, 158, 0.2);
     }
 
     .send-gift-avatar {
@@ -3459,7 +3434,7 @@
     }
 
     .gift-card-item:hover {
-      background: rgba(13, 148, 136, 0.1);
+      background: rgba(42, 255, 158, 0.1);
       border: 1px solid var(--neon-green);
     }
 
@@ -3510,15 +3485,14 @@
       justify-content: center;
     }
     .auth-modal-content, .notice-modal-content {
-      background: var(--panel-bg-elevated);
-      color: var(--text-on-panel);
+      background: #11161F;
       padding: 30px;
       border-radius: 24px;
       text-align: center;
       max-width: 420px;
       width: 90%;
-      border: 1px solid var(--panel-border);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--neon-green);
+      box-shadow: 0 0 30px rgba(42, 255, 158, 0.2);
     }
     .auth-modal-content h3, .notice-modal-content h3 {
       font-size: 1.6rem;
@@ -3534,15 +3508,15 @@
       width: 100%;
       padding: 12px;
       margin: 10px 0;
-      background: rgba(0, 0, 0, 0.22);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: #1E242E;
+      border: 1px solid #2E3A48;
       border-radius: 12px;
-      color: var(--text-on-panel);
+      color: white;
       font-size: 0.9rem;
     }
     .auth-btn {
       background: var(--neon-green);
-      color: var(--text-on-accent);
+      color: #000;
       border: none;
       padding: 10px 20px;
       border-radius: 40px;
@@ -3555,7 +3529,7 @@
     .switch-auth {
       margin-top: 15px;
       font-size: 0.8rem;
-      color: var(--text-on-panel-muted);
+      color: var(--text-secondary);
     }
     .switch-auth a {
       color: var(--neon-green);
@@ -3566,15 +3540,14 @@
       margin-top: 15px;
       background: none;
       border: none;
-      color: var(--text-on-panel-muted);
+      color: var(--text-secondary);
       cursor: pointer;
     }
     .file-label {
       display: block;
       margin: 10px 0;
       padding: 8px;
-      background: var(--panel-bg);
-      border: 1px solid var(--panel-border);
+      background: #2E3A48;
       border-radius: 12px;
       cursor: pointer;
       font-size: 0.8rem;
@@ -3624,7 +3597,7 @@
       cursor: pointer;
       border: none;
     }
-    .confirm-yes { background: var(--neon-green); color: #fff; }
+    .confirm-yes { background: var(--neon-green); color: #000; }
     .confirm-no { background: #2E3A48; color: #fff; }
 
     /* Game modal */
@@ -3678,7 +3651,7 @@
       background: rgba(0, 0, 0, 0.6);
       padding: 24px;
       border-radius: 20px;
-      border: 1px solid rgba(13, 148, 136, 0.3);
+      border: 1px solid rgba(42, 255, 158, 0.3);
     }
     .form-container h3 { font-weight: 800; margin-bottom: 16px; }
     .form-group input, .form-group textarea, .form-group select {
@@ -3691,7 +3664,7 @@
     }
     .submit-btn {
       background: var(--neon-green);
-      color: #fff;
+      color: #000;
       font-weight: 800;
       border-radius: 40px;
       padding: 10px;
@@ -3702,7 +3675,7 @@
       padding: 20px;
       color: #6C7A8F;
       font-size: 0.75rem;
-      border-top: 1px solid rgba(13, 148, 136, 0.1);
+      border-top: 1px solid rgba(42, 255, 158, 0.1);
     }
 
     /* Send Gift Card Modal */
@@ -3811,7 +3784,7 @@
 
     .send-card-btn.send {
       background: var(--neon-green);
-      color: #fff;
+      color: #000;
     }
 
     .send-card-btn.cancel {
@@ -3888,7 +3861,7 @@
     .mission-card:hover {
       transform: translateY(-5px);
       border-color: var(--neon-green);
-      box-shadow: 0 5px 15px rgba(13, 148, 136, 0.2);
+      box-shadow: 0 5px 15px rgba(42, 255, 158, 0.2);
     }
 
     .mission-header {
@@ -3965,7 +3938,7 @@
 
     .claim-btn {
       background: var(--neon-green);
-      color: #fff;
+      color: #000;
       border: none;
       padding: 8px 16px;
       border-radius: 20px;
@@ -3993,8 +3966,8 @@
       margin: 0 auto 28px;
       padding: 22px 24px;
       border-radius: 18px;
-      background: linear-gradient(135deg, rgba(13,148,136,0.12), rgba(255,61,108,0.08));
-      border: 1px solid rgba(13,148,136,0.35);
+      background: linear-gradient(135deg, rgba(42,255,158,0.12), rgba(255,61,108,0.08));
+      border: 1px solid rgba(42,255,158,0.35);
       text-align: center;
     }
     .daily-reward-card h3 {
@@ -4010,7 +3983,7 @@
     }
     .daily-reward-btn {
       background: var(--neon-green);
-      color: #fff;
+      color: #000;
       border: none;
       padding: 10px 28px;
       border-radius: 999px;
@@ -4048,7 +4021,7 @@
       margin-top: 5px;
       padding: 3px 8px;
       border-radius: 12px;
-      background: rgba(13, 148, 136, 0.1);
+      background: rgba(42, 255, 158, 0.1);
       color: var(--neon-green);
     }
     .user-title.gradient-title {
@@ -4108,7 +4081,7 @@
       display: block;
       background: transparent;
     }
-    .up-badge-icon:hover { transform: scale(1.12); box-shadow: 0 0 0 2px rgba(13,148,136,0.35); }
+    .up-badge-icon:hover { transform: scale(1.12); box-shadow: 0 0 0 2px rgba(42,255,158,0.35); }
     .up-badge-icon img {
       width: 100%; height: 100%; object-fit: contain; border-radius: 6px; display: block;
     }
@@ -4138,17 +4111,16 @@
       gap: 6px;
       flex-wrap: wrap;
       margin-bottom: 24px;
-      background: var(--panel-bg);
+      background: rgba(0,0,0,0.3);
       padding: 10px;
       border-radius: 16px;
-      border: 1px solid var(--panel-border);
     }
     .staff-sub-tab {
       padding: 11px 18px;
       border-radius: 12px;
-      border: 1px solid var(--panel-border);
-      background: var(--panel-bg-elevated);
-      color: var(--text-on-panel-muted);
+      border: 1px solid rgba(42,255,158,0.22);
+      background: linear-gradient(180deg, rgba(36,44,58,0.95), rgba(18,22,30,0.98));
+      color: var(--text-secondary);
       font-weight: 800;
       font-size: 0.84rem;
       cursor: pointer;
@@ -4156,20 +4128,20 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.35);
       font-family: 'Nunito', sans-serif;
     }
     .staff-sub-tab:hover {
       transform: translateY(-2px);
-      border-color: rgba(255,255,255,0.25);
-      color: var(--text-on-panel);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+      border-color: rgba(42,255,158,0.45);
+      color: var(--neon-green);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.45);
     }
     .staff-sub-tab.active {
-      background: var(--neon-green);
-      color: var(--text-on-accent);
-      border-color: rgba(0,0,0,0.06);
-      box-shadow: 0 6px 22px rgba(0,0,0,0.18);
+      background: linear-gradient(145deg, #3dffb0 0%, #2AFF9E 50%, #12c77a 100%);
+      color: #04120c;
+      border-color: rgba(42,255,158,0.65);
+      box-shadow: 0 6px 22px rgba(42,255,158,0.28);
     }
     .staff-section {
       display: none;
@@ -4180,18 +4152,17 @@
       content-visibility: visible;
     }
     .staff-card {
-      background: linear-gradient(165deg, var(--panel-bg-elevated) 0%, var(--panel-bg) 100%);
-      color: var(--text-on-panel);
-      border: 1px solid var(--panel-border);
+      background: linear-gradient(165deg, rgba(22,28,38,0.95) 0%, rgba(14,18,26,0.92) 100%);
+      border: 1px solid rgba(42,255,158,0.18);
       border-radius: 20px;
       padding: 24px;
       margin-bottom: 24px;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12), inset 0 0 0 1px rgba(255,255,255,0.06);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.03) inset;
       transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
     }
     .staff-card:hover {
-      border-color: rgba(255,255,255,0.22);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.18), inset 0 0 0 1px rgba(255,255,255,0.08);
+      border-color: rgba(42,255,158,0.32);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.42), 0 0 24px rgba(42,255,158,0.06);
       transform: translateY(-2px);
     }
     .staff-card-header {
@@ -4202,7 +4173,7 @@
       flex-wrap: wrap;
       gap: 12px;
     }
-    .staff-card-header h3 { font-size: 1.1rem; font-weight: 800; color: var(--text-on-panel); }
+    .staff-card-header h3 { font-size: 1.1rem; font-weight: 800; }
     .staff-stats-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
@@ -4210,17 +4181,17 @@
       margin-bottom: 28px;
     }
     .staff-stat-card {
-      background: rgba(0,0,0,0.18);
-      border: 1px solid var(--panel-border);
+      background: rgba(17,22,31,0.8);
+      border: 1px solid rgba(42,255,158,0.12);
       border-radius: 16px;
       padding: 16px;
     }
-    .staff-stat-card h4 { font-size: 0.8rem; color: var(--text-on-panel-muted); margin-bottom: 6px; }
-    .staff-stat-number { font-size: 1.8rem; font-weight: 900; color: var(--neon-green); text-shadow: 0 1px 2px rgba(0,0,0,0.35); }
+    .staff-stat-card h4 { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 6px; }
+    .staff-stat-number { font-size: 1.8rem; font-weight: 900; color: var(--neon-green); }
     .staff-table { width: 100%; border-collapse: collapse; }
-    .staff-table th, .staff-table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid rgba(13,148,136,0.08); font-size: 0.85rem; }
-    .staff-table th { color: var(--text-on-panel); font-weight: 700; }
-    .staff-table tr:hover { background: rgba(13,148,136,0.03); }
+    .staff-table th, .staff-table td { text-align: left; padding: 10px 8px; border-bottom: 1px solid rgba(42,255,158,0.08); font-size: 0.85rem; }
+    .staff-table th { color: var(--neon-green); font-weight: 700; }
+    .staff-table tr:hover { background: rgba(42,255,158,0.03); }
     .staff-btn {
       padding: 11px 22px;
       border-radius: 12px;
@@ -4241,19 +4212,19 @@
     .staff-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,0,0,0.45); }
     .staff-btn:active { transform: translateY(0); box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
     .staff-btn-primary {
-      background: var(--neon-green);
-      color: var(--text-on-accent);
-      border-color: rgba(0,0,0,0.08);
+      background: linear-gradient(145deg, #3dffb0 0%, #2AFF9E 40%, #12c77a 100%);
+      color: #04120c;
+      border-color: rgba(42,255,158,0.55);
     }
-    .staff-btn-primary:hover { filter: brightness(1.06); box-shadow: 0 8px 26px rgba(0,0,0,0.2); }
+    .staff-btn-primary:hover { filter: brightness(1.06); box-shadow: 0 8px 26px rgba(42,255,158,0.35); }
     .staff-btn:not(.staff-btn-primary):not(.staff-btn-danger):not(.staff-btn-warning) {
-      background: rgba(0,0,0,0.2);
-      color: var(--text-on-panel);
-      border-color: var(--panel-border);
+      background: linear-gradient(180deg, rgba(40,48,62,0.95), rgba(22,28,38,0.98));
+      color: var(--text-primary);
+      border-color: rgba(42,255,158,0.22);
     }
     .staff-btn:not(.staff-btn-primary):not(.staff-btn-danger):not(.staff-btn-warning):hover {
-      border-color: rgba(255,255,255,0.3);
-      color: var(--text-on-panel);
+      border-color: rgba(42,255,158,0.45);
+      color: var(--neon-green);
     }
     .staff-btn-danger {
       background: linear-gradient(145deg, #ff5c82 0%, #FF3D6C 45%, #c92a4d 100%);
@@ -4268,26 +4239,25 @@
     }
     .staff-btn-warning:hover { filter: brightness(1.05); box-shadow: 0 8px 26px rgba(255,179,71,0.3); }
     .staff-btn-sm { padding: 7px 14px; font-size: 0.76rem; border-radius: 10px; }
-    .staff-badge { background: rgba(0,0,0,0.22); padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; color: var(--neon-green); display: inline-block; margin: 2px; }
-    .staff-search { background: rgba(0,0,0,0.22); border: 1px solid var(--panel-border); border-radius: 20px; padding: 8px 16px; color: var(--text-on-panel); width: 260px; font-size: 0.85rem; }
+    .staff-badge { background: rgba(42,255,158,0.15); padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; color: var(--neon-green); display: inline-block; margin: 2px; }
+    .staff-search { background: rgba(30,38,50,0.8); border: 1px solid rgba(42,255,158,0.2); border-radius: 20px; padding: 8px 16px; color: white; width: 260px; font-size: 0.85rem; }
     .staff-search:focus { outline: none; border-color: var(--neon-green); }
     .staff-form-group { margin-bottom: 14px; }
-    .staff-form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; color: var(--text-on-panel-muted); }
+    .staff-form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; color: var(--text-secondary); }
     .staff-form-group input, .staff-form-group select, .staff-form-group textarea {
-      background: rgba(0,0,0,0.22);
-      border: 1px solid var(--panel-border);
+      background: rgba(30,38,50,0.8);
+      border: 1px solid rgba(42,255,158,0.2);
       border-radius: 12px;
       padding: 10px 14px;
-      color: var(--text-on-panel);
+      color: white;
       width: 100%;
       font-size: 0.85rem;
     }
     .staff-form-group input:focus, .staff-form-group select:focus, .staff-form-group textarea:focus { outline: none; border-color: var(--neon-green); }
     .staff-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; }
     .staff-modal-content {
-      background: var(--panel-bg-elevated);
-      color: var(--text-on-panel);
-      border: 1px solid var(--panel-border);
+      background: #11161F;
+      border: 1px solid var(--neon-green);
       border-radius: 20px;
       padding: 24px;
       width: 600px;
@@ -4295,7 +4265,7 @@
       max-height: 85vh;
       overflow-y: auto;
     }
-    .staff-modal-content h3 { margin-bottom: 16px; font-weight: 800; color: var(--text-on-panel); }
+    .staff-modal-content h3 { margin-bottom: 16px; font-weight: 800; }
     .staff-flex-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
     .title-preview {
       padding: 6px 14px;
@@ -4348,7 +4318,7 @@
       font-weight: 600;
       transition: 0.15s;
     }
-    .chat-viewer-user:hover, .chat-viewer-user.active { background: rgba(13,148,136,0.15); color: var(--neon-green); }
+    .chat-viewer-user:hover, .chat-viewer-user.active { background: rgba(42,255,158,0.15); color: var(--neon-green); }
     .chat-viewer-messages {
       flex: 1;
       background: rgba(0,0,0,0.3);
@@ -4390,12 +4360,10 @@
     .up-container {
       max-width: 700px;
       margin: 0 auto;
-      background: var(--panel-bg-elevated);
-      color: var(--text-on-panel);
+      background: #11161F;
       border-radius: 20px;
       padding: 20px;
-      border: 1px solid var(--panel-border);
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.15);
+      border: 1px solid rgba(42, 255, 158, 0.2);
     }
     .up-header {
       display: flex;
@@ -4407,7 +4375,7 @@
       height: 72px;
       border-radius: 14px;
       overflow: hidden;
-      border: 2px solid var(--neon-green);
+      border: 2px solid #2AFF9E;
       flex-shrink: 0;
     }
     .up-avatar img { width: 100%; height: 100%; object-fit: cover; }
@@ -4417,7 +4385,7 @@
       height: 72px;
       border-radius: 14px;
       background: #1a2a3a;
-      border: 1px solid rgba(13, 148, 136, 0.15);
+      border: 1px solid rgba(42, 255, 158, 0.15);
       position: relative;
       overflow: hidden;
       display: flex;
@@ -4459,9 +4427,9 @@
       display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 2px;
     }
     .up-title-badge {
-      background: var(--neon-green); color: var(--text-on-accent);
+      background: rgba(42, 255, 158, 0.15); color: #2AFF9E;
       font-size: 0.6rem; padding: 2px 7px; border-radius: 20px;
-      font-weight: 800; border: 1px solid rgba(0,0,0,0.08);
+      font-weight: 800; border: 1px solid #2AFF9E;
     }
     .up-title-badge.gradient-title {
       background: none; border: none;
@@ -4478,17 +4446,17 @@
     .up-stat {
       background: rgba(0,0,0,0.25); border-radius: 12px; padding: 10px 12px;
       display: flex; align-items: center; gap: 10px;
-      border: 1px solid rgba(13,148,136,0.1);
+      border: 1px solid rgba(42,255,158,0.1);
     }
     .up-stat-icon { font-size: 1.2rem; display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
     .up-stat-val { font-size: 1rem; font-weight: 800; line-height: 1.1; }
-    .up-stat-lbl { font-size: 0.68rem; color: var(--text-on-panel-muted); }
+    .up-stat-lbl { font-size: 0.68rem; color: #8A9BB5; }
     .up-section {
       background: rgba(0,0,0,0.2); border-radius: 14px; padding: 14px;
-      margin-bottom: 14px; border: 1px solid rgba(13,148,136,0.08);
+      margin-bottom: 14px; border: 1px solid rgba(42,255,158,0.08);
     }
     .up-section-header {
-      font-weight: 800; font-size: 0.82rem; color: var(--text-on-panel);
+      font-weight: 800; font-size: 0.82rem; color: #2AFF9E;
       display: flex; align-items: center; gap: 6px; margin-bottom: 10px;
     }
     .up-section-count { margin-left: auto; font-size: 0.75rem; color: #8A9BB5; font-weight: 600; }
@@ -4496,7 +4464,7 @@
       background: #2E3A48; border-radius: 40px; height: 8px; overflow: hidden;
     }
     .progress-fill {
-      background: #0d9488; width: 0%; height: 100%; border-radius: 40px;
+      background: #2AFF9E; width: 0%; height: 100%; border-radius: 40px;
       transition: width 0.3s ease;
     }
     .up-blooks-grid {
@@ -4504,10 +4472,10 @@
     }
     .up-blook-card {
       background: rgba(0,0,0,0.3); border-radius: 12px; padding: 8px;
-      text-align: center; border: 1px solid rgba(13,148,136,0.12);
+      text-align: center; border: 1px solid rgba(42,255,158,0.12);
       transition: transform 0.2s;
     }
-    .up-blook-card:hover { transform: translateY(-2px); border-color: #0d9488; }
+    .up-blook-card:hover { transform: translateY(-2px); border-color: #2AFF9E; }
     .up-blook-img {
       width: 52px; height: 52px; margin: 0 auto 6px;
       border-radius: 10px; overflow: hidden; background: #1A1F2A;
@@ -4520,12 +4488,12 @@
     .up-friend-row {
       display: flex; align-items: center; gap: 6px; padding: 4px 8px;
       background: rgba(0,0,0,0.2); border-radius: 10px; cursor: pointer;
-      transition: background 0.15s; border: 1px solid rgba(13,148,136,0.06);
+      transition: background 0.15s; border: 1px solid rgba(42,255,158,0.06);
     }
-    .up-friend-row:hover { background: rgba(13,148,136,0.08); border-color: rgba(13,148,136,0.2); }
+    .up-friend-row:hover { background: rgba(42,255,158,0.08); border-color: rgba(42,255,158,0.2); }
     .up-friend-avatar {
       width: 32px; height: 32px; border-radius: 6px; overflow: hidden;
-      flex-shrink: 0; border: 1px solid rgba(13,148,136,0.2);
+      flex-shrink: 0; border: 1px solid rgba(42,255,158,0.2);
     }
     .up-friend-avatar img { width: 100%; height: 100%; object-fit: cover; }
     .up-friend-banner {
@@ -4562,7 +4530,7 @@
     .up-friend-title-tag {
       position: relative; z-index: 3; font-size: 0.52rem; font-weight: 800;
       margin: 0; padding: 0; border-radius: 0; max-width: 100%;
-      background: transparent; color: #0d9488; flex-shrink: 0;
+      background: transparent; color: #2AFF9E; flex-shrink: 0;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       border: none; line-height: 1.1;
     }
@@ -4690,12 +4658,12 @@
       align-items: center;
       justify-content: center;
       animation: spinUniverse 1.1s linear infinite;
-      filter: drop-shadow(0 0 14px rgba(13, 148, 136, 0.45));
+      filter: drop-shadow(0 0 14px rgba(42, 255, 158, 0.45));
     }
     .loading-universe-icon .fas.fa-gamepad {
       font-size: 3rem;
       color: var(--neon-green);
-      filter: drop-shadow(0 0 14px rgba(13, 148, 136, 0.55));
+      filter: drop-shadow(0 0 14px rgba(42, 255, 158, 0.55));
     }
     @keyframes spinUniverse {
       to { transform: rotate(360deg); }
@@ -4754,7 +4722,7 @@
     #profile-banner-wrap { cursor: default; }
     #profile-banner-wrap.profile-banner-clickable { cursor: pointer; }
     #profile-banner-wrap.profile-banner-clickable:hover {
-      box-shadow: 0 0 0 2px rgba(13,148,136,0.35);
+      box-shadow: 0 0 0 2px rgba(42,255,158,0.35);
     }
 
     /* Banner picker modal */
@@ -4819,7 +4787,7 @@
       padding: 6px 10px 6px 6px;
       border-radius: 999px;
       background: rgba(0,0,0,0.35);
-      border: 1px solid rgba(13,148,136,0.2);
+      border: 1px solid rgba(42,255,158,0.2);
       cursor: pointer;
       font-size: 0.78rem;
       font-weight: 700;
@@ -4829,7 +4797,7 @@
     }
     .staff-blook-chip:hover {
       border-color: var(--neon-green);
-      background: rgba(13,148,136,0.08);
+      background: rgba(42,255,158,0.08);
     }
     .staff-blook-chip img {
       width: 28px;
@@ -4854,6 +4822,212 @@
       line-height: 1;
     }
     .staff-blook-chip-del:hover { opacity: 0.85; }
+
+    /* ========== Deskpot (Golden Ticket giveaways) ========== */
+    .deskpot-page-wrap {
+      min-height: 60vh;
+      padding-bottom: 40px;
+      color: #fff7e6;
+    }
+    .deskpot-hero {
+      text-align: center;
+      padding: 28px 16px 36px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      background: linear-gradient(145deg, #8a6a1a 0%, #c9a227 22%, #ffd700 45%, #b8860b 72%, #5c4a0f 100%);
+      border: 2px solid rgba(255, 248, 220, 0.55);
+      box-shadow: 0 0 48px rgba(255, 215, 0, 0.25), inset 0 0 60px rgba(0, 0, 0, 0.15);
+    }
+    .deskpot-hero h2 {
+      font-family: 'Titan One', 'Nunito', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: #1a1203;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+    .deskpot-hero p {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: rgba(26, 18, 3, 0.85);
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.45;
+    }
+    .deskpot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 22px;
+      align-items: start;
+    }
+    .deskpot-giveaway-card {
+      background: linear-gradient(165deg, #6b5420 0%, #3d2f0d 55%, #1f1706 100%);
+      border: 2px solid #d4af37;
+      border-radius: 18px;
+      padding: 18px 16px 20px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), 0 0 28px rgba(212, 175, 55, 0.12);
+    }
+    .deskpot-giveaway-card h3 {
+      font-family: 'Titan One', 'Nunito', sans-serif;
+      font-size: 1.05rem;
+      color: #fff;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.35);
+      padding-bottom: 8px;
+    }
+    .deskpot-prize-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 140px;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+    }
+    .deskpot-prize-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .deskpot-prize-tier {
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #ffe08a;
+      margin-bottom: 6px;
+    }
+    .deskpot-prize-body {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .deskpot-prize-img {
+      width: 72px;
+      height: 72px;
+      border-radius: 12px;
+      object-fit: cover;
+      border: 2px solid rgba(255, 215, 0, 0.45);
+      flex-shrink: 0;
+      background: rgba(0, 0, 0, 0.35);
+    }
+    .deskpot-prize-name { font-weight: 900; color: #fff; font-size: 0.95rem; margin-bottom: 4px; }
+    .deskpot-prize-desc { font-size: 0.78rem; color: rgba(255, 247, 220, 0.82); line-height: 1.4; }
+    .deskpot-lb {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 12px;
+      padding: 8px 10px;
+      font-size: 0.72rem;
+    }
+    .deskpot-lb-title {
+      font-weight: 800;
+      color: #ffd700;
+      margin-bottom: 6px;
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .deskpot-lb-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 3px 0;
+      color: #fff;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .deskpot-lb-row:last-child { border-bottom: none; }
+    .deskpot-rolling-banner {
+      text-align: center;
+      padding: 20px;
+      font-weight: 900;
+      font-size: 1rem;
+      color: #ffd700;
+      animation: deskpotPulse 1.4s ease-in-out infinite;
+    }
+    @keyframes deskpotPulse {
+      0%, 100% { opacity: 0.85; }
+      50% { opacity: 1; }
+    }
+    .deskpot-winner-line {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #b8ff6a;
+    }
+    .sidebar .tab-button.tab-deskpot-gold {
+      background: linear-gradient(90deg, rgba(212, 175, 55, 0.35) 0%, rgba(255, 215, 0, 0.12) 100%);
+      color: #fff !important;
+      border: 1px solid rgba(255, 215, 0, 0.45);
+      box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.08);
+    }
+    .sidebar .tab-button.tab-deskpot-gold:hover {
+      color: #fff !important;
+      background: linear-gradient(90deg, rgba(255, 215, 0, 0.45) 0%, rgba(212, 175, 55, 0.2) 100%);
+    }
+    .sidebar .tab-button.tab-deskpot-gold.active {
+      background: linear-gradient(90deg, #d4af37 0%, #b8860b 100%) !important;
+      color: #fff !important;
+      box-shadow: inset 3px 0 0 #fff5cc, 0 0 18px rgba(255, 215, 0, 0.35);
+    }
+    .sidebar .tab-button.tab-deskpot-gold i { color: #fff; }
+    .inv-giveaway-box {
+      margin: 0 0 20px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      background: linear-gradient(135deg, rgba(61, 47, 13, 0.92) 0%, rgba(26, 20, 8, 0.95) 100%);
+      color: #fff8e7;
+    }
+    .inv-giveaway-box h4 {
+      font-family: 'Titan One', 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: #ffd700;
+      margin-bottom: 10px;
+    }
+    .inv-giveaway-tickets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 0.82rem;
+    }
+    .inv-giveaway-tickets span { opacity: 0.95; }
+    .inv-giveaway-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    .inv-giveaway-controls select {
+      flex: 1;
+      min-width: 200px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 215, 0, 0.35);
+      background: rgba(0, 0, 0, 0.4);
+      color: #fff;
+      font-size: 0.85rem;
+    }
+    .inv-giveaway-tier-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .inv-giveaway-tier-btns button {
+      padding: 8px 12px;
+      border-radius: 10px;
+      border: 1px solid #d4af37;
+      background: linear-gradient(180deg, #a67c00 0%, #6b4f0a 100%);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.72rem;
+      cursor: pointer;
+      font-family: 'Titan One', 'Nunito', sans-serif;
+    }
+    .inv-giveaway-tier-btns button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+    .inv-giveaway-status { font-size: 0.78rem; margin-top: 8px; color: rgba(255, 248, 220, 0.85); }
   </style>
 </head>
 <body>
@@ -4897,6 +5071,9 @@
       </button>
       <button class="tab-button" data-page="settings-page">
         <i class="fas fa-cog"></i> Settings
+      </button>
+      <button class="tab-button" data-page="deskpot-page" id="deskpot-panel-tab" style="display:none;">
+        <i class="fas fa-ticket-alt"></i> Deskpot
       </button>
       <button class="tab-button" data-page="staff-page" id="staff-panel-tab" style="display:none;">
         <i class="fas fa-shield-alt"></i> Staff Panel
@@ -4959,7 +5136,7 @@
           </div>
           <div class="up-stats-row">
             <div class="up-stat"><div class="up-stat-icon" id="profile-stars-icon-wrap"><i class="fas fa-star" style="color:#FFC107;" id="profile-stars-fallback-icon"></i></div><div><div class="up-stat-val" id="profile-stars-val">0</div><div class="up-stat-lbl">Stars</div></div></div>
-            <div class="up-stat"><div class="up-stat-icon"><i class="fas fa-clock" style="color:#0d9488;"></i></div><div><div class="up-stat-val" id="profile-playtime-val">0h 0m</div><div class="up-stat-lbl">Playtime</div></div></div>
+            <div class="up-stat"><div class="up-stat-icon"><i class="fas fa-clock" style="color:#2AFF9E;"></i></div><div><div class="up-stat-val" id="profile-playtime-val">0h 0m</div><div class="up-stat-lbl">Playtime</div></div></div>
             <div class="up-stat"><div class="up-stat-icon"><i class="fas fa-gamepad" style="color:#42A5F5;"></i></div><div><div class="up-stat-val" id="play-count">0</div><div class="up-stat-lbl">Plays</div></div></div>
             <div class="up-stat"><div class="up-stat-icon"><i class="fas fa-user-friends" style="color:#AB47BC;"></i></div><div><div class="up-stat-val" id="friend-count">0</div><div class="up-stat-lbl">Friends</div></div></div>
           </div>
@@ -5005,7 +5182,7 @@
           </div>
           <div class="up-stats-row">
             <div class="up-stat"><div class="up-stat-icon" id="vp-stars-icon-wrap"><i class="fas fa-star" style="color:#FFC107;" id="vp-stars-fallback-icon"></i></div><div><div class="up-stat-val" id="vp-stars">0</div><div class="up-stat-lbl">Stars</div></div></div>
-            <div class="up-stat"><div class="up-stat-icon"><i class="fas fa-clock" style="color:#0d9488;"></i></div><div><div class="up-stat-val" id="vp-playtime">0h 0m</div><div class="up-stat-lbl">Playtime</div></div></div>
+            <div class="up-stat"><div class="up-stat-icon"><i class="fas fa-clock" style="color:#2AFF9E;"></i></div><div><div class="up-stat-val" id="vp-playtime">0h 0m</div><div class="up-stat-lbl">Playtime</div></div></div>
             <div class="up-stat"><div class="up-stat-icon"><i class="fas fa-gamepad" style="color:#42A5F5;"></i></div><div><div class="up-stat-val" id="vp-plays">0</div><div class="up-stat-lbl">Plays</div></div></div>
             <div class="up-stat"><div class="up-stat-icon"><i class="fas fa-user-friends" style="color:#AB47BC;"></i></div><div><div class="up-stat-val" id="vp-friends">0</div><div class="up-stat-lbl">Friends</div></div></div>
           </div>
@@ -5070,6 +5247,15 @@
           </div>
         </div>
         <p class="inv-blooks-sub">Browse every blook by pack. Locked blooks show as silhouettes. Select a blook to see details on the right.</p>
+        <div class="inv-giveaway-box" id="inv-giveaway-panel" style="display:none;">
+          <h4><i class="fas fa-ticket-alt"></i> Deskpot entries</h4>
+          <p class="inv-giveaway-status" id="inv-giveaway-hint">Use a Golden Ticket copy to add entries while a giveaway is open.</p>
+          <div class="inv-giveaway-controls">
+            <select id="inv-giveaway-pick" aria-label="Giveaway"></select>
+            <div class="inv-giveaway-tier-btns" id="inv-giveaway-tier-btns"></div>
+          </div>
+          <div class="inv-giveaway-status" id="inv-giveaway-msg"></div>
+        </div>
         <div class="inv-pack-tabs" id="inv-pack-tabs"></div>
         <div class="inv-blooks-layout">
           <div class="inv-blooks-catalog" id="inv-blooks-catalog">
@@ -5081,6 +5267,7 @@
               <h3 class="inv-blook-detail-title" id="inv-panel-title">Blook</h3>
               <div class="inv-blook-detail-rarity" id="inv-panel-rarity" style="display:none;">—</div>
               <div class="inv-blook-detail-stars" id="inv-panel-stars-row"><i class="fas fa-star"></i> <span id="inv-panel-stars">0</span></div>
+              <div id="inv-panel-gt-summary" style="display:none;font-size:0.78rem;font-weight:800;color:#ffe08a;margin:-4px 0 10px;line-height:1.35;"></div>
               <div class="inv-blook-detail-visual" id="inv-panel-visual"></div>
               <div class="inv-blook-detail-owned" id="inv-panel-owned">×0</div>
               <div class="inv-blook-detail-actions" id="inv-panel-actions">
@@ -5111,6 +5298,17 @@
             <button type="button" class="cancel-btn inv-blook-send-btn" id="inv-blook-send-btn">Send</button>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- Deskpot — Golden Ticket giveaways (tab hidden until feature enabled) -->
+    <div class="page" id="deskpot-page">
+      <div class="page-content deskpot-page-wrap" id="deskpot-page-inner">
+        <div class="deskpot-hero">
+          <h2><i class="fas fa-ticket-alt" style="margin-right:10px;"></i>Deskpot</h2>
+          <p>Golden Ticket holders can enter active giveaways. Owners pick winners manually — the site never auto-rolls.</p>
+        </div>
+        <div class="deskpot-grid" id="deskpot-giveaways-grid"></div>
       </div>
     </div>
 
@@ -5300,6 +5498,35 @@
 
           <!-- Staff: Rarity styles + daily reward -->
           <div class="staff-section" id="staff-rarity">
+            <div class="staff-card" id="staff-golden-ticket-card">
+              <div class="staff-card-header"><h3>Golden Ticket &amp; Deskpot</h3></div>
+              <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:12px;line-height:1.45;">Hidden until enabled. The chosen blook is added to <strong>every pack</strong> as an extra drop (separate from listed chances). Three visible ticket tiers + one secret Diamond tier use the entry weights below. Configure two giveaways (A &amp; B) with 3–5 prize rows each.</p>
+              <div class="staff-form-group"><label><input type="checkbox" id="staff-gt-enabled" style="width:auto;margin-right:8px;"> Enable Golden Ticket &amp; Deskpot</label></div>
+              <div class="staff-form-group"><label>Golden Ticket blook name (must match a blook name in one of your packs — art/rarity copy from that row)</label><input type="text" id="staff-gt-blook-name" placeholder="e.g. Golden Ticket"></div>
+              <div class="staff-flex-row" style="gap:12px;flex-wrap:wrap;align-items:flex-end;">
+                <div class="staff-form-group" style="margin:0;"><label>Pack drop weight (vs sum of all listed % in pack)</label><input type="number" id="staff-gt-pack-weight" value="1" min="0.01" step="0.01"></div>
+              </div>
+              <p style="font-size:0.72rem;color:var(--text-secondary);margin:-4px 0 10px;">When someone pulls this blook, a <strong>tier</strong> is rolled (weights below). That tier is saved on the inventory row and sets how many giveaway entries one copy is worth.</p>
+              <div class="staff-flex-row" style="gap:12px;flex-wrap:wrap;align-items:flex-end;">
+                <div class="staff-form-group" style="margin:0;"><label>Roll weight: Gold</label><input type="number" id="staff-gt-roll-gold" value="70" min="0" step="1"></div>
+                <div class="staff-form-group" style="margin:0;"><label>Roll weight: Platinum</label><input type="number" id="staff-gt-roll-platinum" value="20" min="0" step="1"></div>
+                <div class="staff-form-group" style="margin:0;"><label>Roll weight: Diamond</label><input type="number" id="staff-gt-roll-diamond" value="9" min="0" step="1"></div>
+                <div class="staff-form-group" style="margin:0;"><label>Roll weight: Secret Diamond</label><input type="number" id="staff-gt-roll-secret" value="1" min="0" step="1"></div>
+              </div>
+              <div class="staff-flex-row" style="gap:12px;flex-wrap:wrap;align-items:flex-end;">
+                <div class="staff-form-group" style="margin:0;"><label>Entries per Gold ticket</label><input type="number" id="staff-gt-entries-gold" value="1" min="1" step="1"></div>
+                <div class="staff-form-group" style="margin:0;"><label>Entries per Platinum ticket</label><input type="number" id="staff-gt-entries-platinum" value="3" min="1" step="1"></div>
+                <div class="staff-form-group" style="margin:0;"><label>Entries per Diamond ticket</label><input type="number" id="staff-gt-entries-diamond-visible" value="10" min="1" step="1"></div>
+                <div class="staff-form-group" style="margin:0;"><label>Entries per Secret Diamond ticket</label><input type="number" id="staff-gt-entries-diamond-secret" value="25" min="1" step="1"></div>
+              </div>
+              <hr style="border:none;border-top:1px solid rgba(42,255,158,0.12);margin:18px 0;">
+              <p style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:10px;">Giveaway A &amp; B — set title, end time (local), rolling state, optional winner display name, and 3–5 prizes (Jackpot … Mini). Image URL optional.</p>
+              <div id="staff-gt-giveaways-editor"></div>
+              <div class="staff-flex-row" style="margin-top:16px;gap:10px;flex-wrap:wrap;">
+                <button type="button" class="staff-btn staff-btn-primary" id="staff-gt-save">Save Golden Ticket / Deskpot</button>
+                <span id="staff-gt-save-status" style="font-size:0.78rem;color:var(--text-secondary);"></span>
+              </div>
+            </div>
             <div class="staff-card">
               <div class="staff-card-header"><h3>Daily login reward</h3></div>
               <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:12px;">Coins and stars granted once per calendar day when users claim on the Missions page.</p>
@@ -5412,7 +5639,7 @@
             
             <div class="form-group">
               <label for="avatar-upload">Change Avatar</label>
-              <input type="url" id="avatar-url-input" class="auth-input staff-only-url-field" placeholder="Or paste image URL (staff)" style="display:none;margin-bottom:8px;width:100%;padding:10px;border-radius:10px;border:1px solid rgba(13,148,136,0.2);background:rgba(0,0,0,0.3);color:#fff;">
+              <input type="url" id="avatar-url-input" class="auth-input staff-only-url-field" placeholder="Or paste image URL (staff)" style="display:none;margin-bottom:8px;width:100%;padding:10px;border-radius:10px;border:1px solid rgba(42,255,158,0.2);background:rgba(0,0,0,0.3);color:#fff;">
               <label class="file-label">
                 <i class="fas fa-upload"></i> Choose Image
                 <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
@@ -5711,13 +5938,13 @@
 
   <div class="staff-modal" id="staff-user-modal"><div class="staff-modal-content"><h3>Edit User</h3><input type="hidden" id="staff-edit-user-id"><div class="staff-form-group"><label>Public ID (6 digits)</label><input id="staff-edit-display-id" readonly style="opacity:0.85;"></div><div class="staff-form-group"><label>Username</label><input id="staff-edit-username"></div><div class="staff-form-group"><label>Coins</label><input id="staff-edit-coins" type="number"></div><div class="staff-form-group"><label>Stars</label><input id="staff-edit-stars" type="number"></div><div class="staff-form-group"><label>Title</label><select id="staff-edit-user-title"><option value="User">User</option></select></div><div class="staff-form-group"><label>Custom Avatar URL (optional)</label><input id="staff-edit-avatar" placeholder="Leave blank to keep current"></div><h4 style="margin-top:16px;font-size:0.9rem;">Profile banner</h4><div class="staff-form-group"><label>Banner image URL</label><input id="staff-edit-banner-url" placeholder="https://... or leave empty for default"></div><div class="staff-form-group"><label>Or upload banner</label><input type="file" id="staff-edit-banner-file" accept="image/*"></div><div class="staff-flex-row" style="gap:8px;flex-wrap:wrap;"><button type="button" class="staff-btn staff-btn-sm" id="staff-clear-banner-btn">Clear banner</button></div><h4 style="margin-top:16px;font-size:0.9rem;">Moderation</h4><div class="staff-flex-row" style="gap:8px;margin:8px 0;flex-wrap:wrap;"><div class="staff-form-group" style="flex:1;min-width:140px;"><label>Mute Status</label><select id="staff-edit-mute"><option value="none">Not Muted</option><option value="temp">Temp Mute</option><option value="perm">Perm Mute</option></select></div><div class="staff-form-group" id="staff-mute-until-group" style="flex:1;min-width:140px;display:none;"><label>Mute Until</label><input type="datetime-local" id="staff-edit-mute-until"></div><div class="staff-form-group" style="flex:1;min-width:140px;"><label>Ban Status</label><select id="staff-edit-ban"><option value="none">Not Banned</option><option value="temp">Temp Ban</option><option value="perm">Perm Ban</option></select></div><div class="staff-form-group" id="staff-ban-until-group" style="flex:1;min-width:140px;display:none;"><label>Ban Until</label><input type="datetime-local" id="staff-edit-ban-until"></div></div><div class="staff-form-group"><label>Mute/Ban Reason</label><input id="staff-edit-mod-reason" placeholder="Reason for mute or ban"></div><h4 style="margin-top:16px;font-size:0.9rem;">Badges</h4><div id="staff-user-badges-list" style="margin:8px 0;"></div><div class="staff-form-group"><label>Add Badge</label><select id="staff-user-add-badge"><option value="">Select badge...</option></select><button type="button" class="staff-btn staff-btn-primary staff-btn-sm" id="staff-assign-badge-btn" style="margin-top:6px;">Assign Badge</button></div><h4 style="margin-top:16px;font-size:0.9rem;">Inventory</h4><div id="staff-user-inventory" style="max-height:180px;overflow-y:auto;background:rgba(0,0,0,0.3);padding:10px;border-radius:12px;margin:8px 0;"></div><div class="staff-flex-row" style="margin-top:16px;"><button class="staff-btn staff-btn-primary" id="staff-update-user-btn">Update</button><button class="staff-btn" id="staff-close-user-modal">Close</button></div></div></div>
 
-  <div class="staff-modal" id="staff-title-modal"><div class="staff-modal-content"><h3 id="staff-title-modal-title">Create Title</h3><input type="hidden" id="staff-title-id"><div class="staff-form-group"><label>Title Name</label><input id="staff-title-name" required placeholder="e.g. Moderator"></div><div class="staff-form-group"><label>Title Color (hex)</label><input id="staff-title-color" type="color" value="#0d9488"></div><div class="staff-form-group"><label>Gradient?</label><select id="staff-title-gradient"><option value="false">No (solid color)</option><option value="true">Yes (gradient)</option></select></div><div class="staff-form-group" id="staff-gradient-colors-group" style="display:none;"><label>Gradient Colors (comma separated hex)</label><input id="staff-title-gradient-colors" placeholder="#ff0000, #00ff00, #0000ff"><div class="staff-form-group"><label>Running Gradient? (animated)</label><select id="staff-title-running"><option value="false">No (static)</option><option value="true">Yes (animated moving colors)</option></select></div><div class="gradient-preview-box" id="staff-gradient-preview">Preview</div></div><div class="staff-form-group"><label>Display Priority (higher = shows first in lists)</label><input id="staff-title-priority" type="number" value="0"></div><h4 style="margin-top:16px;font-size:0.9rem;">Permissions</h4><div class="title-perm-grid" id="staff-title-perms"></div><div class="staff-flex-row" style="margin-top:20px;"><button class="staff-btn staff-btn-primary" id="staff-save-title-btn">Save Title</button><button class="staff-btn" id="staff-close-title-modal">Cancel</button></div></div></div>
+  <div class="staff-modal" id="staff-title-modal"><div class="staff-modal-content"><h3 id="staff-title-modal-title">Create Title</h3><input type="hidden" id="staff-title-id"><div class="staff-form-group"><label>Title Name</label><input id="staff-title-name" required placeholder="e.g. Moderator"></div><div class="staff-form-group"><label>Title Color (hex)</label><input id="staff-title-color" type="color" value="#2AFF9E"></div><div class="staff-form-group"><label>Gradient?</label><select id="staff-title-gradient"><option value="false">No (solid color)</option><option value="true">Yes (gradient)</option></select></div><div class="staff-form-group" id="staff-gradient-colors-group" style="display:none;"><label>Gradient Colors (comma separated hex)</label><input id="staff-title-gradient-colors" placeholder="#ff0000, #00ff00, #0000ff"><div class="staff-form-group"><label>Running Gradient? (animated)</label><select id="staff-title-running"><option value="false">No (static)</option><option value="true">Yes (animated moving colors)</option></select></div><div class="gradient-preview-box" id="staff-gradient-preview">Preview</div></div><div class="staff-form-group"><label>Display Priority (higher = shows first in lists)</label><input id="staff-title-priority" type="number" value="0"></div><h4 style="margin-top:16px;font-size:0.9rem;">Permissions</h4><div class="title-perm-grid" id="staff-title-perms"></div><div class="staff-flex-row" style="margin-top:20px;"><button class="staff-btn staff-btn-primary" id="staff-save-title-btn">Save Title</button><button class="staff-btn" id="staff-close-title-modal">Cancel</button></div></div></div>
 
-  <div class="staff-modal" id="staff-badge-modal"><div class="staff-modal-content"><h3 id="staff-badge-modal-title">Create Badge</h3><input type="hidden" id="staff-badge-id"><div class="staff-form-group"><label>Badge Name</label><input id="staff-badge-name" required></div><div class="staff-form-group"><label>Icon — URL or upload</label><input id="staff-badge-icon" placeholder="https://example.com/badge.png"></div><div class="staff-form-group"><label>Or upload icon image</label><input type="file" id="staff-badge-icon-file" accept="image/*"></div><div class="staff-form-group"><label>Background Color</label><input id="staff-badge-bg" type="color" value="#0d9488"></div><div class="staff-form-group"><label>Text Color</label><input id="staff-badge-text-color" type="color" value="#000000"></div><div class="staff-form-group"><label>Description (shown on click)</label><textarea id="staff-badge-desc" rows="2"></textarea></div><div class="staff-flex-row" style="margin-top:16px;"><button class="staff-btn staff-btn-primary" id="staff-save-badge-btn">Save Badge</button><button class="staff-btn" id="staff-close-badge-modal">Cancel</button></div></div></div>
+  <div class="staff-modal" id="staff-badge-modal"><div class="staff-modal-content"><h3 id="staff-badge-modal-title">Create Badge</h3><input type="hidden" id="staff-badge-id"><div class="staff-form-group"><label>Badge Name</label><input id="staff-badge-name" required></div><div class="staff-form-group"><label>Icon — URL or upload</label><input id="staff-badge-icon" placeholder="https://example.com/badge.png"></div><div class="staff-form-group"><label>Or upload icon image</label><input type="file" id="staff-badge-icon-file" accept="image/*"></div><div class="staff-form-group"><label>Background Color</label><input id="staff-badge-bg" type="color" value="#2AFF9E"></div><div class="staff-form-group"><label>Text Color</label><input id="staff-badge-text-color" type="color" value="#000000"></div><div class="staff-form-group"><label>Description (shown on click)</label><textarea id="staff-badge-desc" rows="2"></textarea></div><div class="staff-flex-row" style="margin-top:16px;"><button class="staff-btn staff-btn-primary" id="staff-save-badge-btn">Save Badge</button><button class="staff-btn" id="staff-close-badge-modal">Cancel</button></div></div></div>
 
   <div class="staff-modal" id="staff-banner-shop-modal"><div class="staff-modal-content" style="max-width:520px;"><h3 id="staff-banner-shop-modal-title">Shop banner</h3><input type="hidden" id="staff-banner-shop-id"><div class="staff-form-group"><label>Name (internal)</label><input id="staff-banner-shop-name" required placeholder="e.g. Neon skyline"></div><div class="staff-form-group"><label>Price (coins)</label><input id="staff-banner-shop-price" type="number" required value="500"></div><p style="font-size:0.78rem;color:var(--text-secondary);margin:-4px 0 8px;">Market card uses the same frame as packs; set inner/outer colors to match rarity.</p><div class="staff-flex-row" style="gap:12px;flex-wrap:wrap;"><div class="staff-form-group" style="flex:1;min-width:140px;margin:0;"><label>Inner color</label><input id="staff-banner-shop-inner" type="color" value="#5a7a9a"></div><div class="staff-form-group" style="flex:1;min-width:140px;margin:0;"><label>Outer color</label><input id="staff-banner-shop-outer" type="color" value="#1a2a3a"></div></div><div class="staff-form-group"><label>Banner image URL</label><input id="staff-banner-shop-url" placeholder="https://..."></div><div class="staff-form-group"><label>Or upload image</label><input type="file" id="staff-banner-shop-file" accept="image/*"></div><div id="staff-banner-shop-preview" class="staff-pack-preview-box" aria-hidden="true"></div><div class="staff-flex-row" style="margin-top:16px;"><button type="button" class="staff-btn staff-btn-primary" id="staff-save-banner-shop-btn">Save</button><button type="button" class="staff-btn" id="staff-close-banner-shop-modal">Cancel</button></div></div></div>
 
-  <div class="staff-modal" id="staff-rarity-order-modal"><div class="staff-modal-content" style="max-width:480px;"><h3>Blook rarity order</h3><p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:10px;">Comma-separated, lowest to highest (used for inventory sorting). Default: common,uncommon,rare,epic,legendary,mythical,chroma</p><textarea id="staff-rarity-order-input" rows="3" style="width:100%;padding:10px;border-radius:10px;background:rgba(0,0,0,0.4);color:#fff;border:1px solid rgba(13,148,136,0.2);"></textarea><div class="staff-flex-row" style="margin-top:16px;"><button type="button" class="staff-btn staff-btn-primary" id="staff-rarity-order-save">Save</button><button type="button" class="staff-btn" id="staff-rarity-order-cancel">Cancel</button></div></div></div>
+  <div class="staff-modal" id="staff-rarity-order-modal"><div class="staff-modal-content" style="max-width:480px;"><h3>Blook rarity order</h3><p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:10px;">Comma-separated, lowest to highest (used for inventory sorting). Default: common,uncommon,rare,epic,legendary,mythical,chroma</p><textarea id="staff-rarity-order-input" rows="3" style="width:100%;padding:10px;border-radius:10px;background:rgba(0,0,0,0.4);color:#fff;border:1px solid rgba(42,255,158,0.2);"></textarea><div class="staff-flex-row" style="margin-top:16px;"><button type="button" class="staff-btn staff-btn-primary" id="staff-rarity-order-save">Save</button><button type="button" class="staff-btn" id="staff-rarity-order-cancel">Cancel</button></div></div></div>
 
   <div class="staff-modal" id="staff-mission-form-modal"><div class="staff-modal-content" style="max-width:520px;"><h3>Create / edit mission</h3><input type="hidden" id="staff-mission-form-id"><div class="staff-form-group"><label>Title</label><input id="staff-mission-title" required></div><div class="staff-form-group"><label>Description</label><textarea id="staff-mission-desc" rows="2"></textarea></div><div class="staff-form-group"><label>Type</label><select id="staff-mission-type"><option value="gametime">Gametime (seconds played)</option><option value="chatting">Chat messages</option><option value="spending">Coins spent</option></select></div><div class="staff-form-group"><label>Target</label><input id="staff-mission-target" type="number" value="10" required></div><div class="staff-form-group"><label>Reward coins</label><input id="staff-mission-rcoins" type="number" value="100"></div><div class="staff-form-group"><label>Reward stars</label><input id="staff-mission-rstars" type="number" value="50"></div><div class="staff-flex-row" style="margin-top:16px;"><button type="button" class="staff-btn staff-btn-primary" id="staff-mission-form-save">Save mission</button><button type="button" class="staff-btn" id="staff-mission-form-cancel">Cancel</button></div></div></div>
 
@@ -5870,7 +6097,7 @@
 
     function discordEmbedColorFromHex(hex) {
       const h = String(hex || '').replace(/^#/, '');
-      if (!/^[0-9a-fA-F]{6}$/.test(h)) return 0x42f5bf;
+      if (!/^[0-9a-fA-F]{6}$/.test(h)) return 0x2AFF9E;
       return parseInt(h, 16);
     }
 
@@ -5881,9 +6108,396 @@
       return items.find((it) => (it.name || '').trim().toLowerCase() === want) || null;
     }
 
-    const DEFAULT_NEON_GREEN = '#42f5bf';
+    const DEFAULT_NEON_GREEN = '#2AFF9E';
     const DEFAULT_NEON_PINK = '#FF3D6C';
     const DEFAULT_THEME_GREY = '#8A9BB5';
+
+    /** Deskpot / Golden Ticket (siteConfig.settings.goldenTicket) */
+    let goldenTicketRuntime = null;
+    let deskpotLeaderUnsubs = [];
+    const DESKPOT_PRIZE_TIERS = ['jackpot', 'mega', 'major', 'minor', 'mini'];
+
+    function defaultDeskpotGiveaway(id) {
+      return {
+        id,
+        title: id === 'A' ? 'Giveaway A' : 'Giveaway B',
+        endAtMs: null,
+        rollingResults: false,
+        winnerDisplay: '',
+        prizes: DESKPOT_PRIZE_TIERS.map((tier) => ({ tier, name: '', description: '', imageUrl: '' }))
+      };
+    }
+
+    function normalizeGtConfig(raw) {
+      const g = raw && typeof raw === 'object' ? raw : {};
+      const gws = Array.isArray(g.giveaways) ? g.giveaways : [];
+      const a = gws[0] || {};
+      const b = gws[1] || {};
+      const mergeGw = (base, id) => {
+        const prizesIn = Array.isArray(base.prizes) ? base.prizes : [];
+        const prizeMap = {};
+        prizesIn.forEach((p) => {
+          if (p && p.tier) prizeMap[String(p.tier).toLowerCase()] = p;
+        });
+        const prizes = DESKPOT_PRIZE_TIERS.map((tier) => {
+          const p = prizeMap[tier] || {};
+          return {
+            tier,
+            name: String(p.name || '').trim(),
+            description: String(p.description || '').trim(),
+            imageUrl: String(p.imageUrl || '').trim()
+          };
+        });
+        return {
+          id,
+          title: String(base.title || (id === 'A' ? 'Giveaway A' : 'Giveaway B')).trim() || (id === 'A' ? 'Giveaway A' : 'Giveaway B'),
+          endAtMs: base.endAtMs != null && Number.isFinite(Number(base.endAtMs)) ? Number(base.endAtMs) : null,
+          rollingResults: !!(base.rollingResults === true || base.rollingResults === 'true'),
+          winnerDisplay: String(base.winnerDisplay || '').trim(),
+          prizes
+        };
+      };
+      return {
+        enabled: !!(g.enabled === true || g.enabled === 'true'),
+        blookName: String(g.blookName || '').trim(),
+        packWeight: Math.max(0, Number(g.packWeight) || 0) || 1,
+        rollWeights: {
+          gold: Math.max(0, Number(g.rollWeights?.gold) || 0),
+          platinum: Math.max(0, Number(g.rollWeights?.platinum) || 0),
+          diamond: Math.max(0, Number(g.rollWeights?.diamond) || 0),
+          secret: Math.max(0, Number(g.rollWeights?.secret) || 0)
+        },
+        entriesPerTier: {
+          gold: Math.max(1, parseInt(g.entriesPerTier?.gold, 10) || 1),
+          platinum: Math.max(1, parseInt(g.entriesPerTier?.platinum, 10) || 3),
+          diamond: Math.max(1, parseInt(g.entriesPerTier?.diamond, 10) || 10),
+          secret: Math.max(1, parseInt(g.entriesPerTier?.secret, 10) || 25)
+        },
+        giveaways: [mergeGw(a, 'A'), mergeGw(b, 'B')]
+      };
+    }
+
+    async function refreshGoldenTicketRuntime() {
+      try {
+        const s = await getDoc(doc(db, 'siteConfig', 'settings'));
+        const d = s.exists() ? s.data() : {};
+        goldenTicketRuntime = normalizeGtConfig(d.goldenTicket);
+      } catch (_) {
+        goldenTicketRuntime = normalizeGtConfig(null);
+      }
+      applyDeskpotTabVisibility();
+      return goldenTicketRuntime;
+    }
+
+    function goldenTicketBlookNameNorm() {
+      return (goldenTicketRuntime && goldenTicketRuntime.blookName || '').trim().toLowerCase();
+    }
+
+    function isGoldenTicketPull(itemName) {
+      const want = goldenTicketBlookNameNorm();
+      if (!want || !goldenTicketRuntime || !goldenTicketRuntime.enabled) return false;
+      return String(itemName || '').trim().toLowerCase() === want;
+    }
+
+    function rollGoldenTicketTier() {
+      const rw = (goldenTicketRuntime && goldenTicketRuntime.rollWeights) || {};
+      const w = {
+        gold: Math.max(0, Number(rw.gold) || 0),
+        platinum: Math.max(0, Number(rw.platinum) || 0),
+        diamond: Math.max(0, Number(rw.diamond) || 0),
+        secret: Math.max(0, Number(rw.secret) || 0)
+      };
+      const sum = w.gold + w.platinum + w.diamond + w.secret;
+      if (sum <= 0) return 'gold';
+      let r = Math.random() * sum;
+      if (r < w.gold) return 'gold';
+      r -= w.gold;
+      if (r < w.platinum) return 'platinum';
+      r -= w.platinum;
+      if (r < w.diamond) return 'diamond';
+      return 'secret';
+    }
+
+    function entriesForGoldenTier(tier) {
+      const e = goldenTicketRuntime && goldenTicketRuntime.entriesPerTier;
+      if (!e) return 1;
+      if (tier === 'platinum') return e.platinum;
+      if (tier === 'diamond') return e.diamond;
+      if (tier === 'secret') return e.secret;
+      return e.gold;
+    }
+
+    function applyDeskpotTabVisibility() {
+      const tab = document.getElementById('deskpot-panel-tab');
+      if (!tab) return;
+      const show = !!(goldenTicketRuntime && goldenTicketRuntime.enabled && goldenTicketRuntime.blookName);
+      tab.style.display = show ? 'flex' : 'none';
+      if (!show && tab.classList.contains('active')) {
+        document.querySelector('.tab-button[data-page="main-page"]')?.click();
+      }
+    }
+
+    function setDeskpotSidebarGoldStyle(on) {
+      const tab = document.getElementById('deskpot-panel-tab');
+      if (!tab) return;
+      tab.classList.toggle('tab-deskpot-gold', !!on);
+    }
+
+    function deskpotGiveawayEnded(gw) {
+      if (!gw || !gw.endAtMs) return false;
+      return Date.now() >= gw.endAtMs;
+    }
+
+    function formatDeskpotEndLabel(ms) {
+      if (!ms) return 'No end date set';
+      try {
+        return new Date(ms).toLocaleString();
+      } catch (_) {
+        return '—';
+      }
+    }
+
+    function renderStaffGoldenTicketEditor() {
+      const host = document.getElementById('staff-gt-giveaways-editor');
+      if (!host) return;
+      const g = goldenTicketRuntime || normalizeGtConfig(null);
+      const gws = g.giveaways || [defaultDeskpotGiveaway('A'), defaultDeskpotGiveaway('B')];
+      host.innerHTML = gws.map((gw) => {
+        const endVal = gw.endAtMs ? new Date(gw.endAtMs).toISOString().slice(0, 16) : '';
+        const prizesHtml = (gw.prizes || []).map((p, idx) => `
+          <div class="staff-flex-row" style="gap:8px;flex-wrap:wrap;align-items:flex-end;margin-bottom:8px;border-bottom:1px solid rgba(42,255,158,0.08);padding-bottom:8px;">
+            <div class="staff-form-group" style="margin:0;min-width:100px;"><label>Tier</label>
+              <select class="staff-gt-prize-tier" data-gw="${gw.id}" data-idx="${idx}" disabled style="opacity:0.85;">
+                ${DESKPOT_PRIZE_TIERS.map(t => `<option value="${t}" ${p.tier === t ? 'selected' : ''}>${t}</option>`).join('')}
+              </select>
+            </div>
+            <div class="staff-form-group" style="margin:0;flex:1;min-width:120px;"><label>Prize name</label>
+              <input type="text" class="staff-gt-prize-name" data-gw="${gw.id}" data-idx="${idx}" value="${escapeHtml(p.name)}" placeholder="Name">
+            </div>
+            <div class="staff-form-group" style="margin:0;flex:2;min-width:180px;"><label>Description</label>
+              <input type="text" class="staff-gt-prize-desc" data-gw="${gw.id}" data-idx="${idx}" value="${escapeHtml(p.description)}" placeholder="Short description">
+            </div>
+            <div class="staff-form-group" style="margin:0;flex:2;min-width:160px;"><label>Image URL</label>
+              <input type="url" class="staff-gt-prize-img" data-gw="${gw.id}" data-idx="${idx}" value="${escapeHtml(p.imageUrl)}" placeholder="https://...">
+            </div>
+          </div>`).join('');
+        return `
+          <div class="staff-card" style="margin-bottom:14px;background:rgba(0,0,0,0.25);">
+            <div class="staff-card-header"><h3>Giveaway ${gw.id}</h3></div>
+            <div class="staff-form-group"><label>Title</label><input type="text" class="staff-gt-gw-title" data-gw="${gw.id}" value="${escapeHtml(gw.title)}"></div>
+            <div class="staff-flex-row" style="gap:12px;flex-wrap:wrap;align-items:flex-end;">
+              <div class="staff-form-group" style="margin:0;"><label>End date &amp; time (local)</label><input type="datetime-local" class="staff-gt-gw-end" data-gw="${gw.id}" value="${endVal}"></div>
+              <div class="staff-form-group" style="margin:0;"><label><input type="checkbox" class="staff-gt-gw-rolling" data-gw="${gw.id}" ${gw.rollingResults ? 'checked' : ''} style="width:auto;margin-right:8px;"> Rolling results (hide prizes / show “rolling…”)</label></div>
+            </div>
+            <div class="staff-form-group"><label>Winner display (shown when not rolling; owners set manually)</label><input type="text" class="staff-gt-gw-winner" data-gw="${gw.id}" value="${escapeHtml(gw.winnerDisplay)}" placeholder="e.g. @PlayerOne — Jackpot"></div>
+            <h4 style="font-size:0.8rem;margin:12px 0 8px;color:var(--text-secondary);">Prize rows (fixed tiers)</h4>
+            ${prizesHtml}
+          </div>`;
+      }).join('');
+    }
+
+    function readStaffGoldenTicketFormIntoPayload() {
+      const enabled = document.getElementById('staff-gt-enabled')?.checked;
+      const blookName = document.getElementById('staff-gt-blook-name')?.value?.trim() || '';
+      const packWeight = Math.max(0.01, Number(document.getElementById('staff-gt-pack-weight')?.value) || 1);
+      const rollWeights = {
+        gold: Math.max(0, parseInt(document.getElementById('staff-gt-roll-gold')?.value, 10) || 0),
+        platinum: Math.max(0, parseInt(document.getElementById('staff-gt-roll-platinum')?.value, 10) || 0),
+        diamond: Math.max(0, parseInt(document.getElementById('staff-gt-roll-diamond')?.value, 10) || 0),
+        secret: Math.max(0, parseInt(document.getElementById('staff-gt-roll-secret')?.value, 10) || 0)
+      };
+      const entriesPerTier = {
+        gold: Math.max(1, parseInt(document.getElementById('staff-gt-entries-gold')?.value, 10) || 1),
+        platinum: Math.max(1, parseInt(document.getElementById('staff-gt-entries-platinum')?.value, 10) || 3),
+        diamond: Math.max(1, parseInt(document.getElementById('staff-gt-entries-diamond-visible')?.value, 10) || 10),
+        secret: Math.max(1, parseInt(document.getElementById('staff-gt-entries-diamond-secret')?.value, 10) || 25)
+      };
+      const giveaways = ['A', 'B'].map((id) => {
+        const title = document.querySelector(`.staff-gt-gw-title[data-gw="${id}"]`)?.value?.trim() || (id === 'A' ? 'Giveaway A' : 'Giveaway B');
+        const endEl = document.querySelector(`.staff-gt-gw-end[data-gw="${id}"]`);
+        let endAtMs = null;
+        if (endEl && endEl.value) {
+          const t = new Date(endEl.value).getTime();
+          if (Number.isFinite(t)) endAtMs = t;
+        }
+        const rollingResults = !!document.querySelector(`.staff-gt-gw-rolling[data-gw="${id}"]`)?.checked;
+        const winnerDisplay = document.querySelector(`.staff-gt-gw-winner[data-gw="${id}"]`)?.value?.trim() || '';
+        const prizes = DESKPOT_PRIZE_TIERS.map((tier, idx) => ({
+          tier,
+          name: document.querySelector(`.staff-gt-prize-name[data-gw="${id}"][data-idx="${idx}"]`)?.value?.trim() || '',
+          description: document.querySelector(`.staff-gt-prize-desc[data-gw="${id}"][data-idx="${idx}"]`)?.value?.trim() || '',
+          imageUrl: document.querySelector(`.staff-gt-prize-img[data-gw="${id}"][data-idx="${idx}"]`)?.value?.trim() || ''
+        }));
+        return { id, title, endAtMs, rollingResults, winnerDisplay, prizes };
+      });
+      return { enabled: !!enabled, blookName, packWeight, rollWeights, entriesPerTier, giveaways };
+    }
+
+    async function loadStaffGoldenTicketPanel() {
+      await refreshGoldenTicketRuntime();
+      const g = goldenTicketRuntime || normalizeGtConfig(null);
+      const enEl = document.getElementById('staff-gt-enabled');
+      if (enEl) enEl.checked = !!g.enabled;
+      const bn = document.getElementById('staff-gt-blook-name');
+      if (bn) bn.value = g.blookName || '';
+      const pw = document.getElementById('staff-gt-pack-weight');
+      if (pw) pw.value = g.packWeight != null ? g.packWeight : 1;
+      const rg = document.getElementById('staff-gt-roll-gold');
+      if (rg) rg.value = g.rollWeights?.gold ?? 70;
+      const rp = document.getElementById('staff-gt-roll-platinum');
+      if (rp) rp.value = g.rollWeights?.platinum ?? 20;
+      const rd = document.getElementById('staff-gt-roll-diamond');
+      if (rd) rd.value = g.rollWeights?.diamond ?? 9;
+      const rs = document.getElementById('staff-gt-roll-secret');
+      if (rs) rs.value = g.rollWeights?.secret ?? 1;
+      const eg = document.getElementById('staff-gt-entries-gold');
+      if (eg) eg.value = g.entriesPerTier?.gold ?? 1;
+      const ep = document.getElementById('staff-gt-entries-platinum');
+      if (ep) ep.value = g.entriesPerTier?.platinum ?? 3;
+      const ed = document.getElementById('staff-gt-entries-diamond-visible');
+      if (ed) ed.value = g.entriesPerTier?.diamond ?? 10;
+      const es = document.getElementById('staff-gt-entries-diamond-secret');
+      if (es) es.value = g.entriesPerTier?.secret ?? 25;
+      renderStaffGoldenTicketEditor();
+      const st = document.getElementById('staff-gt-save-status');
+      if (st) st.textContent = '';
+    }
+
+    function deskpotLeaderboardRef(giveawayId) {
+      return doc(db, 'giveawayLeaderboards', String(giveawayId));
+    }
+
+    function unsubscribeDeskpotLeaders() {
+      deskpotLeaderUnsubs.forEach((u) => { try { u(); } catch (_) {} });
+      deskpotLeaderUnsubs = [];
+    }
+
+    function renderDeskpotLeaderboardRows(map, giveawayId) {
+      const el = document.getElementById(`deskpot-lb-${giveawayId}`);
+      if (!el) return;
+      const pairs = Object.entries(map || {}).map(([uid, v]) => ({
+        uid,
+        username: (v && v.username) || uid.slice(0, 8),
+        entries: Math.max(0, Number(v.entries) || 0)
+      })).filter((x) => x.entries > 0);
+      pairs.sort((a, b) => b.entries - a.entries || a.username.localeCompare(b.username));
+      const top = pairs.slice(0, 10);
+      if (!top.length) {
+        el.innerHTML = '<div class="deskpot-lb-title">Top entrants</div><div class="deskpot-lb-row"><span>—</span><span>0</span></div>';
+        return;
+      }
+      el.innerHTML = `<div class="deskpot-lb-title">Top entrants</div>${top.map((r, i) => `<div class="deskpot-lb-row"><span>#${i + 1} ${escapeHtml(r.username)}</span><span>${r.entries}</span></div>`).join('')}`;
+    }
+
+    function renderDeskpotPage() {
+      const grid = document.getElementById('deskpot-giveaways-grid');
+      if (!grid) return;
+      const g = goldenTicketRuntime;
+      if (!g || !g.enabled || !g.blookName) {
+        grid.innerHTML = '<p style="color:var(--text-secondary);">Deskpot is not available.</p>';
+        unsubscribeDeskpotLeaders();
+        return;
+      }
+      unsubscribeDeskpotLeaders();
+      grid.innerHTML = (g.giveaways || []).map((gw) => {
+        const ended = deskpotGiveawayEnded(gw);
+        const rolling = !!(gw.rollingResults && ended);
+        const prizesBlock = (gw.prizes || []).map((p) => {
+          const showPrize = !rolling;
+          return `
+            <div class="deskpot-prize-row">
+              <div>
+                <div class="deskpot-prize-tier">${escapeHtml(p.tier)}</div>
+                <div class="deskpot-prize-body">
+                  ${showPrize && p.imageUrl ? `<img class="deskpot-prize-img" src="${escapeHtml(p.imageUrl)}" alt="" loading="lazy">` : (showPrize ? '<div class="deskpot-prize-img"></div>' : '<div class="deskpot-prize-img" style="opacity:0.3;"></div>')}
+                  <div>
+                    <div class="deskpot-prize-name">${showPrize ? escapeHtml(p.name || '—') : '—'}</div>
+                    <div class="deskpot-prize-desc">${showPrize ? escapeHtml(p.description || '') : ''}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="deskpot-lb" id="deskpot-lb-${gw.id}"></div>
+            </div>`;
+        }).join('');
+        return `
+          <section class="deskpot-giveaway-card" data-gw="${gw.id}">
+            <h3>${escapeHtml(gw.title || `Giveaway ${gw.id}`)}</h3>
+            <p style="font-size:0.78rem;color:rgba(255,247,220,0.75);margin:-8px 0 12px;">Ends: ${escapeHtml(formatDeskpotEndLabel(gw.endAtMs))}</p>
+            ${rolling ? '<div class="deskpot-rolling-banner">Rolling the results…</div>' : ''}
+            ${!rolling && ended && gw.winnerDisplay ? `<div class="deskpot-winner-line">Winner: ${escapeHtml(gw.winnerDisplay)}</div>` : ''}
+            ${prizesBlock}
+          </section>`;
+      }).join('');
+      (g.giveaways || []).forEach((gw) => {
+        const ref = deskpotLeaderboardRef(gw.id);
+        const unsub = onSnapshot(ref, (snap) => {
+          const data = snap.exists() ? snap.data() : {};
+          const scores = data.scores && typeof data.scores === 'object' ? data.scores : {};
+          renderDeskpotLeaderboardRows(scores, gw.id);
+        }, () => {
+          renderDeskpotLeaderboardRows({}, gw.id);
+        });
+        deskpotLeaderUnsubs.push(unsub);
+      });
+    }
+
+    async function loadDeskpotPage() {
+      await refreshGoldenTicketRuntime();
+      renderDeskpotPage();
+    }
+
+    async function spendGoldenTicketAndEnter(giveawayId, inventoryDocId) {
+      if (!currentUser) return;
+      const g = goldenTicketRuntime;
+      if (!g || !g.enabled) {
+        showNotification('Golden Ticket is not enabled.', 'error');
+        return;
+      }
+      const gw = (g.giveaways || []).find((x) => x.id === giveawayId);
+      if (!gw) {
+        showNotification('Giveaway not found.', 'error');
+        return;
+      }
+      if (deskpotGiveawayEnded(gw)) {
+        if (gw.rollingResults) {
+          showNotification('Giveaway ended — results are rolling. Entries are closed.', 'info');
+        } else {
+          showNotification('This giveaway has ended — entries are closed.', 'error');
+        }
+        return;
+      }
+      const invRef = doc(db, 'inventory', inventoryDocId);
+      const lbRef = deskpotLeaderboardRef(giveawayId);
+      let added = 0;
+      try {
+        await runTransaction(db, async (tx) => {
+          const invSnap = await tx.get(invRef);
+          if (!invSnap.exists()) throw new Error('Ticket not found');
+          const inv = invSnap.data();
+          if (inv.userId !== currentUser.uid) throw new Error('Not your ticket');
+          const nm = String(inv.itemName || '').trim().toLowerCase();
+          if (nm !== goldenTicketBlookNameNorm()) throw new Error('Not a Golden Ticket');
+          const tier = String(inv.goldenTicketTier || 'gold').toLowerCase();
+          if (!['gold', 'platinum', 'diamond', 'secret'].includes(tier)) throw new Error('Invalid ticket tier');
+          const addEntries = entriesForGoldenTier(tier);
+          added = addEntries;
+          const lbSnap = await tx.get(lbRef);
+          const prev = lbSnap.exists() ? lbSnap.data() : {};
+          const scores = { ...(prev.scores && typeof prev.scores === 'object' ? prev.scores : {}) };
+          const uid = currentUser.uid;
+          const uname = (userNameSpan && userNameSpan.textContent) ? userNameSpan.textContent.trim() : (currentUser.displayName || currentUser.email || uid);
+          const cur = scores[uid] && typeof scores[uid] === 'object' ? scores[uid] : { username: uname, entries: 0 };
+          const nextEntries = Math.max(0, Number(cur.entries) || 0) + addEntries;
+          scores[uid] = { username: uname, entries: nextEntries };
+          tx.set(lbRef, { scores, updatedAt: serverTimestamp() }, { merge: true });
+          tx.delete(invRef);
+        });
+        showNotification(`Entered giveaway ${giveawayId} (+${added} entries)`, 'success');
+        loadInventory(currentUser.uid);
+      } catch (e) {
+        showNotification(e.message || 'Could not enter giveaway', 'error');
+      }
+    }
     const DEFAULT_RARITY_ORDER = ['common','uncommon','rare','epic','legendary','mythical','chroma'];
     let effectiveRarityOrder = [...DEFAULT_RARITY_ORDER];
     let blookRarityDefs = {};
@@ -6139,6 +6753,7 @@
     let friendChatRenderedIds = new Set();
     let currentCard = null;
     let inventoryUnsubscribe = null;
+    let goldTicketSettingsUnsub = null;
     let inventoryCatalogCache = null;
     let inventoryCatalogLoaded = false;
     let giftWallUnsubscribe = null;
@@ -6451,6 +7066,7 @@
         await loadUserProfile(user);
         await ensureDefaultTitlesExist();
         await checkStaffAccess(user);
+        setupGoldenTicketRemoteSync();
         if (redirectToProfileAfterAuth) {
           redirectToProfileAfterAuth = false;
           goToProfilePageTab();
@@ -6467,6 +7083,7 @@
           case 'history-page': loadPlayHistory(user.uid); break;
           case 'shop-page': loadShopPacks(); loadUserBalance(user.uid); break;
           case 'inventory-page': loadInventory(user.uid); loadFriends(user.uid); break;
+          case 'deskpot-page': loadDeskpotPage(); break;
           case 'missions-page': loadMissions(user.uid); break;
           case 'chat-page': loadGlobalChat(); break;
           case 'friends-page': loadFriends(user.uid); break;
@@ -6487,6 +7104,9 @@
         if (userUnsubscribe) userUnsubscribe();
         if (missionsListUnsub) { missionsListUnsub(); missionsListUnsub = null; }
         if (missionProgressUnsub) { missionProgressUnsub(); missionProgressUnsub = null; }
+        if (goldTicketSettingsUnsub) { try { goldTicketSettingsUnsub(); } catch (_) {} goldTicketSettingsUnsub = null; }
+        setDeskpotSidebarGoldStyle(false);
+        unsubscribeDeskpotLeaders();
       }
     });
 
@@ -6616,6 +7236,7 @@
       const profilePage = document.getElementById('profile-page');
       if (profileBtn) profileBtn.classList.add('active');
       if (profilePage) profilePage.classList.add('active');
+      setDeskpotSidebarGoldStyle(false);
       if (currentUser?.uid) loadProfilePage(currentUser.uid);
     }
 
@@ -6862,6 +7483,7 @@
         document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
         button.classList.add('active');
         document.getElementById(pageId).classList.add('active');
+        setDeskpotSidebarGoldStyle(pageId === 'deskpot-page');
         switch (pageId) {
           case 'main-page':
             if (!mainPageGamesMounted) ensureMainPageGamesDeferredObserver();
@@ -6870,6 +7492,7 @@
           case 'history-page': loadPlayHistory(currentUser.uid); break;
           case 'shop-page': loadShopPacks(); loadUserBalance(currentUser.uid); break;
           case 'inventory-page': loadInventory(currentUser.uid); loadFriends(currentUser.uid); break;
+          case 'deskpot-page': loadDeskpotPage(); break;
           case 'missions-page': loadMissions(currentUser.uid); break;
           case 'chat-page': loadGlobalChat(); break;
           case 'friends-page': loadFriends(currentUser.uid); break;
@@ -7238,20 +7861,30 @@
       finally { packOpeningBusy = false; }
     }
 
-    // Get item based on weighted chance
+    // Get item based on weighted chance (+ optional Golden Ticket pool)
     function getItemFromPack(pack) {
-      const totalChance = pack.items.reduce((sum, item) => sum + item.chance, 0);
-      let random = Math.random() * totalChance;
-      
-      for (const item of pack.items) {
-        if (random < item.chance) {
-          return item;
+      const items = pack.items || [];
+      const totalListed = items.reduce((sum, item) => sum + (Number(item.chance) || 0), 0);
+      const gt = goldenTicketRuntime;
+      const gName = (gt && gt.blookName || '').trim();
+      if (gt && gt.enabled && gName && (Number(gt.packWeight) || 0) > 0) {
+        const cat = findPackCatalogItemByName(pack, gName);
+        if (cat) {
+          const pool = totalListed + (Number(gt.packWeight) || 0);
+          if (pool > 0 && Math.random() * pool < (Number(gt.packWeight) || 0)) {
+            const tier = rollGoldenTicketTier();
+            return { ...cat, goldenTicketTier: tier, chance: Number(gt.packWeight) };
+          }
         }
-        random -= item.chance;
       }
-      
-      // Fallback to first item
-      return pack.items[0];
+      if (!items.length) return null;
+      let random = Math.random() * (totalListed || 1);
+      for (const item of items) {
+        const c = Number(item.chance) || 0;
+        if (random < c) return { ...item };
+        random -= c;
+      }
+      return { ...items[0] };
     }
 
     // Get stars based on rarity
@@ -7288,6 +7921,7 @@
         packName: pack.name,
         starsGained: starsGained
       };
+      if (item.goldenTicketTier) currentGiftCard.goldenTicketTier = item.goldenTicketTier;
       
       showPackOpeningModal(pack, currentGiftCard);
     }
@@ -7520,7 +8154,7 @@
       if (!packConfettiLayer) return;
       const colors = Array.isArray(colorPalette) && colorPalette.length
         ? colorPalette
-        : ['#0d9488', '#FF3D6C', '#FFC107', '#42A5F5', '#AB47BC', '#ffffff'];
+        : ['#2AFF9E', '#FF3D6C', '#FFC107', '#42A5F5', '#AB47BC', '#ffffff'];
       const grad = rarityForGrad ? getRarityConfettiGradientCss(rarityForGrad) : '';
       const count = Math.max(1, Math.floor(n));
       for (let i = 0; i < count; i++) {
@@ -7731,6 +8365,7 @@
         if (stEl) stEl.textContent = '';
       } catch (e) {}
       invalidateDiscordPullSettings();
+      await loadStaffGoldenTicketPanel();
     }
 
     let staffStarBadgeRulesDraft = [];
@@ -7951,7 +8586,7 @@
       if (!root) return;
       const ir = hexToRgbTriplet(innerHex) || [90, 106, 138];
       const or = hexToRgbTriplet(outerHex) || [26, 34, 51];
-      const rr = hexToRgbTriplet(getRarityColor(rarity)) || [66, 245, 191];
+      const rr = hexToRgbTriplet(getRarityColor(rarity)) || [42, 255, 158];
       const lit = mixRgb(rr, [255, 255, 255], 0.55);
       const toR = (rgb, a) => `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a})`;
       root.style.setProperty('--pack-inner', innerHex);
@@ -8144,7 +8779,7 @@
               return;
             }
             try {
-              await addDoc(collection(db, 'inventory'), {
+              const invPayload = {
                 userId: currentUser.uid,
                 packId: currentGiftCard.packId,
                 packName: currentGiftCard.packName,
@@ -8153,7 +8788,11 @@
                 imageUrl: currentGiftCard.imageUrl || null,
                 starsGained: currentGiftCard.starsGained,
                 timestamp: serverTimestamp()
-              });
+              };
+              if (currentGiftCard.goldenTicketTier) {
+                invPayload.goldenTicketTier = String(currentGiftCard.goldenTicketTier).toLowerCase();
+              }
+              await addDoc(collection(db, 'inventory'), invPayload);
               const packDocCached = (inventoryCatalogCache || []).find(p => p.id === currentGiftCard.packId) || null;
               const catEntry = findPackCatalogItemByName(packDocCached, currentGiftCard.name);
               const chanceVal = catEntry && catEntry.chance != null ? catEntry.chance : currentGiftCard.chance;
@@ -8393,6 +9032,20 @@
         invPanelRarity.style.background = `${rc}22`;
       }
       if (invPanelStars) invPanelStars.textContent = String(stars);
+
+      const gtSum = document.getElementById('inv-panel-gt-summary');
+      if (gtSum) {
+        if (unlocked && isGoldenTicketPull(name)) {
+          const tier = String(cop[0]?.goldenTicketTier || 'gold').toLowerCase();
+          const tierLab = tier === 'secret' ? 'Secret Diamond' : tier.charAt(0).toUpperCase() + tier.slice(1);
+          const ent = entriesForGoldenTier(tier);
+          gtSum.style.display = 'block';
+          gtSum.textContent = `Ticket tier: ${tierLab} · Worth ${ent} giveaway entries per copy`;
+        } else {
+          gtSum.style.display = 'none';
+          gtSum.textContent = '';
+        }
+      }
 
       if (invPanelOwned) {
         invPanelOwned.textContent = unlocked ? `×${cop.length}` : '×0';
@@ -8655,6 +9308,78 @@
         inventoryCatalogLoaded = true;
         blookCatalogUniqueCountCache = null;
       }
+      try {
+        await refreshGoldenTicketRuntime();
+      } catch (_) {}
+    }
+
+    function getGoldenTicketCatalogRow() {
+      const nm = (goldenTicketRuntime && goldenTicketRuntime.blookName || '').trim();
+      if (!nm) return null;
+      const packs = inventoryCatalogCache || [];
+      for (const p of packs) {
+        const it = findPackCatalogItemByName(p, nm);
+        if (it) return { packDoc: p, item: it };
+      }
+      return null;
+    }
+
+    function updateInventoryGiveawayPanel() {
+      const box = document.getElementById('inv-giveaway-panel');
+      const sel = document.getElementById('inv-giveaway-pick');
+      const tierWrap = document.getElementById('inv-giveaway-tier-btns');
+      const msg = document.getElementById('inv-giveaway-msg');
+      const hint = document.getElementById('inv-giveaway-hint');
+      if (!box || !sel || !tierWrap) return;
+      const g = goldenTicketRuntime;
+      const enabled = !!(g && g.enabled && g.blookName);
+      if (!enabled) {
+        box.style.display = 'none';
+        return;
+      }
+      box.style.display = 'block';
+      const tickets = inventoryItems.filter((it) => isGoldenTicketPull(it.itemName));
+      const byTier = { gold: 0, platinum: 0, diamond: 0, secret: 0 };
+      tickets.forEach((it) => {
+        const t = String(it.goldenTicketTier || 'gold').toLowerCase();
+        if (byTier[t] != null) byTier[t] += 1;
+      });
+      if (hint) {
+        hint.textContent = tickets.length
+          ? 'Pick an open giveaway, then spend one ticket tier to add entries (one inventory row is consumed per click).'
+          : 'Pull Golden Tickets from packs to enter giveaways here.';
+      }
+      if (msg) msg.textContent = '';
+      const gws = g.giveaways || [];
+      const openGw = gws.filter((gw) => gw && !deskpotGiveawayEnded(gw));
+      sel.innerHTML = openGw.length
+        ? openGw.map((gw) => `<option value="${escapeHtml(gw.id)}">${escapeHtml(gw.title || 'Giveaway ' + gw.id)} — open</option>`).join('')
+        : '<option value="">No open giveaways</option>';
+      const tierLabels = {
+        gold: 'Gold',
+        platinum: 'Platinum',
+        diamond: 'Diamond',
+        secret: 'Secret diamond'
+      };
+      tierWrap.innerHTML = ['gold', 'platinum', 'diamond', 'secret'].map((tier) => {
+        const n = byTier[tier] || 0;
+        const ent = entriesForGoldenTier(tier);
+        const dis = !openGw.length || n <= 0;
+        return `<button type="button" data-gt-tier="${tier}" ${dis ? 'disabled' : ''} title="${ent} entries per ticket">${tierLabels[tier]} ×${n} (+${ent})</button>`;
+      }).join('');
+      tierWrap.querySelectorAll('button[data-gt-tier]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const tierWant = btn.getAttribute('data-gt-tier');
+          const gid = sel.value;
+          if (!gid || !tierWant) return;
+          const pick = tickets.find((it) => String(it.goldenTicketTier || 'gold').toLowerCase() === tierWant);
+          if (!pick) {
+            if (msg) msg.textContent = 'No ticket of that tier in your inventory.';
+            return;
+          }
+          await spendGoldenTicketAndEnter(gid, pick.id);
+        });
+      });
     }
 
     let blookCatalogUniqueCountCache = null;
@@ -8706,7 +9431,8 @@
       }
 
       const catalogPacks = inventoryCatalogCache || [];
-      const itemPacks = catalogPacks.filter(p => (p.items || []).length > 0);
+      const gtNameNorm = goldenTicketBlookNameNorm();
+      const itemPacks = catalogPacks.filter(p => (p.items || []).length > 0 && (!gtNameNorm || !(p.items || []).some(it => String(it.name || '').trim().toLowerCase() === gtNameNorm)));
 
       const countForPack = (pack) => inventoryItems.filter(it => invPackMatchesItem(pack, it)).length;
 
@@ -8738,6 +9464,90 @@
       const usedItemIds = new Set();
 
       const pickRep = (copies) => copies.reduce((a, b) => (raritySortIndex(a.rarity) > raritySortIndex(b.rarity) ? a : b));
+
+      const gtRow = getGoldenTicketCatalogRow();
+      if (gtRow && goldenTicketRuntime && goldenTicketRuntime.enabled && goldenTicketRuntime.blookName) {
+        const gPack = gtRow.packDoc;
+        const gItem = gtRow.item;
+        const gName = String(gItem.name || goldenTicketRuntime.blookName).trim();
+        const gCopiesAll = inventoryItems.filter((it) => String(it.itemName || '').trim().toLowerCase() === gName.toLowerCase());
+        gCopiesAll.forEach((c) => usedItemIds.add(c.id));
+        const section = document.createElement('section');
+        section.className = 'inv-blook-pack-section';
+        const title = document.createElement('h3');
+        title.className = 'inv-blook-pack-title font-titan-header';
+        title.textContent = 'Hidden blocks';
+        section.appendChild(title);
+        const sub = document.createElement('p');
+        sub.style.cssText = 'font-size:0.78rem;color:var(--text-secondary);margin:-6px 0 12px;line-height:1.4;';
+        sub.textContent = 'Golden Ticket blooks live here (not shown under normal packs).';
+        section.appendChild(sub);
+        const rule = document.createElement('div');
+        rule.className = 'inv-blook-pack-rule';
+        section.appendChild(rule);
+        const row = document.createElement('div');
+        row.className = 'inv-blook-row';
+        const blookName = gName;
+        const copies = gCopiesAll;
+        const unlocked = copies.length > 0;
+        const rep = unlocked ? pickRep(copies) : {
+          itemName: blookName,
+          rarity: gItem.rarity,
+          starsGained: gItem.starsGained,
+          imageUrl: gItem.imageUrl || '',
+          packName: gPack.name,
+          packId: gPack.id
+        };
+        const slotKey = `__hidden_gt__:${encodeURIComponent(blookName)}`;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `inv-blook-slot${unlocked ? ' unlocked' : ''}`;
+        btn.dataset.slotKey = slotKey;
+        btn.setAttribute('aria-label', unlocked ? `${blookName}, owned ${copies.length}` : `${blookName}, locked`);
+        const inner = document.createElement('div');
+        inner.className = 'inv-blook-slot-inner';
+        const imgUrl = String(gItem.imageUrl || rep.imageUrl || '').trim();
+        const slotImgSrc = imgUrl ? escapeHtml(mediaThumbUrl(imgUrl, 200, 80)) : '';
+        if (unlocked) {
+          const rc = getRarityColor((gItem.rarity || rep.rarity || 'common').toLowerCase());
+          if (imgUrl) {
+            inner.innerHTML = `<img src="${slotImgSrc}" alt="" loading="lazy" decoding="async">`;
+          } else {
+            inner.innerHTML = `<span class="inv-blook-ph" style="color:${rc};font-size:1.75rem;"><i class="fas fa-dragon"></i></span>`;
+          }
+          if (copies.length > 1) {
+            const badge = document.createElement('span');
+            badge.className = 'inv-blook-qty-badge';
+            badge.textContent = String(copies.length);
+            btn.appendChild(badge);
+          }
+        } else if (imgUrl) {
+          inner.innerHTML = `
+              <div class="inv-blook-silhouette-wrap">
+                <img class="inv-blook-silhouette-img" src="${slotImgSrc}" alt="" loading="lazy" decoding="async">
+                <div class="inv-blook-lock-overlay" aria-hidden="true"><span class="material-symbols-outlined">lock</span></div>
+              </div>`;
+        } else {
+          const rc = getRarityColor((gItem.rarity || 'common').toLowerCase());
+          inner.innerHTML = `
+              <div class="inv-blook-silhouette-wrap">
+                <span class="inv-blook-ph" style="color:${rc};font-size:1.75rem;"><i class="fas fa-dragon"></i></span>
+                <div class="inv-blook-lock-overlay" aria-hidden="true"><span class="material-symbols-outlined">lock</span></div>
+              </div>`;
+        }
+        btn.appendChild(inner);
+        const catalogDef = {
+          name: blookName,
+          imageUrl: gItem.imageUrl,
+          starsGained: gItem.starsGained,
+          rarity: gItem.rarity,
+          packDoc: gPack
+        };
+        btn.addEventListener('click', () => openInvBlookDetail(rep, copies, catalogDef, slotKey));
+        row.appendChild(btn);
+        section.appendChild(row);
+        inventoryContainer.appendChild(section);
+      }
 
       const renderPackSection = (pack, defs, orphanBucket) => {
         if (!defs.length) return;
@@ -8833,11 +9643,11 @@
           rarity: it.rarity,
           starsGained: it.starsGained,
           imageUrl: it.imageUrl
-        })).filter(d => d.name);
+        })).filter(d => d.name && (!gtNameNorm || String(d.name).trim().toLowerCase() !== gtNameNorm));
         renderPackSection(pack, defs, null);
       });
 
-      const orphanItems = inventoryItems.filter(it => !usedItemIds.has(it.id));
+      const orphanItems = inventoryItems.filter(it => !usedItemIds.has(it.id) && (!gtNameNorm || String(it.itemName || '').trim().toLowerCase() !== gtNameNorm));
       if (orphanItems.length) {
         const byName = {};
         orphanItems.forEach(it => {
@@ -8863,6 +9673,7 @@
       }
 
       refreshInvSlotSelectionUI();
+      updateInventoryGiveawayPanel();
     }
 
     async function loadInventory(userId) {
@@ -9092,7 +9903,7 @@
               const udoc = await getDoc(doc(db, 'users', fromId));
               const un = udoc.exists() ? (udoc.data().username || fromId) : fromId;
               const row = document.createElement('div');
-              row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;background:rgba(0,0,0,0.25);border-radius:10px;margin-bottom:8px;border:1px solid rgba(13,148,136,0.15);';
+              row.style.cssText = 'display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;background:rgba(0,0,0,0.25);border-radius:10px;margin-bottom:8px;border:1px solid rgba(42,255,158,0.15);';
               row.innerHTML = `<span style="font-size:0.88rem;">${escapeHtml(un)}</span><span style="display:flex;gap:6px;"><button type="button" class="staff-btn staff-btn-primary staff-btn-sm fr-acc" data-req="${d.id}" data-from="${fromId}">Accept</button><button type="button" class="staff-btn staff-btn-sm fr-dec" data-req="${d.id}">Decline</button></span>`;
               reqBox.appendChild(row);
             }
@@ -9625,6 +10436,7 @@
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.querySelector('[data-page="profile-page"]').classList.add('active');
         document.getElementById('profile-page').classList.add('active');
+        setDeskpotSidebarGoldStyle(false);
         loadProfilePage(currentUser.uid);
         return;
       }
@@ -9632,6 +10444,7 @@
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('view-profile-page').classList.add('active');
+      setDeskpotSidebarGoldStyle(false);
       viewProfileTargetUid = userId;
       const addBtn = document.getElementById('vp-add-friend-btn');
       try {
@@ -9665,6 +10478,7 @@
       document.getElementById(target).classList.add('active');
       const tabBtn = document.querySelector(`[data-page="${target}"]`);
       if (tabBtn) { document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active')); tabBtn.classList.add('active'); }
+      setDeskpotSidebarGoldStyle(target === 'deskpot-page');
       previousPageId = null;
       viewProfileTargetUid = null;
     });
@@ -9686,6 +10500,19 @@
         const recipientSnap = await getDoc(recipientRef);
         const newStars = (recipientSnap.data().stars || 0) + (cardData.starsGained || 0);
         batch.update(recipientRef, { stars: newStars });
+        const invGift = {
+          userId: recipientId,
+          packId: cardData.packId || null,
+          packName: cardData.packName || '',
+          itemName: cardData.itemName,
+          rarity: cardData.rarity,
+          imageUrl: cardData.imageUrl || null,
+          starsGained: cardData.starsGained || 0,
+          timestamp: serverTimestamp()
+        };
+        if (cardData.goldenTicketTier) invGift.goldenTicketTier = String(cardData.goldenTicketTier).toLowerCase();
+        const newInvRef = doc(collection(db, 'inventory'));
+        batch.set(newInvRef, invGift);
         await batch.commit();
         syncStarBadgesForUser(recipientId, newStars);
         await addDoc(collection(db, "giftwall"), {
@@ -9885,7 +10712,7 @@
         { name: 'Owner', color: '#FFD700', isGradient: true, gradientColors: ['#FFD700','#FF6B35','#FF1744'], priority: 1000, permissions: ALL_PERMISSIONS.map(p => p.key) },
         { name: 'Admin', color: '#FF3D6C', isGradient: false, gradientColors: [], priority: 500, permissions: ALL_PERMISSIONS.filter(p => p.key !== 'manage_permissions' && p.key !== 'create_gradient_titles').map(p => p.key) },
         { name: 'Moderator', color: '#42A5F5', isGradient: false, gradientColors: [], priority: 100, permissions: ['staff_access','view_dashboard','manage_users','view_plays','view_chats','delete_chats','assign_titles','assign_badges','mute_users','ban_users'] },
-        { name: 'User', color: '#0d9488', isGradient: false, gradientColors: [], priority: 0, permissions: [] },
+        { name: 'User', color: '#2AFF9E', isGradient: false, gradientColors: [], priority: 0, permissions: [] },
       ];
       for (const def of defaults) {
         if (!existing.includes(def.name)) {
@@ -10403,7 +11230,7 @@
       const snap = await getDocs(collection(db,'titles'));
       const titles = snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(b.priority||0)-(a.priority||0));
       document.getElementById('staff-titles-list').innerHTML = titles.map(t=>{
-        const style = t.isGradient && t.gradientColors?.length>=2 ? `background:linear-gradient(135deg,${t.gradientColors.join(',')});-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:900;` : `color:${t.color||'#0d9488'};`;
+        const style = t.isGradient && t.gradientColors?.length>=2 ? `background:linear-gradient(135deg,${t.gradientColors.join(',')});-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:900;` : `color:${t.color||'#2AFF9E'};`;
         return `<div class="staff-card" style="margin-bottom:12px;"><div class="staff-card-header"><h3><span style="${style}">${escapeHtml(t.name)}</span> <span style="font-size:0.75rem;color:var(--text-secondary);">(Priority: ${t.priority||0})</span></h3><div><button class="staff-btn staff-btn-primary staff-btn-sm stt-edit" data-id="${t.id}">Edit</button> ${t.name!=='Owner'&&t.name!=='User'?`<button class="staff-btn staff-btn-danger staff-btn-sm stt-del" data-id="${t.id}">Del</button>`:''}</div></div><div style="font-size:0.8rem;color:var(--text-secondary);">Permissions: ${(t.permissions||[]).length ? (t.permissions||[]).join(', ') : 'None'}</div></div>`;
       }).join('');
       document.querySelectorAll('.stt-edit').forEach(b=>b.addEventListener('click',()=>openStaffEditTitle(b.dataset.id)));
@@ -10415,7 +11242,7 @@
       const data = d.data();
       document.getElementById('staff-title-id').value = id;
       document.getElementById('staff-title-name').value = data.name||'';
-      document.getElementById('staff-title-color').value = data.color||'#0d9488';
+      document.getElementById('staff-title-color').value = data.color||'#2AFF9E';
       document.getElementById('staff-title-gradient').value = data.isGradient?'true':'false';
       document.getElementById('staff-title-gradient-colors').value = (data.gradientColors||[]).join(', ');
       document.getElementById('staff-title-running').value = data.isRunning?'true':'false';
@@ -10459,7 +11286,7 @@
       document.getElementById('staff-badge-id').value = id;
       document.getElementById('staff-badge-name').value = data.name||'';
       document.getElementById('staff-badge-icon').value = data.icon||'fas fa-star';
-      document.getElementById('staff-badge-bg').value = data.bgColor||'#0d9488';
+      document.getElementById('staff-badge-bg').value = data.bgColor||'#2AFF9E';
       document.getElementById('staff-badge-text-color').value = data.textColor||'#000000';
       document.getElementById('staff-badge-desc').value = data.description||'';
       document.getElementById('staff-badge-modal-title').textContent = 'Edit Badge';
@@ -10766,6 +11593,47 @@
         } catch (e) { showNotification('Save failed: ' + e.message, 'error'); }
       });
 
+      document.getElementById('staff-gt-save')?.addEventListener('click', async () => {
+        const statusEl = document.getElementById('staff-gt-save-status');
+        if (!hasPermission('staff_access')) {
+          showNotification('No permission', 'error');
+          return;
+        }
+        const payload = readStaffGoldenTicketFormIntoPayload();
+        if (payload.enabled) {
+          if (!payload.blookName) {
+            showNotification('Set a Golden Ticket blook name that exists in a pack.', 'error');
+            return;
+          }
+          const found = (await getDocs(collection(db, 'packs'))).docs.some((d) => {
+            const p = d.data();
+            if (p.shopType === 'banner') return false;
+            return !!(p.items || []).find((it) => String(it.name || '').trim().toLowerCase() === payload.blookName.toLowerCase());
+          });
+          if (!found) {
+            showNotification('No pack contains a blook with that exact name.', 'error');
+            return;
+          }
+        }
+        if (statusEl) statusEl.textContent = 'Saving…';
+        try {
+          await setDoc(doc(db, 'siteConfig', 'settings'), {
+            goldenTicket: payload,
+            updatedAt: serverTimestamp()
+          }, { merge: true });
+          goldenTicketRuntime = normalizeGtConfig(payload);
+          applyDeskpotTabVisibility();
+          renderStaffGoldenTicketEditor();
+          if (statusEl) statusEl.textContent = 'Saved.';
+          showNotification('Golden Ticket / Deskpot saved', 'success');
+          if (document.getElementById('deskpot-page')?.classList.contains('active')) renderDeskpotPage();
+          if (inventoryCatalogLoaded) renderInventory();
+        } catch (e) {
+          if (statusEl) statusEl.textContent = '';
+          showNotification('Save failed: ' + e.message, 'error');
+        }
+      });
+
       document.getElementById('staff-discord-save')?.addEventListener('click', async () => {
         const statusEl = document.getElementById('staff-discord-save-status');
         if (statusEl) statusEl.textContent = 'Saving…';
@@ -10860,7 +11728,7 @@
       });
 
       // Titles
-      document.getElementById('staff-add-title-btn')?.addEventListener('click',()=>{document.getElementById('staff-title-id').value='';document.getElementById('staff-title-name').value='';document.getElementById('staff-title-color').value='#0d9488';document.getElementById('staff-title-gradient').value='false';document.getElementById('staff-title-gradient-colors').value='';document.getElementById('staff-title-priority').value='0';document.getElementById('staff-gradient-colors-group').style.display='none';renderTitlePermissions([]);document.getElementById('staff-title-modal-title').textContent='Create Title';document.getElementById('staff-title-modal').style.display='flex';});
+      document.getElementById('staff-add-title-btn')?.addEventListener('click',()=>{document.getElementById('staff-title-id').value='';document.getElementById('staff-title-name').value='';document.getElementById('staff-title-color').value='#2AFF9E';document.getElementById('staff-title-gradient').value='false';document.getElementById('staff-title-gradient-colors').value='';document.getElementById('staff-title-priority').value='0';document.getElementById('staff-gradient-colors-group').style.display='none';renderTitlePermissions([]);document.getElementById('staff-title-modal-title').textContent='Create Title';document.getElementById('staff-title-modal').style.display='flex';});
       document.getElementById('staff-close-title-modal')?.addEventListener('click',()=>document.getElementById('staff-title-modal').style.display='none');
       document.getElementById('staff-title-gradient')?.addEventListener('change',e=>{document.getElementById('staff-gradient-colors-group').style.display=e.target.value==='true'?'block':'none';});
       document.getElementById('staff-title-gradient-colors')?.addEventListener('input',updateGradientPreview);
@@ -10880,7 +11748,7 @@
       });
 
       // Badges
-      document.getElementById('staff-add-badge-btn')?.addEventListener('click',()=>{document.getElementById('staff-badge-id').value='';document.getElementById('staff-badge-name').value='';document.getElementById('staff-badge-icon').value='';const bif=document.getElementById('staff-badge-icon-file');if(bif)bif.value='';document.getElementById('staff-badge-bg').value='#0d9488';document.getElementById('staff-badge-text-color').value='#000000';document.getElementById('staff-badge-desc').value='';document.getElementById('staff-badge-modal-title').textContent='Create Badge';document.getElementById('staff-badge-modal').style.display='flex';});
+      document.getElementById('staff-add-badge-btn')?.addEventListener('click',()=>{document.getElementById('staff-badge-id').value='';document.getElementById('staff-badge-name').value='';document.getElementById('staff-badge-icon').value='';const bif=document.getElementById('staff-badge-icon-file');if(bif)bif.value='';document.getElementById('staff-badge-bg').value='#2AFF9E';document.getElementById('staff-badge-text-color').value='#000000';document.getElementById('staff-badge-desc').value='';document.getElementById('staff-badge-modal-title').textContent='Create Badge';document.getElementById('staff-badge-modal').style.display='flex';});
       document.getElementById('staff-close-badge-modal')?.addEventListener('click',()=>document.getElementById('staff-badge-modal').style.display='none');
       document.getElementById('staff-save-badge-btn')?.addEventListener('click',async()=>{
         const id=document.getElementById('staff-badge-id').value;
@@ -11068,6 +11936,22 @@
     setupStaffEventListeners();
 
     // ========== Initialize the app ==========
+    function setupGoldenTicketRemoteSync() {
+      if (goldTicketSettingsUnsub) {
+        try { goldTicketSettingsUnsub(); } catch (_) {}
+        goldTicketSettingsUnsub = null;
+      }
+      goldTicketSettingsUnsub = onSnapshot(doc(db, 'siteConfig', 'settings'), (snap) => {
+        const raw = snap.exists() ? snap.data().goldenTicket : null;
+        goldenTicketRuntime = normalizeGtConfig(raw);
+        applyDeskpotTabVisibility();
+        if (document.getElementById('deskpot-page')?.classList.contains('active')) renderDeskpotPage();
+        if (inventoryCatalogLoaded && document.getElementById('inventory-page')?.classList.contains('active')) {
+          renderInventory();
+        }
+      }, () => {});
+    }
+
     async function init() {
       await refreshRarityOrderFromServer();
       applyFixedSiteTheme();

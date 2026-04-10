@@ -4,7 +4,8 @@ All notable changes to this project are documented here. The app is a single fil
 
 ## Unreleased
 
-- **Theme:** main field uses `#42f5bf` mint; panels are mint-tinted grey with **white** type; bright mint accents (tabs, CTAs) use **black** type for contrast.
+- **Theme:** reverted mint/Blooket-blue experiments; restored the original dark neon site palette.
+- **Deskpot / Golden Ticket:** staff-configurable blook (extra pack drop + tier roll), hidden inventory section, giveaways A/B with fixed prize tiers and live top-10 entry boards (`giveawayLeaderboards/{A|B}`). No auto winner draw.
 - Pack unbox: smaller on-screen pack scale during open animation.
 - Discord special pulls: embed uses blook art as **thumbnail only**; message body lists pull line, stars, rarity (title case), and chance.
 
