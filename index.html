@@ -7262,12 +7262,16 @@
         embed.image = { url: thumb };
       }
       try {
-        await fetch(webhookUrl, {
+        const res = await fetch(webhookUrl, {
           method: 'POST',
           mode: 'cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ embeds: [embed] })
         });
+        if (!res.ok) {
+          const errBody = await res.text().catch(() => '');
+          console.warn('Discord webhook (special pull) HTTP', res.status, errBody.slice(0, 200));
+        }
       } catch (e) {
         console.warn('Discord webhook (special pull) failed:', e);
       }
