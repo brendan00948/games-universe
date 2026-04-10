@@ -242,8 +242,9 @@
       color: var(--text-secondary);
       text-align: left;
       padding: 16px 20px;
-      font-size: 0.98rem;
-      font-weight: 400;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -793,13 +794,12 @@
     .font-titan-btn,
     .collect-btn, .confirm-btn, .cancel-btn,
     .buy-btn, .chance-btn,
-    .settings-btn, .auth-btn,
+    .settings-btn,
     .confirm-yes, .confirm-no,
     .submit-btn,
     .send-card-btn,
     .daily-reward-btn, .claim-btn,
     .slide-play-button,
-    .tab-button,
     .staff-btn,
     .staff-sub-tab,
     #logout-btn {
@@ -3498,6 +3498,12 @@
       font-size: 1.6rem;
       margin-bottom: 20px;
     }
+    #loginModal .auth-modal-content > h3,
+    #signupModal .auth-modal-content > h3 {
+      font-family: 'Titan One', 'Nunito', sans-serif;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
     .auth-input {
       width: 100%;
       padding: 12px;
@@ -3514,6 +3520,7 @@
       border: none;
       padding: 10px 20px;
       border-radius: 40px;
+      font-family: 'Nunito', sans-serif;
       font-weight: 800;
       cursor: pointer;
       width: 100%;
