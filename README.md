@@ -1,14 +1,20 @@
 # games-universe
 
-Single-page app: **`index.html`** (Game Universe).
+- **Landing page:** **`index.html`** — short intro and hero art for **https://gamesuniverse.org**
+- **Full app (dashboard):** **`dashboard.html`** — games, shop, inventory, missions, chat, staff, etc.
 
 ## Published site (source)
 
 - **Branch:** `main` on GitHub  
-- **Browse:** https://github.com/brendan00948/games-universe/blob/main/index.html  
-- **Raw (copy/paste / host):** https://raw.githubusercontent.com/brendan00948/games-universe/main/index.html  
+- **Landing:** https://github.com/brendan00948/games-universe/blob/main/index.html  
+- **Dashboard app:** https://github.com/brendan00948/games-universe/blob/main/dashboard.html  
+- **Raw dashboard (copy/paste / host):** https://raw.githubusercontent.com/brendan00948/games-universe/main/dashboard.html  
 
 The commit at the tip of `main` is the published version; see **Commits** on GitHub for the exact SHA.
+
+### Hero image on the landing page
+
+Add your collage as **`assets/landing-hero.png`** in the repo (same path on the live site). Until that file exists, the page falls back to **`assets/landing-hero.svg`**.
 
 ## Staff: Discord pull alerts
 
