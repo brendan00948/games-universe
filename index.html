@@ -32,6 +32,10 @@
       --star-empty: #66587a;
       --sidebar-bg: #26142f;
       --sidebar-width: 300px;
+      --surface-input: #2c1f3a;
+      --surface-panel: #281c34;
+      --surface-muted: #4a3d5e;
+      --border-ui: rgba(238, 102, 255, 0.32);
       --common: #c0c0c0;
       --uncommon: #2e7d32;
       --rare: #1565c0;
@@ -56,7 +60,18 @@
       box-sizing: border-box;
     }
 
+    a:focus-visible,
+    button:focus-visible,
+    .tab-button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid var(--theme-purple);
+      outline-offset: 2px;
+    }
+
     html {
+      color-scheme: dark;
       scrollbar-width: thin;
       scrollbar-color: var(--theme-purple) var(--card-bg);
     }
@@ -635,8 +650,8 @@
       width: 100%;
       max-width: 400px;
       padding: 10px 18px;
-      background: #1A1E26;
-      border: 1px solid #2E3A48;
+      background: var(--surface-input);
+      border: 1px solid var(--border-ui);
       border-radius: 60px;
       color: white;
       font-size: 0.9rem;
@@ -669,7 +684,7 @@
       position: relative;
       width: 100%;
       aspect-ratio: 16 / 9;
-      background: #0d1118;
+      background: #1a1226;
       overflow: hidden;
     }
     .full-game-banner-bg {
@@ -3526,7 +3541,7 @@
       justify-content: center;
     }
     .auth-modal-content, .notice-modal-content {
-      background: #11161F;
+      background: var(--surface-panel);
       padding: 30px;
       border-radius: 24px;
       text-align: center;
@@ -3549,8 +3564,8 @@
       width: 100%;
       padding: 12px;
       margin: 10px 0;
-      background: #1E242E;
-      border: 1px solid #2E3A48;
+      background: var(--surface-input);
+      border: 1px solid var(--surface-muted);
       border-radius: 12px;
       color: white;
       font-size: 0.9rem;
@@ -3588,7 +3603,7 @@
       display: block;
       margin: 10px 0;
       padding: 8px;
-      background: #2E3A48;
+      background: var(--surface-muted);
       border-radius: 12px;
       cursor: pointer;
       font-size: 0.8rem;
@@ -3617,7 +3632,7 @@
       justify-content: center;
     }
     .confirm-modal-content {
-      background: #11161F;
+      background: var(--surface-panel);
       padding: 30px;
       border-radius: 24px;
       text-align: center;
@@ -3639,7 +3654,7 @@
       border: none;
     }
     .confirm-yes { background: var(--neon-green); color: #000; }
-    .confirm-no { background: #2E3A48; color: #fff; }
+    .confirm-no { background: var(--surface-muted); color: #fff; }
 
     /* Game modal */
     .modal {
@@ -3672,7 +3687,7 @@
     .close {
       font-size: 28px;
       cursor: pointer;
-      color: #aaa;
+      color: var(--text-secondary);
     }
     .close:hover { color: var(--neon-green); }
     .game-frame { width: 100%; height: calc(100% - 56px); border: none; }
@@ -3696,8 +3711,8 @@
     }
     .form-container h3 { font-weight: 800; margin-bottom: 16px; }
     .form-group input, .form-group textarea, .form-group select {
-      background: #1E242E;
-      border: 1px solid #2E3A48;
+      background: var(--surface-input);
+      border: 1px solid var(--surface-muted);
       border-radius: 12px;
       padding: 10px;
       color: white;
@@ -3714,9 +3729,9 @@
     footer {
       text-align: center;
       padding: 20px;
-      color: #b89cc8;
+      color: var(--text-secondary);
       font-size: 0.75rem;
-      border-top: 1px solid rgba(255, 255, 160, 0.1);
+      border-top: 1px solid rgba(255, 255, 160, 0.14);
     }
 
     /* Send Gift Card Modal */
@@ -3734,7 +3749,7 @@
     }
 
     .send-card-modal-content {
-      background: #11161F;
+      background: var(--surface-panel);
       padding: 30px;
       border-radius: 24px;
       max-width: 400px;
@@ -3796,8 +3811,8 @@
     .send-form-group input, .send-form-group select {
       width: 100%;
       padding: 10px;
-      background: #1E242E;
-      border: 1px solid #2E3A48;
+      background: var(--surface-input);
+      border: 1px solid var(--surface-muted);
       border-radius: 12px;
       color: white;
       font-size: 0.9rem;
@@ -3829,7 +3844,7 @@
     }
 
     .send-card-btn.cancel {
-      background: #2E3A48;
+      background: var(--surface-muted);
       color: #fff;
     }
 
@@ -3940,7 +3955,7 @@
 
     .progress-bar {
       height: 10px;
-      background: #2E3A48;
+      background: var(--surface-muted);
       border-radius: 5px;
       overflow: hidden;
       margin-bottom: 5px;
@@ -3990,7 +4005,7 @@
     }
 
     .claim-btn:disabled {
-      background: #2E3A48;
+      background: var(--surface-muted);
       color: var(--text-secondary);
       cursor: not-allowed;
     }
@@ -4033,7 +4048,7 @@
       font-size: 0.95rem;
     }
     .daily-reward-btn:disabled {
-      background: #2E3A48;
+      background: var(--surface-muted);
       color: var(--text-secondary);
       cursor: not-allowed;
     }
@@ -4135,7 +4150,7 @@
     }
     .up-badge-fa:hover { transform: scale(1.12); }
     .badge-tooltip {
-      position: fixed; z-index: 9999; background: #11161F;
+      position: fixed; z-index: 9999; background: var(--surface-panel);
       border: 1px solid var(--neon-green); border-radius: 12px;
       padding: 10px 14px; max-width: 220px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.6); pointer-events: none;
@@ -4282,12 +4297,12 @@
     .staff-btn-warning:hover { filter: brightness(1.05); box-shadow: 0 8px 26px rgba(255,179,71,0.3); }
     .staff-btn-sm { padding: 7px 14px; font-size: 0.76rem; border-radius: 10px; }
     .staff-badge { background: rgba(255,255,160,0.15); padding: 3px 10px; border-radius: 20px; font-size: 0.75rem; color: var(--theme-purple); display: inline-block; margin: 2px; }
-    .staff-search { background: rgba(30,38,50,0.8); border: 1px solid rgba(255,255,160,0.2); border-radius: 20px; padding: 8px 16px; color: white; width: 260px; font-size: 0.85rem; }
+    .staff-search { background: rgba(44, 31, 58, 0.92); border: 1px solid rgba(255,255,160,0.2); border-radius: 20px; padding: 8px 16px; color: white; width: 260px; font-size: 0.85rem; }
     .staff-search:focus { outline: none; border-color: var(--neon-green); }
     .staff-form-group { margin-bottom: 14px; }
     .staff-form-group label { display: block; font-size: 0.8rem; font-weight: 700; margin-bottom: 4px; color: var(--text-secondary); }
     .staff-form-group input, .staff-form-group select, .staff-form-group textarea {
-      background: rgba(30,38,50,0.8);
+      background: rgba(44, 31, 58, 0.92);
       border: 1px solid rgba(255,255,160,0.2);
       border-radius: 12px;
       padding: 10px 14px;
@@ -4298,7 +4313,7 @@
     .staff-form-group input:focus, .staff-form-group select:focus, .staff-form-group textarea:focus { outline: none; border-color: var(--neon-green); }
     .staff-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; align-items: center; justify-content: center; }
     .staff-modal-content {
-      background: #11161F;
+      background: var(--surface-panel);
       border: 1px solid var(--neon-green);
       border-radius: 20px;
       padding: 24px;
@@ -4402,7 +4417,7 @@
     .up-container {
       max-width: 700px;
       margin: 0 auto;
-      background: #11161F;
+      background: var(--surface-panel);
       border-radius: 20px;
       padding: 20px;
       border: 1px solid rgba(255, 255, 160, 0.2);
@@ -4503,7 +4518,7 @@
     }
     .up-section-count { margin-left: auto; font-size: 0.75rem; color: #f8efff; font-weight: 600; }
     .progress-bar {
-      background: #2E3A48; border-radius: 40px; height: 8px; overflow: hidden;
+      background: var(--surface-muted); border-radius: 40px; height: 8px; overflow: hidden;
     }
     .progress-fill {
       background: #ffffa0; width: 0%; height: 100%; border-radius: 40px;
