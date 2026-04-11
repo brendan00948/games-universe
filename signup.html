@@ -28,7 +28,7 @@
         <button type="submit" class="auth-btn" id="submit">Create account</button>
       </form>
       <div class="auth-links">
-        <a href="login.html">Already have an account? Log in</a>
+        <a id="link-login" href="login.html">Already have an account? Log in</a>
         ·
         <a href="index.html">Home</a>
       </div>
@@ -36,7 +36,7 @@
   </div>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+    import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
     import {
       getFirestore,
       doc,
@@ -65,6 +65,27 @@
     const form = document.getElementById("form");
     const msg = document.getElementById("msg");
     const submit = document.getElementById("submit");
+
+    const qs = new URLSearchParams(window.location.search);
+    const nextRaw = qs.get("next");
+    function safeNextUrl() {
+      if (!nextRaw) return "/dashboard/";
+      try {
+        const d = decodeURIComponent(nextRaw);
+        if (!d.startsWith("/") || d.startsWith("//")) return "/dashboard/";
+        return d;
+      } catch (_) {
+        return "/dashboard/";
+      }
+    }
+    const afterSignupUrl = safeNextUrl();
+    const loginLink = document.getElementById("link-login");
+    if (loginLink) {
+      const q = nextRaw ? `?next=${encodeURIComponent(nextRaw)}` : "";
+      loginLink.href = `login.html${q}`;
+    }
+
+    setPersistence(auth, browserLocalPersistence).catch(() => {});
 
     const defaultAvatar = "https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg";
 
@@ -105,7 +126,7 @@
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        window.location.replace("/dashboard/");
+        window.location.replace(afterSignupUrl);
       }
     });
 
@@ -123,8 +144,8 @@
       try {
         const cred = await createUserWithEmailAndPassword(auth, email, password);
         await saveUserProfile(cred.user.uid, email, username);
-        setMsg("Success — opening dashboard…", true);
-        window.location.replace("/dashboard/");
+        setMsg("Success — opening app…", true);
+        window.location.replace(afterSignupUrl);
       } catch (err) {
         setMsg(err.message || "Sign up failed.");
         submit.disabled = false;

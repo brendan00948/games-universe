@@ -6069,7 +6069,9 @@
       signOut,     
       onAuthStateChanged,     
       updatePassword,     
-      updateProfile 
+      updateProfile,
+      setPersistence,
+      browserLocalPersistence
     } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
     import { 
       getFirestore,     
@@ -6117,8 +6119,48 @@
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
+    setPersistence(auth, browserLocalPersistence).catch(() => {});
     const db = getFirestore(app);
     const storage = getStorage(app);
+
+    /** Run heavy init (games, rarity) once after we know the user is signed in. */
+    let dashboardAppInitStarted = false;
+    function startDashboardAppOnce() {
+      if (dashboardAppInitStarted) return;
+      dashboardAppInitStarted = true;
+      init().catch((e) => {
+        console.error('init', e);
+        hidePageLoading();
+      });
+    }
+
+    function safeInternalPath(raw) {
+      if (!raw || typeof raw !== 'string') return '/dashboard/';
+      try {
+        const d = decodeURIComponent(raw.trim());
+        if (!d.startsWith('/') || d.startsWith('//')) return '/dashboard/';
+        return d;
+      } catch (_) {
+        return '/dashboard/';
+      }
+    }
+
+    let dashboardLoginRedirectSent = false;
+    function redirectGuestToLogin() {
+      if (dashboardLoginRedirectSent) return;
+      const path = (location.pathname || '').toLowerCase();
+      if (path.endsWith('/login.html') || path.endsWith('/signup.html')) return;
+      hidePageLoading();
+      const next = encodeURIComponent(location.pathname + location.search + location.hash);
+      const go = () => {
+        if (dashboardLoginRedirectSent) return;
+        if (auth.currentUser) return;
+        dashboardLoginRedirectSent = true;
+        window.location.replace(`${location.origin}/login.html?next=${next}`);
+      };
+      /* Defer one tick so IndexedDB-restored sessions are not mistaken for logged-out. */
+      setTimeout(go, 80);
+    }
 
     /** Default webhook if not set in Staff → Discord or Firestore. */
     const SPECIAL_PULL_DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1491040161155256351/8huNJrIDwJpsfVi30xaCisPELzWTh3-SbrK4de92bKkhSVQTayEHFZpyg8yHxMqcOXEQ';
@@ -7149,6 +7191,7 @@
     onAuthStateChanged(auth, async (user) => {
       currentUser = user;
       if (user) {
+        startDashboardAppOnce();
         try {
           const p = window.location.pathname || '';
           if (/\/dashboard\/index\.html$/i.test(p) || /\/dashboard\.html$/i.test(p) || /\/dashboard\/index$/i.test(p)) {
@@ -7242,6 +7285,7 @@
         if (goldTicketSettingsUnsub) { try { goldTicketSettingsUnsub(); } catch (_) {} goldTicketSettingsUnsub = null; }
         setGoldenTicketSidebarGoldStyle(false);
         unsubscribeGoldenGiveawayLeaders();
+        redirectGuestToLogin();
       }
     });
 
@@ -7415,7 +7459,16 @@
     function ensureMainPageGamesDeferredObserver() {
       const mp = document.getElementById('main-page');
       const ph = document.getElementById('main-games-load-placeholder');
-      if (!mp || !ph || mainPageGamesMounted || typeof IntersectionObserver === 'undefined') return;
+      if (!mp || !ph || mainPageGamesMounted) return;
+      /* Main tab visible: mount immediately (observer root may not include off-screen placeholder). */
+      if (mp.classList.contains('active')) {
+        mountMainPageGamesContent().catch((e) => console.error('mountMainPageGamesContent', e));
+        return;
+      }
+      if (typeof IntersectionObserver === 'undefined') {
+        mountMainPageGamesContent().catch((e) => console.error('mountMainPageGamesContent', e));
+        return;
+      }
       if (mainPageGamesScrollObserver) return;
       mainPageGamesScrollObserver = new IntersectionObserver((entries) => {
         entries.forEach((en) => {
@@ -12087,15 +12140,27 @@
     }
 
     async function init() {
-      await refreshRarityOrderFromServer();
-      applyFixedSiteTheme();
-      appGamesDataCache = await getGames();
-      ensureMainPageGamesDeferredObserver();
+      /* Never block the shell on Firestore: overlay hid only after getGames() before — if reads hang, dashboard "loads forever". */
       hidePageLoading();
+      try {
+        await refreshRarityOrderFromServer();
+      } catch (e) {
+        console.warn('refreshRarityOrderFromServer', e);
+      }
+      applyFixedSiteTheme();
+      try {
+        appGamesDataCache = await getGames();
+      } catch (e) {
+        console.error('getGames init', e);
+        appGamesDataCache = { topGames: [], newGames: [], allGames: [] };
+      }
+      ensureMainPageGamesDeferredObserver();
+      if (!mainPageGamesMounted) {
+        mountMainPageGamesContent().catch((e) => console.error('mountMainPageGamesContent init', e));
+      }
     }
 
-    init().catch(() => hidePageLoading());
-    setTimeout(hidePageLoading, 12000);
+    setTimeout(hidePageLoading, 6000);
     // ========== Event Listeners ==========
     document.getElementById('daily-reward-claim-btn')?.addEventListener('click', () => claimDailyReward());
     document.getElementById('badge-detail-close')?.addEventListener('click', () => {

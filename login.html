@@ -26,7 +26,7 @@
         <button type="submit" class="auth-btn" id="submit">Log in</button>
       </form>
       <div class="auth-links">
-        <a href="signup.html">Need an account? Sign up</a>
+        <a id="link-signup" href="signup.html">Need an account? Sign up</a>
         ·
         <a href="index.html">Home</a>
       </div>
@@ -34,55 +34,78 @@
   </div>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyC49VFcW1pjHq0sCkdcps_DwUAoo4z5oaw",
-      authDomain: "blacket-65c5b.firebaseapp.com",
-      databaseURL: "https://blacket-65c5b-default-rtdb.firebaseio.com",
-      projectId: "blacket-65c5b",
-      storageBucket: "blacket-65c5b.firebasestorage.app",
-      messagingSenderId: "497023905730",
-      appId: "1:497023905730:web:a59093052a3f93a476305b",
-      measurementId: "G-XZZR5DH79B"
-    };
+    (async function run() {
+      const firebaseConfig = {
+        apiKey: "AIzaSyC49VFcW1pjHq0sCkdcps_DwUAoo4z5oaw",
+        authDomain: "blacket-65c5b.firebaseapp.com",
+        databaseURL: "https://blacket-65c5b-default-rtdb.firebaseio.com",
+        projectId: "blacket-65c5b",
+        storageBucket: "blacket-65c5b.firebasestorage.app",
+        messagingSenderId: "497023905730",
+        appId: "1:497023905730:web:a59093052a3f93a476305b",
+        measurementId: "G-XZZR5DH79B"
+      };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const form = document.getElementById("form");
-    const msg = document.getElementById("msg");
-    const submit = document.getElementById("submit");
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      await setPersistence(auth, browserLocalPersistence).catch(() => {});
 
-    function setMsg(text, ok) {
-      msg.textContent = text || "";
-      msg.classList.toggle("ok", !!ok);
-    }
-
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        window.location.replace("/dashboard/");
+      const qs = new URLSearchParams(window.location.search);
+      const nextRaw = qs.get("next");
+      function safeNextUrl() {
+        if (!nextRaw) return "/dashboard/";
+        try {
+          const d = decodeURIComponent(nextRaw);
+          if (!d.startsWith("/") || d.startsWith("//")) return "/dashboard/";
+          return d;
+        } catch (_) {
+          return "/dashboard/";
+        }
       }
-    });
+      const afterLoginUrl = safeNextUrl();
+      const signupLink = document.getElementById("link-signup");
+      if (signupLink) {
+        const q = nextRaw ? `?next=${encodeURIComponent(nextRaw)}` : "";
+        signupLink.href = `signup.html${q}`;
+      }
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      if (!email || !password) {
-        setMsg("Enter email and password.");
-        return;
+      const form = document.getElementById("form");
+      const msg = document.getElementById("msg");
+      const submit = document.getElementById("submit");
+
+      function setMsg(text, ok) {
+        msg.textContent = text || "";
+        msg.classList.toggle("ok", !!ok);
       }
-      submit.disabled = true;
-      setMsg("Signing in…", true);
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        setMsg("Success — opening dashboard…", true);
-        window.location.replace("/dashboard/");
-      } catch (err) {
-        setMsg(err.message || "Login failed.");
-        submit.disabled = false;
-      }
-    });
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          window.location.replace(afterLoginUrl);
+        }
+      });
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        if (!email || !password) {
+          setMsg("Enter email and password.");
+          return;
+        }
+        submit.disabled = true;
+        setMsg("Signing in…", true);
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+          setMsg("Success — opening app…", true);
+          window.location.replace(afterLoginUrl);
+        } catch (err) {
+          setMsg(err.message || "Login failed.");
+          submit.disabled = false;
+        }
+      });
+    })();
   </script>
 </body>
 </html>
