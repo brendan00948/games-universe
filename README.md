@@ -1,7 +1,7 @@
 # games-universe
 
 - **Landing page:** **`index.html`** — marketing home for **https://gamesuniverse.org**
-- **Auth pages:** **`login.html`** and **`signup.html`** — dedicated pages (then redirect to **`/dashboard/`** after success). Shared styles: **`assets/auth-pages.css`** (static background pattern, centered form card).
+- **Auth pages:** **`login.html`** and **`signup.html`** — dedicated pages (then redirect to **`/dashboard/`** or optional **`?next=`** internal path after success). Shared styles: **`assets/auth-pages.css`** (static background pattern, centered form card). **`/dashboard/`** sends guests to **`/login.html?next=…`** after Firebase reports no user; the app bundle loads only when signed in.
 - **Full app (dashboard):** **`dashboard/index.html`** — games, shop, inventory, missions, chat, staff, etc.  
   **Public URL (no `.html`):** **`/dashboard/`** (GitHub Pages serves the folder index).
 
