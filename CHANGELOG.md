@@ -5,7 +5,7 @@ All notable changes to this project are documented here. The app is a single fil
 ## Unreleased
 
 - **Theme:** reverted mint/Blooket-blue experiments; restored the original dark neon site palette.
-- **Deskpot / Golden Ticket:** staff-configurable blook (extra pack drop + tier roll), hidden inventory section, giveaways A/B with fixed prize tiers and live top-10 entry boards (`giveawayLeaderboards/{A|B}`). No auto winner draw.
+- **Golden Ticket:** staff-configurable blook (extra pack drop + ticket tier roll for entry value), hidden inventory section, **three** giveaways each with a **single** prize and live top-10 entry boards (`giveawayLeaderboards/{A|B|C}`). No auto winner draw.
 - Pack unbox: smaller on-screen pack scale during open animation.
 - Discord special pulls: embed uses blook art as **thumbnail only**; message body lists pull line, stars, rarity (title case), and chance.
 
