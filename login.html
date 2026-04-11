@@ -34,7 +34,14 @@
   </div>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+    import {
+      initializeAuth,
+      getAuth,
+      signInWithEmailAndPassword,
+      onAuthStateChanged,
+      setPersistence,
+      browserLocalPersistence
+    } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
     (async function run() {
       const firebaseConfig = {
@@ -49,8 +56,13 @@
       };
 
       const app = initializeApp(firebaseConfig);
-      const auth = getAuth(app);
-      await setPersistence(auth, browserLocalPersistence).catch(() => {});
+      let auth;
+      try {
+        auth = initializeAuth(app, { persistence: browserLocalPersistence });
+      } catch (_) {
+        auth = getAuth(app);
+        await setPersistence(auth, browserLocalPersistence).catch(() => {});
+      }
 
       const qs = new URLSearchParams(window.location.search);
       const nextRaw = qs.get("next");
