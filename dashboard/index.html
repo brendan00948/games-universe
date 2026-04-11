@@ -6061,9 +6061,10 @@
   <script type="module">
     // Import required Firebase modules
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
+    import { getAnalytics, isSupported } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
     import { 
-      getAuth,     
+      initializeAuth,
+      getAuth,
       createUserWithEmailAndPassword,     
       signInWithEmailAndPassword,     
       signOut,     
@@ -7198,75 +7199,83 @@
             window.history.replaceState({}, '', '/dashboard/');
           }
         } catch (_) {}
-        const userDoc = await getDoc(doc(db, "users", user.uid));
-        if (!userDoc.exists()) {
-          await saveUserProfile(user.uid, user.email, user.email.split('@')[0], null);
-        } else {
-          const patch = {};
-          const d0 = userDoc.data();
-          if (!d0.displayId || String(d0.displayId).length !== 6) patch.displayId = await ensureUniqueDisplayId();
-          if (!Array.isArray(d0.ownedBannerIds)) patch.ownedBannerIds = [];
-          if (Object.keys(patch).length) await updateDoc(doc(db, "users", user.uid), patch);
-          if (user.email === "chonhouliu@gmail.com") {
-            await updateDoc(doc(db, "users", user.uid), { coins: 999999, title: "Owner" });
+        try {
+          const userDoc = await getDoc(doc(db, "users", user.uid));
+          if (!userDoc.exists()) {
+            await saveUserProfile(user.uid, user.email, user.email.split('@')[0], null);
+          } else {
+            const patch = {};
+            const d0 = userDoc.data();
+            if (!d0.displayId || String(d0.displayId).length !== 6) patch.displayId = await ensureUniqueDisplayId();
+            if (!Array.isArray(d0.ownedBannerIds)) patch.ownedBannerIds = [];
+            if (Object.keys(patch).length) await updateDoc(doc(db, "users", user.uid), patch);
+            if (user.email === "chonhouliu@gmail.com") {
+              await updateDoc(doc(db, "users", user.uid), { coins: 999999, title: "Owner" });
+            }
           }
-        }
-        const banCheck = await getDoc(doc(db, "users", user.uid));
-        if (banCheck.exists()) {
-          const bd = banCheck.data();
-          if (bd.banStatus === 'perm' || (bd.banStatus === 'temp' && bd.banUntil && new Date(bd.banUntil.toDate ? bd.banUntil.toDate() : bd.banUntil) > new Date())) {
-            const reason = bd.modReason || 'No reason provided';
-            const until = bd.banStatus === 'perm' ? 'permanently' : `until ${new Date(bd.banUntil.toDate ? bd.banUntil.toDate() : bd.banUntil).toLocaleString()}`;
-            alert(`Your account has been banned ${until}.\nReason: ${reason}`);
-            await signOut(auth);
-            return;
+          const banCheck = await getDoc(doc(db, "users", user.uid));
+          if (banCheck.exists()) {
+            const bd = banCheck.data();
+            if (bd.banStatus === 'perm' || (bd.banStatus === 'temp' && bd.banUntil && new Date(bd.banUntil.toDate ? bd.banUntil.toDate() : bd.banUntil) > new Date())) {
+              const reason = bd.modReason || 'No reason provided';
+              const until = bd.banStatus === 'perm' ? 'permanently' : `until ${new Date(bd.banUntil.toDate ? bd.banUntil.toDate() : bd.banUntil).toLocaleString()}`;
+              alert(`Your account has been banned ${until}.\nReason: ${reason}`);
+              await signOut(auth);
+              return;
+            }
+            if (bd.banStatus === 'temp' && bd.banUntil && new Date(bd.banUntil.toDate ? bd.banUntil.toDate() : bd.banUntil) <= new Date()) {
+              await updateDoc(doc(db, "users", user.uid), { banStatus: 'none', banUntil: null });
+            }
           }
-          if (bd.banStatus === 'temp' && bd.banUntil && new Date(bd.banUntil.toDate ? bd.banUntil.toDate() : bd.banUntil) <= new Date()) {
-            await updateDoc(doc(db, "users", user.uid), { banStatus: 'none', banUntil: null });
-          }
-        }
-        await loadUserProfile(user);
-        await ensureDefaultTitlesExist();
-        await checkStaffAccess(user);
-        setupGoldenTicketRemoteSync();
-        if (goToMainAfterAuth) {
-          goToMainAfterAuth = false;
-          document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-          document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-          const mainBtn = document.querySelector('.tab-button[data-page="main-page"]');
-          const mainPage = document.getElementById('main-page');
-          if (mainBtn) mainBtn.classList.add('active');
-          if (mainPage) mainPage.classList.add('active');
-          setGoldenTicketSidebarGoldStyle(false);
-          if (!mainPageGamesMounted) ensureMainPageGamesDeferredObserver();
-        } else if (redirectToProfileAfterAuth) {
-          redirectToProfileAfterAuth = false;
-          goToProfilePageTab();
-        }
-        if (pendingGame) { showConfirmModal(pendingGame); pendingGame = null; }
-        sidebar.classList.add('active');
-        mainContent.classList.add('sidebar-active');
-        const activePage = document.querySelector('.page.active').id;
-        switch (activePage) {
-          case 'main-page':
+          await loadUserProfile(user);
+          await ensureDefaultTitlesExist();
+          await checkStaffAccess(user);
+          setupGoldenTicketRemoteSync();
+          if (goToMainAfterAuth) {
+            goToMainAfterAuth = false;
+            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            const mainBtn = document.querySelector('.tab-button[data-page="main-page"]');
+            const mainPage = document.getElementById('main-page');
+            if (mainBtn) mainBtn.classList.add('active');
+            if (mainPage) mainPage.classList.add('active');
+            setGoldenTicketSidebarGoldStyle(false);
             if (!mainPageGamesMounted) ensureMainPageGamesDeferredObserver();
-            break;
-          case 'profile-page': loadProfilePage(user.uid); break;
-          case 'history-page': loadPlayHistory(user.uid); break;
-          case 'shop-page': loadShopPacks(); loadUserBalance(user.uid); break;
-          case 'inventory-page': loadInventory(user.uid); loadFriends(user.uid); break;
-          case 'gt-page': loadGoldenTicketGiveawaysPage(); break;
-          case 'missions-page': loadMissions(user.uid); break;
-          case 'chat-page': loadGlobalChat(); break;
-          case 'friends-page': loadFriends(user.uid); break;
-          case 'settings-page': loadSettings(user.uid); break;
-          case 'staff-page': loadStaffPanel(); break;
-        }
-        /* Main games load uses IntersectionObserver on #main-games-load-placeholder with root #main-content.
-           When the active tab is not main-page (e.g. Profile after login from login.html), that placeholder
-           is never intersecting — observer never fires and games stay on "permanent load". Mount in background once. */
-        if (!mainPageGamesMounted) {
-          mountMainPageGamesContent().catch((e) => console.error('mountMainPageGamesContent', e));
+          } else if (redirectToProfileAfterAuth) {
+            redirectToProfileAfterAuth = false;
+            goToProfilePageTab();
+          }
+          if (pendingGame) { showConfirmModal(pendingGame); pendingGame = null; }
+          sidebar.classList.add('active');
+          mainContent.classList.add('sidebar-active');
+          const activeEl = document.querySelector('.page.active');
+          const activePage = activeEl ? activeEl.id : 'profile-page';
+          switch (activePage) {
+            case 'main-page':
+              if (!mainPageGamesMounted) ensureMainPageGamesDeferredObserver();
+              break;
+            case 'profile-page': loadProfilePage(user.uid); break;
+            case 'history-page': loadPlayHistory(user.uid); break;
+            case 'shop-page': loadShopPacks(); loadUserBalance(user.uid); break;
+            case 'inventory-page': loadInventory(user.uid); loadFriends(user.uid); break;
+            case 'gt-page': loadGoldenTicketGiveawaysPage(); break;
+            case 'missions-page': loadMissions(user.uid); break;
+            case 'chat-page': loadGlobalChat(); break;
+            case 'friends-page': loadFriends(user.uid); break;
+            case 'settings-page': loadSettings(user.uid); break;
+            case 'staff-page': loadStaffPanel(); break;
+          }
+          /* Main games load uses IntersectionObserver on #main-games-load-placeholder with root #main-content.
+             When the active tab is not main-page (e.g. Profile after login from login.html), that placeholder
+             is never intersecting — observer never fires and games stay on "permanent load". Mount in background once. */
+          if (!mainPageGamesMounted) {
+            mountMainPageGamesContent().catch((e) => console.error('mountMainPageGamesContent', e));
+          }
+        } catch (err) {
+          console.error('onAuthStateChanged signed-in branch', err);
+          showNotification((err && err.message) ? err.message : 'Could not load your account. Check connection or try again.', 'error');
+        } finally {
+          hidePageLoading();
         }
       } else {
         currentUserPermissions = [];
