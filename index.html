@@ -4823,13 +4823,13 @@
     }
     .staff-blook-chip-del:hover { opacity: 0.85; }
 
-    /* ========== Deskpot (Golden Ticket giveaways) ========== */
-    .deskpot-page-wrap {
+    /* ========== Golden Ticket giveaways page ========== */
+    .gt-page-wrap {
       min-height: 60vh;
       padding-bottom: 40px;
       color: #fff7e6;
     }
-    .deskpot-hero {
+    .gt-hero {
       text-align: center;
       padding: 28px 16px 36px;
       border-radius: 20px;
@@ -4838,7 +4838,7 @@
       border: 2px solid rgba(255, 248, 220, 0.55);
       box-shadow: 0 0 48px rgba(255, 215, 0, 0.25), inset 0 0 60px rgba(0, 0, 0, 0.15);
     }
-    .deskpot-hero h2 {
+    .gt-hero h2 {
       font-family: 'Titan One', 'Nunito', sans-serif;
       font-size: clamp(1.5rem, 4vw, 2.1rem);
       font-weight: 400;
@@ -4846,7 +4846,7 @@
       color: #1a1203;
       text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
     }
-    .deskpot-hero p {
+    .gt-hero p {
       margin-top: 10px;
       font-size: 0.9rem;
       color: rgba(26, 18, 3, 0.85);
@@ -4855,20 +4855,20 @@
       margin-right: auto;
       line-height: 1.45;
     }
-    .deskpot-grid {
+    .gt-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 22px;
       align-items: start;
     }
-    .deskpot-giveaway-card {
+    .gt-giveaway-card {
       background: linear-gradient(165deg, #6b5420 0%, #3d2f0d 55%, #1f1706 100%);
       border: 2px solid #d4af37;
       border-radius: 18px;
       padding: 18px 16px 20px;
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45), 0 0 28px rgba(212, 175, 55, 0.12);
     }
-    .deskpot-giveaway-card h3 {
+    .gt-giveaway-card h3 {
       font-family: 'Titan One', 'Nunito', sans-serif;
       font-size: 1.05rem;
       color: #fff;
@@ -4876,7 +4876,7 @@
       border-bottom: 1px solid rgba(255, 215, 0, 0.35);
       padding-bottom: 8px;
     }
-    .deskpot-prize-row {
+    .gt-prize-row {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 140px;
       gap: 12px;
@@ -4885,8 +4885,8 @@
       padding-bottom: 14px;
       border-bottom: 1px solid rgba(255, 215, 0, 0.15);
     }
-    .deskpot-prize-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .deskpot-prize-tier {
+    .gt-prize-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .gt-prize-tier {
       font-size: 0.68rem;
       font-weight: 900;
       letter-spacing: 0.14em;
@@ -4894,12 +4894,12 @@
       color: #ffe08a;
       margin-bottom: 6px;
     }
-    .deskpot-prize-body {
+    .gt-prize-body {
       display: flex;
       gap: 12px;
       align-items: flex-start;
     }
-    .deskpot-prize-img {
+    .gt-prize-img {
       width: 72px;
       height: 72px;
       border-radius: 12px;
@@ -4908,16 +4908,16 @@
       flex-shrink: 0;
       background: rgba(0, 0, 0, 0.35);
     }
-    .deskpot-prize-name { font-weight: 900; color: #fff; font-size: 0.95rem; margin-bottom: 4px; }
-    .deskpot-prize-desc { font-size: 0.78rem; color: rgba(255, 247, 220, 0.82); line-height: 1.4; }
-    .deskpot-lb {
+    .gt-prize-name { font-weight: 900; color: #fff; font-size: 0.95rem; margin-bottom: 4px; }
+    .gt-prize-desc { font-size: 0.78rem; color: rgba(255, 247, 220, 0.82); line-height: 1.4; }
+    .gt-lb {
       background: rgba(0, 0, 0, 0.35);
       border: 1px solid rgba(255, 215, 0, 0.3);
       border-radius: 12px;
       padding: 8px 10px;
       font-size: 0.72rem;
     }
-    .deskpot-lb-title {
+    .gt-lb-title {
       font-weight: 800;
       color: #ffd700;
       margin-bottom: 6px;
@@ -4925,7 +4925,7 @@
       letter-spacing: 0.06em;
       text-transform: uppercase;
     }
-    .deskpot-lb-row {
+    .gt-lb-row {
       display: flex;
       justify-content: space-between;
       gap: 8px;
@@ -4933,41 +4933,41 @@
       color: #fff;
       border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     }
-    .deskpot-lb-row:last-child { border-bottom: none; }
-    .deskpot-rolling-banner {
+    .gt-lb-row:last-child { border-bottom: none; }
+    .gt-rolling-banner {
       text-align: center;
       padding: 20px;
       font-weight: 900;
       font-size: 1rem;
       color: #ffd700;
-      animation: deskpotPulse 1.4s ease-in-out infinite;
+      animation: gtPulse 1.4s ease-in-out infinite;
     }
-    @keyframes deskpotPulse {
+    @keyframes gtPulse {
       0%, 100% { opacity: 0.85; }
       50% { opacity: 1; }
     }
-    .deskpot-winner-line {
+    .gt-winner-line {
       margin-top: 8px;
       font-size: 0.8rem;
       font-weight: 800;
       color: #b8ff6a;
     }
-    .sidebar .tab-button.tab-deskpot-gold {
+    .sidebar .tab-button.tab-gt-gold {
       background: linear-gradient(90deg, rgba(212, 175, 55, 0.35) 0%, rgba(255, 215, 0, 0.12) 100%);
       color: #fff !important;
       border: 1px solid rgba(255, 215, 0, 0.45);
       box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.08);
     }
-    .sidebar .tab-button.tab-deskpot-gold:hover {
+    .sidebar .tab-button.tab-gt-gold:hover {
       color: #fff !important;
       background: linear-gradient(90deg, rgba(255, 215, 0, 0.45) 0%, rgba(212, 175, 55, 0.2) 100%);
     }
-    .sidebar .tab-button.tab-deskpot-gold.active {
+    .sidebar .tab-button.tab-gt-gold.active {
       background: linear-gradient(90deg, #d4af37 0%, #b8860b 100%) !important;
       color: #fff !important;
       box-shadow: inset 3px 0 0 #fff5cc, 0 0 18px rgba(255, 215, 0, 0.35);
     }
-    .sidebar .tab-button.tab-deskpot-gold i { color: #fff; }
+    .sidebar .tab-button.tab-gt-gold i { color: #fff; }
     .inv-giveaway-box {
       margin: 0 0 20px;
       padding: 16px 18px;
@@ -5072,8 +5072,8 @@
       <button class="tab-button" data-page="settings-page">
         <i class="fas fa-cog"></i> Settings
       </button>
-      <button class="tab-button" data-page="deskpot-page" id="deskpot-panel-tab" style="display:none;">
-        <i class="fas fa-ticket-alt"></i> Deskpot
+      <button class="tab-button" data-page="gt-page" id="gt-panel-tab" style="display:none;">
+        <i class="fas fa-ticket-alt"></i> Golden Ticket
       </button>
       <button class="tab-button" data-page="staff-page" id="staff-panel-tab" style="display:none;">
         <i class="fas fa-shield-alt"></i> Staff Panel
@@ -5248,7 +5248,7 @@
         </div>
         <p class="inv-blooks-sub">Browse every blook by pack. Locked blooks show as silhouettes. Select a blook to see details on the right.</p>
         <div class="inv-giveaway-box" id="inv-giveaway-panel" style="display:none;">
-          <h4><i class="fas fa-ticket-alt"></i> Deskpot entries</h4>
+          <h4><i class="fas fa-ticket-alt"></i> Golden Ticket entries</h4>
           <p class="inv-giveaway-status" id="inv-giveaway-hint">Use a Golden Ticket copy to add entries while a giveaway is open.</p>
           <div class="inv-giveaway-controls">
             <select id="inv-giveaway-pick" aria-label="Giveaway"></select>
@@ -5301,14 +5301,14 @@
       </div>
     </div>
 
-    <!-- Deskpot — Golden Ticket giveaways (tab hidden until feature enabled) -->
-    <div class="page" id="deskpot-page">
-      <div class="page-content deskpot-page-wrap" id="deskpot-page-inner">
-        <div class="deskpot-hero">
-          <h2><i class="fas fa-ticket-alt" style="margin-right:10px;"></i>Deskpot</h2>
+    <!-- Golden Ticket giveaways (tab hidden until feature enabled) -->
+    <div class="page" id="gt-page">
+      <div class="page-content gt-page-wrap" id="gt-page-inner">
+        <div class="gt-hero">
+          <h2><i class="fas fa-ticket-alt" style="margin-right:10px;"></i>Golden Ticket</h2>
           <p>Golden Ticket holders can enter active giveaways. Owners pick winners manually — the site never auto-rolls.</p>
         </div>
-        <div class="deskpot-grid" id="deskpot-giveaways-grid"></div>
+        <div class="gt-grid" id="gt-giveaways-grid"></div>
       </div>
     </div>
 
@@ -5499,9 +5499,9 @@
           <!-- Staff: Rarity styles + daily reward -->
           <div class="staff-section" id="staff-rarity">
             <div class="staff-card" id="staff-golden-ticket-card">
-              <div class="staff-card-header"><h3>Golden Ticket &amp; Deskpot</h3></div>
-              <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:12px;line-height:1.45;">Hidden until enabled. The chosen blook is added to <strong>every pack</strong> as an extra drop (separate from listed chances). Three visible ticket tiers + one secret Diamond tier use the entry weights below. Configure two giveaways (A &amp; B) with 3–5 prize rows each.</p>
-              <div class="staff-form-group"><label><input type="checkbox" id="staff-gt-enabled" style="width:auto;margin-right:8px;"> Enable Golden Ticket &amp; Deskpot</label></div>
+              <div class="staff-card-header"><h3>Golden Ticket</h3></div>
+              <p style="font-size:0.82rem;color:var(--text-secondary);margin-bottom:12px;line-height:1.45;">Hidden until enabled. The chosen blook is added to <strong>every pack</strong> as an extra drop (separate from listed chances). Ticket <strong>tiers</strong> (below) only change how many entries one copy is worth. Configure <strong>three giveaways</strong> — each has one prize (name, description, image).</p>
+              <div class="staff-form-group"><label><input type="checkbox" id="staff-gt-enabled" style="width:auto;margin-right:8px;"> Enable Golden Ticket page &amp; giveaways</label></div>
               <div class="staff-form-group"><label>Golden Ticket blook name (must match a blook name in one of your packs — art/rarity copy from that row)</label><input type="text" id="staff-gt-blook-name" placeholder="e.g. Golden Ticket"></div>
               <div class="staff-flex-row" style="gap:12px;flex-wrap:wrap;align-items:flex-end;">
                 <div class="staff-form-group" style="margin:0;"><label>Pack drop weight (vs sum of all listed % in pack)</label><input type="number" id="staff-gt-pack-weight" value="1" min="0.01" step="0.01"></div>
@@ -5520,10 +5520,10 @@
                 <div class="staff-form-group" style="margin:0;"><label>Entries per Secret Diamond ticket</label><input type="number" id="staff-gt-entries-diamond-secret" value="25" min="1" step="1"></div>
               </div>
               <hr style="border:none;border-top:1px solid rgba(42,255,158,0.12);margin:18px 0;">
-              <p style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:10px;">Giveaway A &amp; B — set title, end time (local), rolling state, optional winner display name, and 3–5 prizes (Jackpot … Mini). Image URL optional.</p>
+              <p style="font-size:0.78rem;color:var(--text-secondary);margin-bottom:10px;">Three giveaways — each: title, end time (local), rolling state, winner line, and a single prize (name, description, image URL).</p>
               <div id="staff-gt-giveaways-editor"></div>
               <div class="staff-flex-row" style="margin-top:16px;gap:10px;flex-wrap:wrap;">
-                <button type="button" class="staff-btn staff-btn-primary" id="staff-gt-save">Save Golden Ticket / Deskpot</button>
+                <button type="button" class="staff-btn staff-btn-primary" id="staff-gt-save">Save Golden Ticket</button>
                 <span id="staff-gt-save-status" style="font-size:0.78rem;color:var(--text-secondary);"></span>
               </div>
             </div>
@@ -6112,51 +6112,63 @@
     const DEFAULT_NEON_PINK = '#FF3D6C';
     const DEFAULT_THEME_GREY = '#8A9BB5';
 
-    /** Deskpot / Golden Ticket (siteConfig.settings.goldenTicket) */
+    /** Golden Ticket giveaways (siteConfig.settings.goldenTicket) */
     let goldenTicketRuntime = null;
-    let deskpotLeaderUnsubs = [];
-    const DESKPOT_PRIZE_TIERS = ['jackpot', 'mega', 'major', 'minor', 'mini'];
+    let goldenGiveawayLeaderUnsubs = [];
+    const GOLDEN_GIVEAWAY_IDS = ['A', 'B', 'C'];
 
-    function defaultDeskpotGiveaway(id) {
+    function defaultGoldenGiveaway(id) {
       return {
         id,
-        title: id === 'A' ? 'Giveaway A' : 'Giveaway B',
+        title: `Giveaway ${id}`,
         endAtMs: null,
         rollingResults: false,
         winnerDisplay: '',
-        prizes: DESKPOT_PRIZE_TIERS.map((tier) => ({ tier, name: '', description: '', imageUrl: '' }))
+        prize: { name: '', description: '', imageUrl: '' }
       };
+    }
+
+    function migrateGiveawayPrizeToSingle(base) {
+      if (base && base.prize && typeof base.prize === 'object') {
+        return {
+          name: String(base.prize.name || '').trim(),
+          description: String(base.prize.description || '').trim(),
+          imageUrl: String(base.prize.imageUrl || '').trim()
+        };
+      }
+      const arr = Array.isArray(base?.prizes) ? base.prizes : [];
+      const first = arr.find((p) => p && (String(p.name || '').trim() || String(p.imageUrl || '').trim()));
+      if (first) {
+        return {
+          name: String(first.name || '').trim(),
+          description: String(first.description || '').trim(),
+          imageUrl: String(first.imageUrl || '').trim()
+        };
+      }
+      return { name: '', description: '', imageUrl: '' };
     }
 
     function normalizeGtConfig(raw) {
       const g = raw && typeof raw === 'object' ? raw : {};
       const gws = Array.isArray(g.giveaways) ? g.giveaways : [];
-      const a = gws[0] || {};
-      const b = gws[1] || {};
       const mergeGw = (base, id) => {
-        const prizesIn = Array.isArray(base.prizes) ? base.prizes : [];
-        const prizeMap = {};
-        prizesIn.forEach((p) => {
-          if (p && p.tier) prizeMap[String(p.tier).toLowerCase()] = p;
-        });
-        const prizes = DESKPOT_PRIZE_TIERS.map((tier) => {
-          const p = prizeMap[tier] || {};
-          return {
-            tier,
-            name: String(p.name || '').trim(),
-            description: String(p.description || '').trim(),
-            imageUrl: String(p.imageUrl || '').trim()
-          };
-        });
+        const b = base && typeof base === 'object' ? base : {};
+        const prize = migrateGiveawayPrizeToSingle(b);
+        const defTitle = id === 'A' ? 'Giveaway A' : id === 'B' ? 'Giveaway B' : 'Giveaway C';
         return {
           id,
-          title: String(base.title || (id === 'A' ? 'Giveaway A' : 'Giveaway B')).trim() || (id === 'A' ? 'Giveaway A' : 'Giveaway B'),
-          endAtMs: base.endAtMs != null && Number.isFinite(Number(base.endAtMs)) ? Number(base.endAtMs) : null,
-          rollingResults: !!(base.rollingResults === true || base.rollingResults === 'true'),
-          winnerDisplay: String(base.winnerDisplay || '').trim(),
-          prizes
+          title: String(b.title || defTitle).trim() || defTitle,
+          endAtMs: b.endAtMs != null && Number.isFinite(Number(b.endAtMs)) ? Number(b.endAtMs) : null,
+          rollingResults: !!(b.rollingResults === true || b.rollingResults === 'true'),
+          winnerDisplay: String(b.winnerDisplay || '').trim(),
+          prize
         };
       };
+      const byId = {};
+      gws.forEach((gw) => {
+        const id = String(gw && gw.id != null ? gw.id : '').toUpperCase().trim();
+        if (GOLDEN_GIVEAWAY_IDS.includes(id)) byId[id] = gw;
+      });
       return {
         enabled: !!(g.enabled === true || g.enabled === 'true'),
         blookName: String(g.blookName || '').trim(),
@@ -6173,7 +6185,7 @@
           diamond: Math.max(1, parseInt(g.entriesPerTier?.diamond, 10) || 10),
           secret: Math.max(1, parseInt(g.entriesPerTier?.secret, 10) || 25)
         },
-        giveaways: [mergeGw(a, 'A'), mergeGw(b, 'B')]
+        giveaways: GOLDEN_GIVEAWAY_IDS.map((id) => mergeGw(byId[id] || {}, id))
       };
     }
 
@@ -6185,7 +6197,7 @@
       } catch (_) {
         goldenTicketRuntime = normalizeGtConfig(null);
       }
-      applyDeskpotTabVisibility();
+      applyGoldenTicketTabVisibility();
       return goldenTicketRuntime;
     }
 
@@ -6227,8 +6239,8 @@
       return e.gold;
     }
 
-    function applyDeskpotTabVisibility() {
-      const tab = document.getElementById('deskpot-panel-tab');
+    function applyGoldenTicketTabVisibility() {
+      const tab = document.getElementById('gt-panel-tab');
       if (!tab) return;
       const show = !!(goldenTicketRuntime && goldenTicketRuntime.enabled && goldenTicketRuntime.blookName);
       tab.style.display = show ? 'flex' : 'none';
@@ -6237,18 +6249,18 @@
       }
     }
 
-    function setDeskpotSidebarGoldStyle(on) {
-      const tab = document.getElementById('deskpot-panel-tab');
+    function setGoldenTicketSidebarGoldStyle(on) {
+      const tab = document.getElementById('gt-panel-tab');
       if (!tab) return;
-      tab.classList.toggle('tab-deskpot-gold', !!on);
+      tab.classList.toggle('tab-gt-gold', !!on);
     }
 
-    function deskpotGiveawayEnded(gw) {
+    function goldenGiveawayEnded(gw) {
       if (!gw || !gw.endAtMs) return false;
       return Date.now() >= gw.endAtMs;
     }
 
-    function formatDeskpotEndLabel(ms) {
+    function formatGoldenGiveawayEndLabel(ms) {
       if (!ms) return 'No end date set';
       try {
         return new Date(ms).toLocaleString();
@@ -6261,37 +6273,31 @@
       const host = document.getElementById('staff-gt-giveaways-editor');
       if (!host) return;
       const g = goldenTicketRuntime || normalizeGtConfig(null);
-      const gws = g.giveaways || [defaultDeskpotGiveaway('A'), defaultDeskpotGiveaway('B')];
+      const gws = g.giveaways || GOLDEN_GIVEAWAY_IDS.map((id) => defaultGoldenGiveaway(id));
       host.innerHTML = gws.map((gw) => {
         const endVal = gw.endAtMs ? new Date(gw.endAtMs).toISOString().slice(0, 16) : '';
-        const prizesHtml = (gw.prizes || []).map((p, idx) => `
-          <div class="staff-flex-row" style="gap:8px;flex-wrap:wrap;align-items:flex-end;margin-bottom:8px;border-bottom:1px solid rgba(42,255,158,0.08);padding-bottom:8px;">
-            <div class="staff-form-group" style="margin:0;min-width:100px;"><label>Tier</label>
-              <select class="staff-gt-prize-tier" data-gw="${gw.id}" data-idx="${idx}" disabled style="opacity:0.85;">
-                ${DESKPOT_PRIZE_TIERS.map(t => `<option value="${t}" ${p.tier === t ? 'selected' : ''}>${t}</option>`).join('')}
-              </select>
-            </div>
-            <div class="staff-form-group" style="margin:0;flex:1;min-width:120px;"><label>Prize name</label>
-              <input type="text" class="staff-gt-prize-name" data-gw="${gw.id}" data-idx="${idx}" value="${escapeHtml(p.name)}" placeholder="Name">
-            </div>
-            <div class="staff-form-group" style="margin:0;flex:2;min-width:180px;"><label>Description</label>
-              <input type="text" class="staff-gt-prize-desc" data-gw="${gw.id}" data-idx="${idx}" value="${escapeHtml(p.description)}" placeholder="Short description">
-            </div>
-            <div class="staff-form-group" style="margin:0;flex:2;min-width:160px;"><label>Image URL</label>
-              <input type="url" class="staff-gt-prize-img" data-gw="${gw.id}" data-idx="${idx}" value="${escapeHtml(p.imageUrl)}" placeholder="https://...">
-            </div>
-          </div>`).join('');
+        const p = gw.prize || { name: '', description: '', imageUrl: '' };
         return `
           <div class="staff-card" style="margin-bottom:14px;background:rgba(0,0,0,0.25);">
             <div class="staff-card-header"><h3>Giveaway ${gw.id}</h3></div>
             <div class="staff-form-group"><label>Title</label><input type="text" class="staff-gt-gw-title" data-gw="${gw.id}" value="${escapeHtml(gw.title)}"></div>
             <div class="staff-flex-row" style="gap:12px;flex-wrap:wrap;align-items:flex-end;">
               <div class="staff-form-group" style="margin:0;"><label>End date &amp; time (local)</label><input type="datetime-local" class="staff-gt-gw-end" data-gw="${gw.id}" value="${endVal}"></div>
-              <div class="staff-form-group" style="margin:0;"><label><input type="checkbox" class="staff-gt-gw-rolling" data-gw="${gw.id}" ${gw.rollingResults ? 'checked' : ''} style="width:auto;margin-right:8px;"> Rolling results (hide prizes / show “rolling…”)</label></div>
+              <div class="staff-form-group" style="margin:0;"><label><input type="checkbox" class="staff-gt-gw-rolling" data-gw="${gw.id}" ${gw.rollingResults ? 'checked' : ''} style="width:auto;margin-right:8px;"> Rolling results (hide prize / show “rolling…”)</label></div>
             </div>
-            <div class="staff-form-group"><label>Winner display (shown when not rolling; owners set manually)</label><input type="text" class="staff-gt-gw-winner" data-gw="${gw.id}" value="${escapeHtml(gw.winnerDisplay)}" placeholder="e.g. @PlayerOne — Jackpot"></div>
-            <h4 style="font-size:0.8rem;margin:12px 0 8px;color:var(--text-secondary);">Prize rows (fixed tiers)</h4>
-            ${prizesHtml}
+            <div class="staff-form-group"><label>Winner display (owners set manually)</label><input type="text" class="staff-gt-gw-winner" data-gw="${gw.id}" value="${escapeHtml(gw.winnerDisplay)}" placeholder="e.g. @PlayerOne"></div>
+            <h4 style="font-size:0.8rem;margin:12px 0 8px;color:var(--text-secondary);">Prize</h4>
+            <div class="staff-flex-row" style="gap:8px;flex-wrap:wrap;align-items:flex-end;">
+              <div class="staff-form-group" style="margin:0;flex:1;min-width:140px;"><label>Prize name</label>
+                <input type="text" class="staff-gt-prize-name" data-gw="${gw.id}" value="${escapeHtml(p.name)}" placeholder="Name">
+              </div>
+              <div class="staff-form-group" style="margin:0;flex:2;min-width:200px;"><label>Description</label>
+                <input type="text" class="staff-gt-prize-desc" data-gw="${gw.id}" value="${escapeHtml(p.description)}" placeholder="Description">
+              </div>
+              <div class="staff-form-group" style="margin:0;flex:2;min-width:160px;"><label>Image URL</label>
+                <input type="url" class="staff-gt-prize-img" data-gw="${gw.id}" value="${escapeHtml(p.imageUrl)}" placeholder="https://...">
+              </div>
+            </div>
           </div>`;
       }).join('');
     }
@@ -6312,8 +6318,9 @@
         diamond: Math.max(1, parseInt(document.getElementById('staff-gt-entries-diamond-visible')?.value, 10) || 10),
         secret: Math.max(1, parseInt(document.getElementById('staff-gt-entries-diamond-secret')?.value, 10) || 25)
       };
-      const giveaways = ['A', 'B'].map((id) => {
-        const title = document.querySelector(`.staff-gt-gw-title[data-gw="${id}"]`)?.value?.trim() || (id === 'A' ? 'Giveaway A' : 'Giveaway B');
+      const giveaways = GOLDEN_GIVEAWAY_IDS.map((id) => {
+        const defTitle = id === 'A' ? 'Giveaway A' : id === 'B' ? 'Giveaway B' : 'Giveaway C';
+        const title = document.querySelector(`.staff-gt-gw-title[data-gw="${id}"]`)?.value?.trim() || defTitle;
         const endEl = document.querySelector(`.staff-gt-gw-end[data-gw="${id}"]`);
         let endAtMs = null;
         if (endEl && endEl.value) {
@@ -6322,13 +6329,12 @@
         }
         const rollingResults = !!document.querySelector(`.staff-gt-gw-rolling[data-gw="${id}"]`)?.checked;
         const winnerDisplay = document.querySelector(`.staff-gt-gw-winner[data-gw="${id}"]`)?.value?.trim() || '';
-        const prizes = DESKPOT_PRIZE_TIERS.map((tier, idx) => ({
-          tier,
-          name: document.querySelector(`.staff-gt-prize-name[data-gw="${id}"][data-idx="${idx}"]`)?.value?.trim() || '',
-          description: document.querySelector(`.staff-gt-prize-desc[data-gw="${id}"][data-idx="${idx}"]`)?.value?.trim() || '',
-          imageUrl: document.querySelector(`.staff-gt-prize-img[data-gw="${id}"][data-idx="${idx}"]`)?.value?.trim() || ''
-        }));
-        return { id, title, endAtMs, rollingResults, winnerDisplay, prizes };
+        const prize = {
+          name: document.querySelector(`.staff-gt-prize-name[data-gw="${id}"]`)?.value?.trim() || '',
+          description: document.querySelector(`.staff-gt-prize-desc[data-gw="${id}"]`)?.value?.trim() || '',
+          imageUrl: document.querySelector(`.staff-gt-prize-img[data-gw="${id}"]`)?.value?.trim() || ''
+        };
+        return { id, title, endAtMs, rollingResults, winnerDisplay, prize };
       });
       return { enabled: !!enabled, blookName, packWeight, rollWeights, entriesPerTier, giveaways };
     }
@@ -6363,17 +6369,17 @@
       if (st) st.textContent = '';
     }
 
-    function deskpotLeaderboardRef(giveawayId) {
+    function goldenGiveawayLeaderboardRef(giveawayId) {
       return doc(db, 'giveawayLeaderboards', String(giveawayId));
     }
 
-    function unsubscribeDeskpotLeaders() {
-      deskpotLeaderUnsubs.forEach((u) => { try { u(); } catch (_) {} });
-      deskpotLeaderUnsubs = [];
+    function unsubscribeGoldenGiveawayLeaders() {
+      goldenGiveawayLeaderUnsubs.forEach((u) => { try { u(); } catch (_) {} });
+      goldenGiveawayLeaderUnsubs = [];
     }
 
-    function renderDeskpotLeaderboardRows(map, giveawayId) {
-      const el = document.getElementById(`deskpot-lb-${giveawayId}`);
+    function renderGoldenGiveawayLeaderboardRows(map, giveawayId) {
+      const el = document.getElementById(`gt-lb-${giveawayId}`);
       if (!el) return;
       const pairs = Object.entries(map || {}).map(([uid, v]) => ({
         uid,
@@ -6383,67 +6389,65 @@
       pairs.sort((a, b) => b.entries - a.entries || a.username.localeCompare(b.username));
       const top = pairs.slice(0, 10);
       if (!top.length) {
-        el.innerHTML = '<div class="deskpot-lb-title">Top entrants</div><div class="deskpot-lb-row"><span>—</span><span>0</span></div>';
+        el.innerHTML = '<div class="gt-lb-title">Top entrants</div><div class="gt-lb-row"><span>—</span><span>0</span></div>';
         return;
       }
-      el.innerHTML = `<div class="deskpot-lb-title">Top entrants</div>${top.map((r, i) => `<div class="deskpot-lb-row"><span>#${i + 1} ${escapeHtml(r.username)}</span><span>${r.entries}</span></div>`).join('')}`;
+      el.innerHTML = `<div class="gt-lb-title">Top entrants</div>${top.map((r, i) => `<div class="gt-lb-row"><span>#${i + 1} ${escapeHtml(r.username)}</span><span>${r.entries}</span></div>`).join('')}`;
     }
 
-    function renderDeskpotPage() {
-      const grid = document.getElementById('deskpot-giveaways-grid');
+    function renderGoldenTicketGiveawaysPage() {
+      const grid = document.getElementById('gt-giveaways-grid');
       if (!grid) return;
       const g = goldenTicketRuntime;
       if (!g || !g.enabled || !g.blookName) {
-        grid.innerHTML = '<p style="color:var(--text-secondary);">Deskpot is not available.</p>';
-        unsubscribeDeskpotLeaders();
+        grid.innerHTML = '<p style="color:var(--text-secondary);">Golden Ticket giveaways are not available.</p>';
+        unsubscribeGoldenGiveawayLeaders();
         return;
       }
-      unsubscribeDeskpotLeaders();
+      unsubscribeGoldenGiveawayLeaders();
       grid.innerHTML = (g.giveaways || []).map((gw) => {
-        const ended = deskpotGiveawayEnded(gw);
+        const ended = goldenGiveawayEnded(gw);
         const rolling = !!(gw.rollingResults && ended);
-        const prizesBlock = (gw.prizes || []).map((p) => {
-          const showPrize = !rolling;
-          return `
-            <div class="deskpot-prize-row">
+        const p = gw.prize || { name: '', description: '', imageUrl: '' };
+        const showPrize = !rolling;
+        const prizeBlock = `
+            <div class="gt-prize-row">
               <div>
-                <div class="deskpot-prize-tier">${escapeHtml(p.tier)}</div>
-                <div class="deskpot-prize-body">
-                  ${showPrize && p.imageUrl ? `<img class="deskpot-prize-img" src="${escapeHtml(p.imageUrl)}" alt="" loading="lazy">` : (showPrize ? '<div class="deskpot-prize-img"></div>' : '<div class="deskpot-prize-img" style="opacity:0.3;"></div>')}
+                <div class="gt-prize-body">
+                  ${showPrize && p.imageUrl ? `<img class="gt-prize-img" src="${escapeHtml(p.imageUrl)}" alt="" loading="lazy">` : (showPrize ? '<div class="gt-prize-img"></div>' : '<div class="gt-prize-img" style="opacity:0.3;"></div>')}
                   <div>
-                    <div class="deskpot-prize-name">${showPrize ? escapeHtml(p.name || '—') : '—'}</div>
-                    <div class="deskpot-prize-desc">${showPrize ? escapeHtml(p.description || '') : ''}</div>
+                    <div class="gt-prize-name">${showPrize ? escapeHtml(p.name || '—') : '—'}</div>
+                    <div class="gt-prize-desc">${showPrize ? escapeHtml(p.description || '') : ''}</div>
                   </div>
                 </div>
               </div>
-              <div class="deskpot-lb" id="deskpot-lb-${gw.id}"></div>
+              <div class="gt-lb" id="gt-lb-${gw.id}"></div>
             </div>`;
-        }).join('');
         return `
-          <section class="deskpot-giveaway-card" data-gw="${gw.id}">
+          <section class="gt-giveaway-card" data-gw="${gw.id}">
             <h3>${escapeHtml(gw.title || `Giveaway ${gw.id}`)}</h3>
-            <p style="font-size:0.78rem;color:rgba(255,247,220,0.75);margin:-8px 0 12px;">Ends: ${escapeHtml(formatDeskpotEndLabel(gw.endAtMs))}</p>
-            ${rolling ? '<div class="deskpot-rolling-banner">Rolling the results…</div>' : ''}
-            ${!rolling && ended && gw.winnerDisplay ? `<div class="deskpot-winner-line">Winner: ${escapeHtml(gw.winnerDisplay)}</div>` : ''}
-            ${prizesBlock}
+            <p style="font-size:0.78rem;color:rgba(255,247,220,0.75);margin:-8px 0 12px;">Ends: ${escapeHtml(formatGoldenGiveawayEndLabel(gw.endAtMs))}</p>
+            ${rolling ? '<div class="gt-rolling-banner">Rolling the results…</div>' : ''}
+            ${!rolling && ended && gw.winnerDisplay ? `<div class="gt-winner-line">Winner: ${escapeHtml(gw.winnerDisplay)}</div>` : ''}
+            ${prizeBlock}
           </section>`;
       }).join('');
       (g.giveaways || []).forEach((gw) => {
-        const ref = deskpotLeaderboardRef(gw.id);
+        const ref = goldenGiveawayLeaderboardRef(gw.id);
         const unsub = onSnapshot(ref, (snap) => {
           const data = snap.exists() ? snap.data() : {};
           const scores = data.scores && typeof data.scores === 'object' ? data.scores : {};
-          renderDeskpotLeaderboardRows(scores, gw.id);
+          renderGoldenGiveawayLeaderboardRows(scores, gw.id);
         }, () => {
-          renderDeskpotLeaderboardRows({}, gw.id);
+          renderGoldenGiveawayLeaderboardRows({}, gw.id);
         });
-        deskpotLeaderUnsubs.push(unsub);
+        goldenGiveawayLeaderUnsubs.push(unsub);
       });
     }
 
-    async function loadDeskpotPage() {
+    async function loadGoldenTicketGiveawaysPage() {
       await refreshGoldenTicketRuntime();
-      renderDeskpotPage();
+      renderGoldenTicketGiveawaysPage();
     }
 
     async function spendGoldenTicketAndEnter(giveawayId, inventoryDocId) {
@@ -6458,7 +6462,7 @@
         showNotification('Giveaway not found.', 'error');
         return;
       }
-      if (deskpotGiveawayEnded(gw)) {
+      if (goldenGiveawayEnded(gw)) {
         if (gw.rollingResults) {
           showNotification('Giveaway ended — results are rolling. Entries are closed.', 'info');
         } else {
@@ -6467,7 +6471,7 @@
         return;
       }
       const invRef = doc(db, 'inventory', inventoryDocId);
-      const lbRef = deskpotLeaderboardRef(giveawayId);
+      const lbRef = goldenGiveawayLeaderboardRef(giveawayId);
       let added = 0;
       try {
         await runTransaction(db, async (tx) => {
@@ -7083,7 +7087,7 @@
           case 'history-page': loadPlayHistory(user.uid); break;
           case 'shop-page': loadShopPacks(); loadUserBalance(user.uid); break;
           case 'inventory-page': loadInventory(user.uid); loadFriends(user.uid); break;
-          case 'deskpot-page': loadDeskpotPage(); break;
+          case 'gt-page': loadGoldenTicketGiveawaysPage(); break;
           case 'missions-page': loadMissions(user.uid); break;
           case 'chat-page': loadGlobalChat(); break;
           case 'friends-page': loadFriends(user.uid); break;
@@ -7105,8 +7109,8 @@
         if (missionsListUnsub) { missionsListUnsub(); missionsListUnsub = null; }
         if (missionProgressUnsub) { missionProgressUnsub(); missionProgressUnsub = null; }
         if (goldTicketSettingsUnsub) { try { goldTicketSettingsUnsub(); } catch (_) {} goldTicketSettingsUnsub = null; }
-        setDeskpotSidebarGoldStyle(false);
-        unsubscribeDeskpotLeaders();
+        setGoldenTicketSidebarGoldStyle(false);
+        unsubscribeGoldenGiveawayLeaders();
       }
     });
 
@@ -7236,7 +7240,7 @@
       const profilePage = document.getElementById('profile-page');
       if (profileBtn) profileBtn.classList.add('active');
       if (profilePage) profilePage.classList.add('active');
-      setDeskpotSidebarGoldStyle(false);
+      setGoldenTicketSidebarGoldStyle(false);
       if (currentUser?.uid) loadProfilePage(currentUser.uid);
     }
 
@@ -7483,7 +7487,7 @@
         document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
         button.classList.add('active');
         document.getElementById(pageId).classList.add('active');
-        setDeskpotSidebarGoldStyle(pageId === 'deskpot-page');
+        setGoldenTicketSidebarGoldStyle(pageId === 'gt-page');
         switch (pageId) {
           case 'main-page':
             if (!mainPageGamesMounted) ensureMainPageGamesDeferredObserver();
@@ -7492,7 +7496,7 @@
           case 'history-page': loadPlayHistory(currentUser.uid); break;
           case 'shop-page': loadShopPacks(); loadUserBalance(currentUser.uid); break;
           case 'inventory-page': loadInventory(currentUser.uid); loadFriends(currentUser.uid); break;
-          case 'deskpot-page': loadDeskpotPage(); break;
+          case 'gt-page': loadGoldenTicketGiveawaysPage(); break;
           case 'missions-page': loadMissions(currentUser.uid); break;
           case 'chat-page': loadGlobalChat(); break;
           case 'friends-page': loadFriends(currentUser.uid); break;
@@ -9351,7 +9355,7 @@
       }
       if (msg) msg.textContent = '';
       const gws = g.giveaways || [];
-      const openGw = gws.filter((gw) => gw && !deskpotGiveawayEnded(gw));
+      const openGw = gws.filter((gw) => gw && !goldenGiveawayEnded(gw));
       sel.innerHTML = openGw.length
         ? openGw.map((gw) => `<option value="${escapeHtml(gw.id)}">${escapeHtml(gw.title || 'Giveaway ' + gw.id)} — open</option>`).join('')
         : '<option value="">No open giveaways</option>';
@@ -10436,7 +10440,7 @@
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.querySelector('[data-page="profile-page"]').classList.add('active');
         document.getElementById('profile-page').classList.add('active');
-        setDeskpotSidebarGoldStyle(false);
+        setGoldenTicketSidebarGoldStyle(false);
         loadProfilePage(currentUser.uid);
         return;
       }
@@ -10444,7 +10448,7 @@
       document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('view-profile-page').classList.add('active');
-      setDeskpotSidebarGoldStyle(false);
+      setGoldenTicketSidebarGoldStyle(false);
       viewProfileTargetUid = userId;
       const addBtn = document.getElementById('vp-add-friend-btn');
       try {
@@ -10478,7 +10482,7 @@
       document.getElementById(target).classList.add('active');
       const tabBtn = document.querySelector(`[data-page="${target}"]`);
       if (tabBtn) { document.querySelectorAll('.tab-button').forEach(b => b.classList.remove('active')); tabBtn.classList.add('active'); }
-      setDeskpotSidebarGoldStyle(target === 'deskpot-page');
+      setGoldenTicketSidebarGoldStyle(target === 'gt-page');
       previousPageId = null;
       viewProfileTargetUid = null;
     });
@@ -11622,11 +11626,11 @@
             updatedAt: serverTimestamp()
           }, { merge: true });
           goldenTicketRuntime = normalizeGtConfig(payload);
-          applyDeskpotTabVisibility();
+          applyGoldenTicketTabVisibility();
           renderStaffGoldenTicketEditor();
           if (statusEl) statusEl.textContent = 'Saved.';
-          showNotification('Golden Ticket / Deskpot saved', 'success');
-          if (document.getElementById('deskpot-page')?.classList.contains('active')) renderDeskpotPage();
+          showNotification('Golden Ticket saved', 'success');
+          if (document.getElementById('gt-page')?.classList.contains('active')) renderGoldenTicketGiveawaysPage();
           if (inventoryCatalogLoaded) renderInventory();
         } catch (e) {
           if (statusEl) statusEl.textContent = '';
@@ -11944,8 +11948,8 @@
       goldTicketSettingsUnsub = onSnapshot(doc(db, 'siteConfig', 'settings'), (snap) => {
         const raw = snap.exists() ? snap.data().goldenTicket : null;
         goldenTicketRuntime = normalizeGtConfig(raw);
-        applyDeskpotTabVisibility();
-        if (document.getElementById('deskpot-page')?.classList.contains('active')) renderDeskpotPage();
+        applyGoldenTicketTabVisibility();
+        if (document.getElementById('gt-page')?.classList.contains('active')) renderGoldenTicketGiveawaysPage();
         if (inventoryCatalogLoaded && document.getElementById('inventory-page')?.classList.contains('active')) {
           renderInventory();
         }
