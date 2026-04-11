@@ -36,7 +36,14 @@
   </div>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+    import {
+      initializeAuth,
+      getAuth,
+      createUserWithEmailAndPassword,
+      onAuthStateChanged,
+      setPersistence,
+      browserLocalPersistence
+    } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
     import {
       getFirestore,
       doc,
@@ -60,7 +67,13 @@
     };
 
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    let auth;
+    try {
+      auth = initializeAuth(app, { persistence: browserLocalPersistence });
+    } catch (_) {
+      auth = getAuth(app);
+      setPersistence(auth, browserLocalPersistence).catch(() => {});
+    }
     const db = getFirestore(app);
     const form = document.getElementById("form");
     const msg = document.getElementById("msg");
@@ -84,8 +97,6 @@
       const q = nextRaw ? `?next=${encodeURIComponent(nextRaw)}` : "";
       loginLink.href = `login.html${q}`;
     }
-
-    setPersistence(auth, browserLocalPersistence).catch(() => {});
 
     const defaultAvatar = "https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg";
 
