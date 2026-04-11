@@ -3386,8 +3386,10 @@
       justify-content: space-around;
       margin: 20px 0;
       padding: 15px;
-      background: rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, rgba(238, 102, 255, 0.14) 0%, rgba(255, 255, 160, 0.08) 100%);
       border-radius: 12px;
+      border: 1px solid rgba(255, 255, 160, 0.22);
+      box-shadow: 0 0 24px rgba(238, 102, 255, 0.08) inset;
     }
 
     .user-profile-stats .stat-item {
@@ -4417,10 +4419,14 @@
     .up-container {
       max-width: 700px;
       margin: 0 auto;
-      background: var(--surface-panel);
+      background: linear-gradient(165deg, rgba(72, 32, 92, 0.55) 0%, var(--surface-panel) 42%, rgba(36, 18, 48, 0.98) 100%);
       border-radius: 20px;
       padding: 20px;
-      border: 1px solid rgba(255, 255, 160, 0.2);
+      border: 1px solid rgba(255, 255, 160, 0.38);
+      box-shadow:
+        0 0 0 1px rgba(238, 102, 255, 0.15) inset,
+        0 12px 40px rgba(238, 102, 255, 0.14),
+        0 0 48px rgba(255, 255, 160, 0.06);
     }
     .up-header {
       display: flex;
@@ -4441,8 +4447,9 @@
       max-width: calc(72px * 3);
       height: 72px;
       border-radius: 14px;
-      background: #1a2a3a;
-      border: 1px solid rgba(255, 255, 160, 0.15);
+      background: linear-gradient(125deg, #4a2888 0%, #321c52 45%, #5a2080 100%);
+      border: 1px solid rgba(238, 102, 255, 0.45);
+      box-shadow: 0 0 28px rgba(238, 102, 255, 0.22), 0 0 20px rgba(255, 255, 160, 0.08) inset;
       position: relative;
       overflow: hidden;
       display: flex;
@@ -4457,18 +4464,18 @@
       background-repeat: repeat;
       transform: rotate(-15deg) scale(1.2);
       transform-origin: center center;
-      opacity: 0.12;
+      opacity: 0.2;
       z-index: 0;
     }
     .up-banner-bg {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover; z-index: 1; filter: brightness(0.55);
+      object-fit: cover; z-index: 1; filter: brightness(0.72) saturate(1.08);
       display: none;
     }
     .up-banner.has-custom-banner .up-banner-bg { display: block; }
     .up-banner.has-custom-banner .up-banner-pattern { display: none; }
     .up-banner-content {
-      position: relative; z-index: 3; text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+      position: relative; z-index: 3; text-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 0 18px rgba(255,255,255,0.12);
       width: 100%;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
@@ -4484,9 +4491,10 @@
       display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-bottom: 2px;
     }
     .up-title-badge {
-      background: rgba(255, 255, 160, 0.15); color: #ffffa0;
+      background: rgba(255, 255, 160, 0.28); color: #ffffa0;
       font-size: 0.6rem; padding: 2px 7px; border-radius: 20px;
-      font-weight: 800; border: 1px solid #ffffa0;
+      font-weight: 800; border: 1px solid rgba(255, 255, 160, 0.85);
+      box-shadow: 0 0 12px rgba(255, 255, 160, 0.25);
     }
     .up-title-badge.gradient-title {
       background: none; border: none;
@@ -4495,47 +4503,57 @@
       color: transparent;
       font-weight: 900; font-size: 0.65rem;
     }
-    .up-member { font-size: 0.65rem; color: rgba(255,255,255,0.85); }
+    .up-member { font-size: 0.65rem; color: rgba(255,255,255,0.95); }
     .up-stats-row {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
       gap: 10px; margin-bottom: 16px;
     }
     .up-stat {
-      background: rgba(0,0,0,0.25); border-radius: 12px; padding: 10px 12px;
+      background: linear-gradient(135deg, rgba(238, 102, 255, 0.16) 0%, rgba(255, 255, 160, 0.1) 100%);
+      border-radius: 12px; padding: 10px 12px;
       display: flex; align-items: center; gap: 10px;
-      border: 1px solid rgba(255,255,160,0.1);
+      border: 1px solid rgba(255,255,160,0.28);
+      box-shadow: 0 0 16px rgba(238, 102, 255, 0.08) inset;
     }
     .up-stat-icon { font-size: 1.2rem; display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
     .up-stat-val { font-size: 1rem; font-weight: 800; line-height: 1.1; }
-    .up-stat-lbl { font-size: 0.68rem; color: #f8efff; }
+    .up-stat-lbl { font-size: 0.68rem; color: #fff8ff; }
     .up-section {
-      background: rgba(0,0,0,0.2); border-radius: 14px; padding: 14px;
-      margin-bottom: 14px; border: 1px solid rgba(255,255,160,0.08);
+      background: linear-gradient(180deg, rgba(238, 102, 255, 0.12) 0%, rgba(44, 31, 58, 0.65) 100%);
+      border-radius: 14px; padding: 14px;
+      margin-bottom: 14px; border: 1px solid rgba(255,255,160,0.22);
+      box-shadow: 0 0 20px rgba(238, 102, 255, 0.06) inset;
     }
     .up-section-header {
-      font-weight: 800; font-size: 0.82rem; color: #ffffa0;
+      font-weight: 800; font-size: 0.82rem; color: #ffffc4;
+      text-shadow: 0 0 14px rgba(255, 255, 160, 0.35);
       display: flex; align-items: center; gap: 6px; margin-bottom: 10px;
     }
-    .up-section-count { margin-left: auto; font-size: 0.75rem; color: #f8efff; font-weight: 600; }
+    .up-section-count { margin-left: auto; font-size: 0.75rem; color: #fff8ff; font-weight: 600; }
     .progress-bar {
-      background: var(--surface-muted); border-radius: 40px; height: 8px; overflow: hidden;
+      background: rgba(74, 61, 94, 0.85); border-radius: 40px; height: 8px; overflow: hidden;
+      border: 1px solid rgba(255, 255, 160, 0.15);
     }
     .progress-fill {
-      background: #ffffa0; width: 0%; height: 100%; border-radius: 40px;
+      background: linear-gradient(90deg, #ffffa0 0%, #ee66ff 100%); width: 0%; height: 100%; border-radius: 40px;
       transition: width 0.3s ease;
+      box-shadow: 0 0 10px rgba(255, 255, 160, 0.45);
     }
     .up-blooks-grid {
       display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
     }
     .up-blook-card {
-      background: rgba(0,0,0,0.3); border-radius: 12px; padding: 8px;
-      text-align: center; border: 1px solid rgba(255,255,160,0.12);
-      transition: transform 0.2s;
+      background: linear-gradient(160deg, rgba(255,255,160,0.12) 0%, rgba(50, 28, 64, 0.9) 100%);
+      border-radius: 12px; padding: 8px;
+      text-align: center; border: 1px solid rgba(255,255,160,0.26);
+      transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.2);
     }
     .up-blook-card:hover { transform: translateY(-2px); border-color: #ffffa0; }
     .up-blook-img {
       width: 52px; height: 52px; margin: 0 auto 6px;
-      border-radius: 10px; overflow: hidden; background: #1c1026;
+      border-radius: 10px; overflow: hidden; background: linear-gradient(145deg, #4a3560 0%, #2a1c38 100%);
+      border: 1px solid rgba(238, 102, 255, 0.2);
     }
     .up-blook-img img { width: 100%; height: 100%; object-fit: cover; }
     .up-blook-name { font-size: 0.68rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -4544,10 +4562,16 @@
     .up-friends-list { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
     .up-friend-row {
       display: flex; align-items: center; gap: 6px; padding: 4px 8px;
-      background: rgba(0,0,0,0.2); border-radius: 10px; cursor: pointer;
-      transition: background 0.15s; border: 1px solid rgba(255,255,160,0.06);
+      background: linear-gradient(90deg, rgba(238, 102, 255, 0.1) 0%, rgba(44, 31, 58, 0.75) 100%);
+      border-radius: 10px; cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+      border: 1px solid rgba(255,255,160,0.18);
     }
-    .up-friend-row:hover { background: rgba(255,255,160,0.08); border-color: rgba(255,255,160,0.2); }
+    .up-friend-row:hover {
+      background: linear-gradient(90deg, rgba(255,255,160,0.16) 0%, rgba(238, 102, 255, 0.12) 100%);
+      border-color: rgba(255,255,160,0.42);
+      box-shadow: 0 0 16px rgba(238, 102, 255, 0.12);
+    }
     .up-friend-avatar {
       width: 32px; height: 32px; border-radius: 6px; overflow: hidden;
       flex-shrink: 0; border: 1px solid rgba(255,255,160,0.2);
@@ -4556,7 +4580,10 @@
     .up-friend-banner {
       flex: 1; min-height: 36px; height: auto; border-radius: 6px; position: relative;
       overflow: hidden; display: flex; flex-direction: column; align-items: stretch;
-      justify-content: center; padding: 0; background: #1a2a3a;
+      justify-content: center; padding: 0;
+      background: linear-gradient(115deg, #4a2888 0%, #2e1a44 50%, #4a2080 100%);
+      border: 1px solid rgba(238, 102, 255, 0.35);
+      box-shadow: 0 0 14px rgba(238, 102, 255, 0.15) inset;
     }
     .up-friend-banner-text {
       position: relative; z-index: 3; display: flex; flex-direction: column;
@@ -4567,11 +4594,11 @@
       position: absolute; top: 0; left: 0; width: 200%; height: 200%;
       background-image: url('https://ac.blooket.com/@codeblooket/blooket-frontend-components/v0.2.45/assets/BlookCheckers-e975c505.png');
       background-size: 30px 30px; background-repeat: repeat;
-      transform: rotate(-15deg) scale(1.2); opacity: 0.1; z-index: 0;
+      transform: rotate(-15deg) scale(1.2); opacity: 0.16; z-index: 0;
     }
     .up-friend-banner-bg {
       position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-      object-fit: cover; z-index: 1; filter: brightness(0.5); display: none;
+      object-fit: cover; z-index: 1; filter: brightness(0.68) saturate(1.05); display: none;
       pointer-events: none;
       user-select: none;
       -webkit-user-drag: none;
@@ -4609,7 +4636,8 @@
       margin: 0 auto 10px;
       border-radius: 16px;
       overflow: hidden;
-      background: #1c1026;
+      background: linear-gradient(145deg, #4a3560 0%, #2a1c38 100%);
+      border: 1px solid rgba(255, 255, 160, 0.2);
     }
     .top-blook-image img {
       width: 100%;
@@ -4774,7 +4802,9 @@
     }
     #profile-page .up-avatar {
       border: none;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
+      box-shadow:
+        0 0 0 2px rgba(255, 255, 160, 0.5),
+        0 0 20px rgba(238, 102, 255, 0.35);
     }
     #profile-banner-wrap { cursor: default; }
     #profile-banner-wrap.profile-banner-clickable { cursor: pointer; }
@@ -4797,7 +4827,7 @@
       border: 2px solid rgba(255,255,255,0.12);
       cursor: pointer;
       aspect-ratio: 16/5;
-      background: #1a2a3a;
+      background: linear-gradient(125deg, #4a2888 0%, #2a1840 100%);
       transition: border-color 0.2s, transform 0.2s;
     }
     .banner-picker-item:hover, .banner-picker-item.selected {
