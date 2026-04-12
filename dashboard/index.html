@@ -1709,11 +1709,11 @@
         padding-right: 6px;
       }
       .inv-blook-detail {
-        flex: 0 0 340px;
+        flex: 0 0 var(--inv-detail-card-size, min(300px, 38vw));
+        width: var(--inv-detail-card-size, min(300px, 38vw));
         position: sticky;
-        top: 64px;
+        top: 28px;
         align-self: flex-start;
-        max-height: min(78vh, 820px);
       }
     }
     .inv-blooks-catalog {
@@ -1848,6 +1848,7 @@
       z-index: 2;
     }
     .inv-blook-detail {
+      --inv-detail-card-size: min(300px, min(72vh, 92vw));
       border-radius: 20px;
       border: 1px solid rgba(255,255,160,0.22);
       background-color: #07090e;
@@ -1856,12 +1857,17 @@
       background-position: center;
       background-repeat: no-repeat;
       box-shadow: 0 16px 48px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.04);
-      padding: 22px 18px 20px;
+      padding: 14px 12px 12px;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
-      min-height: 360px;
+      width: var(--inv-detail-card-size);
+      max-width: 100%;
+      height: var(--inv-detail-card-size);
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box;
       overflow: hidden;
       position: relative;
     }
@@ -1885,10 +1891,10 @@
     }
     .inv-blook-detail-title {
       font-family: 'Titan One', 'Nunito', sans-serif;
-      font-size: clamp(1.05rem, 2.2vw, 1.35rem);
+      font-size: clamp(0.95rem, 2.5vw, 1.15rem);
       font-weight: 400;
       color: #fff;
-      margin: 0 0 8px;
+      margin: 0 0 6px;
       line-height: 1.15;
       text-shadow: 0 2px 14px rgba(0,0,0,0.55);
     }
@@ -1909,7 +1915,7 @@
       font-size: 0.88rem;
       font-weight: 800;
       color: #ffe066;
-      margin: 0 0 16px;
+      margin: 0 0 10px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1921,9 +1927,10 @@
       font-size: 0.95rem;
     }
     .inv-blook-detail-visual {
-      width: min(200px, 70vw);
-      height: min(200px, 70vw);
-      margin: 0 auto 18px;
+      width: min(140px, 48%);
+      height: min(140px, 48%);
+      margin: 0 auto 10px;
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1956,20 +1963,29 @@
     }
     .inv-blook-detail-owned {
       font-family: 'Titan One', 'Nunito', sans-serif;
-      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-size: clamp(1.15rem, 3.5vw, 1.5rem);
       font-weight: 400;
       color: #fff;
-      margin: auto 0 0;
-      padding-top: 12px;
+      margin: 0 0 8px;
+      padding-top: 0;
+      flex-shrink: 0;
       text-shadow: 0 2px 16px rgba(0,0,0,0.55);
+    }
+    #inv-blook-detail-body {
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
     }
     .inv-blook-detail-actions {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       width: 100%;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 16px;
+      margin-top: auto;
+      padding-top: 8px;
+      flex-shrink: 0;
     }
     .inv-blook-detail-actions .collect-btn,
     .inv-blook-detail-actions .cancel-btn {
@@ -8627,13 +8643,24 @@
     // ========== Purchase pack and award stars immediately ==========
     async function purchasePack(pack) {
       if (!currentUser) return;
-      if (packOpeningBusy) return;
+      if (shopPackPurchaseLock || packOpeningBusy) return;
+      shopPackPurchaseLock = true;
       packOpeningBusy = true;
       try {
         const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-        if (!userDoc.exists()) { showNotification("User data not found", "error"); packOpeningBusy = false; return; }
+        if (!userDoc.exists()) {
+          showNotification("User data not found", "error");
+          packOpeningBusy = false;
+          shopPackPurchaseLock = false;
+          return;
+        }
         const userData = userDoc.data();
-        if (userData.coins < pack.price) { showNotification("Not enough coins!", "error"); packOpeningBusy = false; return; }
+        if (userData.coins < pack.price) {
+          showNotification("Not enough coins!", "error");
+          packOpeningBusy = false;
+          shopPackPurchaseLock = false;
+          return;
+        }
         await updateDoc(doc(db, "users", currentUser.uid), { coins: userData.coins - pack.price });
         updateMissionProgress('spending', pack.price);
         loadUserBalance(currentUser.uid);
@@ -8641,8 +8668,9 @@
       } catch (e) {
         showNotification("Error purchasing pack: " + e.message, "error");
         packOpeningBusy = false;
+        shopPackPurchaseLock = false;
       }
-      /* packOpeningBusy stays true until resetPackOpeningModalLayout() when the pack modal closes */
+      /* Both flags stay true until closePackOpeningModal() when the pack modal closes */
     }
 
     // Get item based on weighted chance (+ optional Golden Ticket pool)
@@ -8862,6 +8890,8 @@
     let packAutoUnboxTimer = null;
     let packRipFlashTimer = null;
     let packOpeningBusy = false;
+    /** Blocks double-clicks on shop packs before async purchasePack body runs */
+    let shopPackPurchaseLock = false;
 
     function hexToRgbTriplet(hex) {
       const s = String(hex || '').trim();
@@ -9369,6 +9399,7 @@
       if (packOpeningModal) packOpeningModal.style.display = 'none';
       resetPackOpeningModalLayout();
       packOpeningBusy = false;
+      shopPackPurchaseLock = false;
     }
 
     function applyPackUnboxBackdropVars(innerHex, outerHex, rarity) {
