@@ -3020,6 +3020,12 @@
       align-items: center;
       justify-content: center;
     }
+    /* Pack unbox: avoid harsh black flashes from the full-screen dimmer */
+    #pack-opening-modal.modal {
+      background: rgba(6, 14, 12, 0.72);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
 
     .modal-content {
       background: rgba(10, 12, 16, 0.95);
@@ -3047,7 +3053,8 @@
       overflow: visible;
     }
     .pack-opening-modal-unbox .modal-background {
-      filter: none;
+      filter: none !important;
+      background-color: #0f1c18;
       background-size: 220% 220%;
       background-position: 40% 45%;
       z-index: 0;
@@ -3063,7 +3070,7 @@
     @keyframes packBgGradientDrift {
       0%, 100% { background-position: 35% 40%; filter: brightness(1) saturate(1); }
       25% { background-position: 65% 55%; filter: brightness(1.06) saturate(1.08); }
-      50% { background-position: 50% 65%; filter: brightness(0.98) saturate(1.12); }
+      50% { background-position: 50% 65%; filter: brightness(1.02) saturate(1.12); }
       75% { background-position: 30% 50%; filter: brightness(1.04) saturate(1.05); }
     }
     .modal-content.pack-opening-modal-unbox.pack-unbox-celebrate .modal-background {
@@ -3096,10 +3103,6 @@
       0% { opacity: 0; }
       35% { opacity: 1; background: radial-gradient(ellipse 85% 65% at 50% 45%, rgba(0,0,0,0.22), transparent 62%); }
       100% { opacity: 0; background: transparent; }
-    }
-    @keyframes packBgCelebratePulse {
-      0%, 100% { filter: brightness(0.94) saturate(1.06); }
-      50% { filter: brightness(1.12) saturate(1.28) contrast(1.03); }
     }
     /* Layered FX above base gradient */
     .pack-bg-fx {
@@ -3183,7 +3186,7 @@
     .pack-bg-fx .pack-bg-vignette {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 75% 70% at 50% 48%, transparent 0%, rgba(0, 0, 0, 0.55) 88%, rgba(0, 0, 0, 0.85) 100%);
+      background: radial-gradient(ellipse 75% 70% at 50% 48%, transparent 0%, rgba(0, 0, 0, 0.28) 88%, rgba(0, 0, 0, 0.52) 100%);
       animation: packVignetteBreathe 5s ease-in-out infinite;
     }
     @keyframes packVignetteBreathe {
@@ -3632,7 +3635,7 @@
       100% {
         transform: translateY(155%) rotate(22deg) scale(0.76);
         opacity: 0;
-        filter: brightness(0.28);
+        filter: brightness(0.72);
       }
     }
     @keyframes packRipTopFlap {
@@ -3665,6 +3668,10 @@
       background-size: cover;
       background-position: center;
       filter: blur(2px) brightness(0.5);
+    }
+    /* Pack flow uses its own brightness; never inherit the dim default from .modal-background */
+    #opening-modal-bg {
+      filter: none;
     }
     #opening-modal-bg.pack-rarity-celebrate {
       filter: brightness(1.02) saturate(1.08);
@@ -9393,6 +9400,7 @@
       openingModalBg.style.backgroundRepeat = '';
       openingModalBg.style.backgroundPosition = '';
       openingModalBg.style.backgroundBlendMode = '';
+      openingModalBg.style.backgroundColor = '';
     }
 
     function closePackOpeningModal() {
@@ -9464,6 +9472,8 @@
       openingModalBg.style.backgroundRepeat = s.backgroundRepeat;
       openingModalBg.style.backgroundPosition = s.backgroundPosition;
       openingModalBg.style.backgroundBlendMode = s.backgroundBlendMode;
+      /* Solid fallback so there is never a transparent frame behind the gradient */
+      openingModalBg.style.backgroundColor = '#0f1c18';
     }
 
     function showPackOpeningModal(pack, item) {
@@ -9477,6 +9487,8 @@
 
       packOpeningModalInner?.classList.add('pack-opening-modal-unbox');
       packOpeningModalBody?.classList.add('pack-unbox-body', 'pack-unbox-body-lively');
+      /* Show modal only after backdrop is painted — avoids one frame of black / empty */
+      if (packOpeningModal) packOpeningModal.style.display = 'flex';
 
       openedGiftName.textContent = item.name || '';
       const rKey = (item.rarity || '').trim().toLowerCase() || 'unknown';
@@ -9661,21 +9673,7 @@
         if (giftAnimation.classList.contains('torn')) return;
         giftAnimation.classList.add('torn', 'pack-unbox-peek');
         packOpeningModalInner?.classList.add('pack-unbox-peek-mood');
-        if (packRipOverlay) {
-          requestAnimationFrame(() => {
-            if (packRipFlashTimer) {
-              clearTimeout(packRipFlashTimer);
-              packRipFlashTimer = null;
-            }
-            packRipOverlay.classList.remove('pack-bg-rip-flash', 'pack-bg-rip-flash-dark');
-            void packRipOverlay.offsetWidth;
-            packRipOverlay.classList.add('pack-bg-rip-flash');
-            packRipFlashTimer = setTimeout(() => {
-              packRipOverlay?.classList.remove('pack-bg-rip-flash');
-              packRipFlashTimer = null;
-            }, 700);
-          });
-        }
+        /* Rip overlay flash removed — it caused visible black/white flashes on some GPUs */
         if (packUnboxBoost) packUnboxBoost.style.display = 'none';
         /* After first rip, remove {once} listener left the raw <button> receiving taps → WebKit focus/active flashes at top/bottom */
         if (packUnboxClickLayer) {
@@ -9723,8 +9721,6 @@
         }
       };
       probe.src = artUrl;
-
-      packOpeningModal.style.display = 'flex';
     }
 
     // ========== Blooket-style Inventory ==========
