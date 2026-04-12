@@ -3,17 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Redirecting…</title>
-  <meta http-equiv="refresh" content="0;url=/dashboard/">
+  <title>Opening Game Universe…</title>
   <script>
     (function () {
       var q = window.location.search || '';
       var h = window.location.hash || '';
-      window.location.replace('/dashboard/' + q + h);
+      var dest = '/dashboard/' + q + h;
+      /* One navigation only: avoid meta refresh + replace (double load / jank). */
+      try {
+        if (typeof fetch === 'function') {
+          fetch(dest, {
+            method: 'HEAD',
+            cache: 'no-store',
+            credentials: 'same-origin',
+            keepalive: true
+          }).catch(function () {});
+        }
+      } catch (e) {}
+      window.location.replace(dest);
     })();
   </script>
 </head>
 <body>
-  <p style="font-family:system-ui,sans-serif;padding:2rem;">Opening the app… <a href="/dashboard/">Continue to Game Universe</a></p>
+  <p style="font-family:system-ui,sans-serif;padding:2rem;">Opening the app… <a id="dashboard-continue" href="/dashboard/">Continue to Game Universe</a></p>
+  <script>
+    (function () {
+      var q = window.location.search || '';
+      var h = window.location.hash || '';
+      var dest = '/dashboard/' + q + h;
+      var a = document.getElementById('dashboard-continue');
+      if (a) a.setAttribute('href', dest);
+    })();
+  </script>
+  <noscript>
+    <p style="font-family:system-ui,sans-serif;padding:2rem;">Enable JavaScript or <a href="/dashboard/">open the dashboard</a>.</p>
+  </noscript>
 </body>
 </html>
