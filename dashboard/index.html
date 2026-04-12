@@ -7839,7 +7839,8 @@
         try {
           const p = window.location.pathname || '';
           if (/\/dashboard\/index\.html$/i.test(p) || /\/dashboard\.html$/i.test(p) || /\/dashboard\/index$/i.test(p)) {
-            window.history.replaceState({}, '', '/dashboard/');
+            const tail = (window.location.search || '') + (window.location.hash || '');
+            window.history.replaceState({}, '', '/dashboard/' + (tail === '?' ? '' : tail));
           }
         } catch (_) {}
         try {
