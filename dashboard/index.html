@@ -2719,10 +2719,14 @@
       min-height: 100vh;
       flex: 1;
     }
+    #pack-opening-modal-body.pack-unbox-body {
+      overflow: hidden;
+      isolation: isolate;
+    }
     .pack-unbox-body-lively::before {
       content: '';
       position: absolute;
-      inset: -5%;
+      inset: 0;
       z-index: 4;
       pointer-events: none;
       background: radial-gradient(ellipse 70% 55% at 50% 42%, rgba(255, 255, 160, 0.07), transparent 62%);
@@ -2888,6 +2892,7 @@
       cursor: pointer;
       background: transparent;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
       appearance: none;
       -webkit-appearance: none;
       border: none;
@@ -3195,9 +3200,10 @@
       50% { filter: brightness(1.08) saturate(1.12); }
     }
     @keyframes packBgCelebrateFlash {
-      0% { filter: brightness(1.12) saturate(1.2); transform: scale(1.01); }
-      45% { filter: brightness(1.06) saturate(1.12); transform: scale(1); }
-      100% { filter: brightness(1.02) saturate(1.08); transform: scale(1); }
+      /* Avoid transform: scale on full-viewport bg — exposes modal backdrop as top/bottom flashes on some GPUs */
+      0% { filter: brightness(1.12) saturate(1.2); }
+      45% { filter: brightness(1.06) saturate(1.12); }
+      100% { filter: brightness(1.02) saturate(1.08); }
     }
     @keyframes packRarityBgRun {
       0% { background-position: 0% 50%; }
@@ -9099,6 +9105,11 @@
           });
         }
         if (packUnboxBoost) packUnboxBoost.style.display = 'none';
+        /* After first rip, remove {once} listener left the raw <button> receiving taps → WebKit focus/active flashes at top/bottom */
+        if (packUnboxClickLayer) {
+          packUnboxClickLayer.style.display = 'none';
+          if (typeof packUnboxClickLayer.blur === 'function') packUnboxClickLayer.blur();
+        }
       };
 
       const secondReveal = () => {
@@ -9129,14 +9140,14 @@
         setStackSize(probe.naturalWidth, probe.naturalHeight);
         giftAnimation.appendChild(stack);
         if (packUnboxClickLayer) {
-          packUnboxClickLayer.addEventListener('click', packUnboxClickHandler, { once: true });
+          packUnboxClickLayer.addEventListener('click', packUnboxClickHandler);
         }
       };
       probe.onerror = () => {
         setStackSize(280, 280);
         giftAnimation.appendChild(stack);
         if (packUnboxClickLayer) {
-          packUnboxClickLayer.addEventListener('click', packUnboxClickHandler, { once: true });
+          packUnboxClickLayer.addEventListener('click', packUnboxClickHandler);
         }
       };
       probe.src = artUrl;
