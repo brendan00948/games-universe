@@ -8223,7 +8223,7 @@
       }
     });
 
-    // ========== Sidebar page switching (full reload per panel when signed in) ==========
+    // ========== Sidebar page switching (in-page; avoids full dashboard reload / lag) ==========
     document.querySelectorAll('.sidebar .tab-button').forEach((button) => {
       button.addEventListener('click', () => {
         const pageId = button.getAttribute('data-page');
@@ -8232,11 +8232,24 @@
           window.location.href = MAIN_SITE_ORIGIN + '/';
           return;
         }
-        const q = new URLSearchParams(window.location.search || '');
-        PANEL_QUERY_KEYS.forEach((k) => q.delete(k));
-        q.set('panel', pageId);
-        const qs = q.toString();
-        window.location.href = '/dashboard/' + (qs ? '?' + qs : '') + (window.location.hash || '');
+        stripPanelQueryFromUrl();
+        activateDashboardPanel(pageId);
+        switch (pageId) {
+          case 'main-page':
+            if (!mainPageGamesMounted) ensureMainPageGamesDeferredObserver();
+            break;
+          case 'profile-page': loadProfilePage(currentUser.uid); break;
+          case 'history-page': loadPlayHistory(currentUser.uid); break;
+          case 'shop-page': loadShopPacks(); loadUserBalance(currentUser.uid); break;
+          case 'inventory-page': loadInventory(currentUser.uid); loadFriends(currentUser.uid); break;
+          case 'emporium-page': loadEmporiumPage(); loadUserBalance(currentUser.uid); break;
+          case 'gt-page': loadGoldenTicketGiveawaysPage(); break;
+          case 'missions-page': loadMissions(currentUser.uid); break;
+          case 'chat-page': loadGlobalChat(); break;
+          case 'friends-page': loadFriends(currentUser.uid); break;
+          case 'settings-page': loadSettings(currentUser.uid); break;
+          case 'staff-page': loadStaffPanel(); break;
+        }
       });
     });
 
